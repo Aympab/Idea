@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:idea/bloc/inscription/inscription_bloc.dart';
 import 'package:flutter_multiselect/flutter_multiselect.dart';
+import 'package:idea/widget/multiSelect.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 import 'dart:io';
@@ -68,6 +69,21 @@ class _InscriptionViewState extends State<InscriptionView> {
       }
     });
   }
+
+
+
+  var myCompetence_1 = {"value": 1, "name": "Bricolage"};
+  var myCompetence_2 = {"value": 2, "name": "Jardinage"};
+  var myCompetence_3 = {"value": 3, "name": "Mécano"};
+  var myCompetence_4 = {"value": 4, "name": "Architecte"};
+  var myCompetence_5 = {"value": 5, "name": "Gestion de Projet"};
+  
+  var myMateriel_1 = {"value": 1, "name": "Marteau"};
+  var myMateriel_2 = {"value": 2, "name": "Imprimante 3D"};
+  var myMateriel_3 = {"value": 3, "name": "Ciseaux"};
+  var myMateriel_4 = {"value": 4, "name": "Tourne-vis"};
+  var myMateriel_5 = {"value": 5, "name": "Métal"};
+
 
   @override
   Widget build(BuildContext context) {
@@ -346,6 +362,16 @@ class _InscriptionViewState extends State<InscriptionView> {
       ],
     );
 
+	List competenceListFunction (){
+		List competenceList = List();
+		competenceList.add(myCompetence_1);
+		competenceList.add(myCompetence_2);
+		competenceList.add(myCompetence_3);
+		competenceList.add(myCompetence_4);
+		competenceList.add(myCompetence_5);
+		return competenceList;
+	}
+
     final competences = new ConfigurableExpansionTile(
       headerExpanded: Flexible(
         child: RichText(
@@ -381,46 +407,18 @@ class _InscriptionViewState extends State<InscriptionView> {
           ),
         ),
       ),
-      children: [
-        MultiSelect(
-          autovalidate: false,
-          titleText: "Ajouter vos compétences",
-          validator: (value) {
-            if (value == null) {
-              return 'Please select one or more option(s)';
-            }
-          },
-          errorText: 'Please select one or more option(s)',
-          dataSource: [
-            {
-              "name": "Bricolage",
-              "value": 1,
-            },
-            {
-              "name": "Jardinage",
-              "value": 2,
-            },
-            {
-              "name": "Développeur",
-              "value": 3,
-            },
-            {
-              "name": "Mécano",
-              "value": 4,
-            },
-          ],
-          textField: 'name',
-          valueField: 'value',
-          filterable: true,
-          required: true,
-          value: null,
-          change: (values) {
-            selectedCompetences = values;
-          },
-        ),
-        // + more params, see example !!
-      ],
+      children: [ new MultiSelectWidget(titleMultiSelect: 'Ajouter vos compétences', textFieldName: 'name', textFieldValue: 'value', objectList: competenceListFunction(), selectedvalues: selectedCompetences,)],
     );
+
+	List materielListFunction (){
+		List materielList = List();
+		materielList.add(myMateriel_1);
+		materielList.add(myMateriel_2);
+		materielList.add(myMateriel_3);
+		materielList.add(myMateriel_4);
+		materielList.add(myMateriel_5);
+		return materielList;
+	}
 
     final materiel = new ConfigurableExpansionTile(
       headerExpanded: Flexible(
@@ -452,49 +450,13 @@ class _InscriptionViewState extends State<InscriptionView> {
                 ),
               ),
               TextSpan(
-                  text: 'Matériel', style: TextStyle(color: Colors.purple)),
+				  style: TextStyle(color: Colors.purple),
+                  text: 'Matériel'),
             ],
           ),
         ),
       ),
-      children: [
-        MultiSelect(
-          autovalidate: false,
-          titleText: "Ajouter un matériel",
-          validator: (value) {
-            if (value == null) {
-              return 'Please select one or more option(s)';
-            }
-          },
-          errorText: 'Please select one or more option(s)',
-          dataSource: [
-            {
-              "name": "Marteau",
-              "value": 1,
-            },
-            {
-              "name": "Tondeuse",
-              "value": 2,
-            },
-            {
-              "name": "Tourne-vis",
-              "value": 3,
-            },
-            {
-              "name": "Scie",
-              "value": 4,
-            },
-          ],
-          textField: 'name',
-          valueField: 'value',
-          filterable: true,
-          required: true,
-          value: null,
-          change: (values) {
-            selectedMateriels = values;
-          },
-        ),
-      ],
+	  children: [ new MultiSelectWidget(titleMultiSelect: 'Ajouter un matériel', textFieldName: 'name', textFieldValue: 'value', objectList: materielListFunction(), selectedvalues: selectedMateriels,)],
     );
 
     final checkbox = new Container(
@@ -600,7 +562,7 @@ class _InscriptionViewState extends State<InscriptionView> {
           competences,
           separator,
           SizedBox(height: 5),
-          materiel,
+		  Theme(data: ThemeData(primaryColor: Colors.purple), child: materiel),
           SizedBox(height: 22),
           checkbox,
           SizedBox(height: 22),
