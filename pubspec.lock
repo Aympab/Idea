@@ -148,6 +148,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.1.0"
+  equatable:
+    dependency: "direct dev"
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -194,7 +201,25 @@ packages:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< dev
     version: "1.0.6"
+=======
+    version: "1.0.7"
+  flutter_bloc:
+    dependency: "direct dev"
+    description:
+      name: flutter_bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0"
+  flutter_multiselect:
+    dependency: "direct main"
+    description:
+      name: flutter_multiselect
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
+>>>>>>> creation page nouvelle idee (structure globale)
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -337,7 +362,18 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< dev
     version: "4.0.5+1"
+=======
+    version: "4.0.5"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.5"
+>>>>>>> creation page nouvelle idee (structure globale)
   quiver:
     dependency: transitive
     description:
@@ -457,4 +493,10 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.7.0 <3.0.0"
+<<<<<<< dev
   flutter: ">=1.12.13 <2.0.0"
+=======
+  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  dart: ">=2.6.0 <3.0.0"
+  flutter: ">=1.12.1"
+>>>>>>> creation page nouvelle idee (structure globale)
