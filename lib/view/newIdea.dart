@@ -1,9 +1,10 @@
+import 'package:custom_radio_button/custom_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/bloc/newIdea/newidea_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_multiselect/flutter_multiselect.dart';
-import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 import 'package:idea/widget/expansionTileWidget.dart';
+import 'package:custom_radio_button/radio_model.dart';
+import 'package:idea/widget/multiSelect.dart';
 
 class NewIdeaView extends StatefulWidget {
   NewIdeaView({Key key}) : super(key: key);
@@ -12,6 +13,8 @@ class NewIdeaView extends StatefulWidget {
   @override
   _NewIdeaViewState createState() => _NewIdeaViewState();
 }
+
+enum StatusValues { PRIVE, PUBLIC }
 
 class _NewIdeaViewState extends State<NewIdeaView> {
   // Creation des données : Différentes Catégories
@@ -33,6 +36,13 @@ class _NewIdeaViewState extends State<NewIdeaView> {
   var myMateriel_3 = {"value": 3, "name": "Ciseaux"};
   var myMateriel_4 = {"value": 4, "name": "Tourne-vis"};
   var myMateriel_5 = {"value": 5, "name": "Métal"};
+
+  var myContact_1 = {"value": 1, "name": "Chef de Projet informatique"};
+  var myContact_2 = {"value": 2, "name": "Ingénieur Aéronautique"};
+  var myContact_3 = {"value": 3, "name": "Architecte"};
+  var myContact_4 = {"value": 4, "name": "Designer"};
+  var myContact_5 = {"value": 5, "name": "Maçon"};
+  var myContact_6 = {"value": 6, "name": "Pilote d'hélicoptère"};
 
   List categorieListFunction (){
 		List categorieList = List();
@@ -64,6 +74,32 @@ class _NewIdeaViewState extends State<NewIdeaView> {
 		materielList.add(myMateriel_5);
 		return materielList;
 	}
+
+  List contactListFunction (){
+		List contactList = List();
+		contactList.add(myContact_1);
+		contactList.add(myContact_2);
+		contactList.add(myContact_3);
+		contactList.add(myContact_4);
+		contactList.add(myContact_5);
+		contactList.add(myContact_6);
+		return contactList;
+	}
+
+  List selectedCategories = [];
+  List selectedCompetences = [];
+  List selectedMateriels = [];
+  List selectedContacts = [];
+
+  String selectedValue;
+  @override
+  void initState(){
+    super.initState();
+    selectedValue = "public";
+  }
+
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController descriptionController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +143,7 @@ class _NewIdeaViewState extends State<NewIdeaView> {
             margin: const EdgeInsets.only(left: 10.0, right: 15.0),
             child: Divider(
               color: Colors.black,
-              height: 50,
+              height: 60,
             )),
       )
     ]);
@@ -150,193 +186,123 @@ class _NewIdeaViewState extends State<NewIdeaView> {
       style: Theme.of(context).textTheme.title)
       );
 
-    final categorySelector = 
-      MultiSelect(
-          autovalidate: false,
-          titleText: "Ajouter les Catégories de votre idée",
-          validator: (value) {
-            if (value == null) {
-              return 'Please select one or more option(s)';
+    final categorySelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les Catégories de votre idée', textFieldName: 'name', textFieldValue: 'value', objectList: categorieListFunction(), selectedvalues: selectedCategories);
+
+    final ideaName = new TextFormField(
+      keyboardType: TextInputType.text,
+      controller: nameController,
+      decoration: InputDecoration(
+        hintText: 'Nom',
+        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
+    );
+
+    final ideaDescription = new TextFormField(
+      keyboardType: TextInputType.multiline,
+      controller: descriptionController,
+      maxLines: 6,
+      decoration: InputDecoration(
+        hintText: 'max. 150 caractères',
+        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
+    );
+
+    final infoComponents = Column(
+          children: [
+            SizedBox(height: 20),
+            comments("Comment appelez vous votre idée ?" ),
+            SizedBox(height: 5),
+            ideaName,
+            SizedBox(height: 22),
+            comments("Essayez de trouver une image !" ),
+            SizedBox(height: 5),
+            // Image 
+            SizedBox(height: 22),
+            comments("Décrivez brièvement votre idée" ),
+            SizedBox(height: 5),
+            ideaDescription,
+            SizedBox(height: 5),
+          ]
+        
+      );
+      final competenceSelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les compétences nécessaires', textFieldName: 'name', textFieldValue: 'value', objectList: competenceListFunction(), selectedvalues: selectedCompetences);
+      final materielSelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter le matériel nécessaire', textFieldName: 'name', textFieldValue: 'value', objectList: materielListFunction(), selectedvalues: selectedMateriels);
+      final contactselector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les contacts nécessaires', textFieldName: 'name', textFieldValue: 'value', objectList: contactListFunction(), selectedvalues: selectedContacts);
+      final besoinsComponents = Column(
+            children: [
+              SizedBox(height: 15),
+              ExpansionTileWidget(
+                components : Theme(data: ThemeData(primaryColor: Colors.blue), child: competenceSelector), 
+                name: "Compétences", myColor: 
+                Colors.blue),
+              SizedBox(height: 15),
+              ExpansionTileWidget(
+                components : Theme(data: ThemeData(primaryColor: Colors.purple), child: materielSelector),
+                name: "Matériels", myColor: 
+                Colors.purple), 
+              SizedBox(height: 15),
+              ExpansionTileWidget(
+                components : Theme(data: ThemeData(primaryColor: Colors.orange), child: contactselector), 
+                name: "Contacts", myColor: 
+                Colors.orange)
+            ]
+          
+      );
+      final globalInformations = ExpansionTileWidget(components : infoComponents, name: "Infos", myColor: Colors.grey[200]);
+      final besoins = ExpansionTileWidget(components : besoinsComponents, name: "Besoins", myColor: Colors.grey[200]);
+      final statustitle = new Center( 
+      child : Text(
+      "Status de l'idée", 
+      style: Theme.of(context).textTheme.title)
+      );
+      setSelectedValue(String value) {
+        setState(() {
+          selectedValue = value;
+        });
+      }
+      final ideaStatus2 = Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          comments("Comment voulez vous enregistrer l'idée ?" ),
+          RadioListTile(
+            title: Text("Privé"),
+            value: "prive", 
+            groupValue: selectedValue, 
+            activeColor: Colors.green,
+            onChanged: (val) {
+              print ("Radio $val");
+              setSelectedValue(val);
             }
-          },
-          errorText: 'Please select one or more option(s)',
-          dataSource: categorieListFunction(),
-          textField: 'name',
-          valueField: 'value',
-          filterable: true,
-          required: true,
-          value: null,
-          change: (values) {
-            //selectedCategories = values;
-          },
-        );
-
-        final ideaName = new TextFormField(
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            hintText: 'Nom',
-            contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-          ),
-        );
-
-        final ideaDescription = new TextFormField(
-          keyboardType: TextInputType.multiline,
-          maxLines: 6,
-          decoration: InputDecoration(
-            hintText: 'max. 150 caractères',
-            contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-          ),
-        );
-
-        final infoComponents = Column(
-              children: [
-                SizedBox(height: 20),
-                comments("Comment appelez vous votre idée ?" ),
-                SizedBox(height: 5),
-                ideaName,
-                SizedBox(height: 22),
-                comments("Essayez de trouver une image !" ),
-                SizedBox(height: 5),
-                // Image 
-                SizedBox(height: 22),
-                comments("Décrivez brièvement votre idée" ),
-                SizedBox(height: 5),
-                ideaDescription,
-                SizedBox(height: 5),
-              ]
-            
-            );
-        final competencesSelector = 
-          MultiSelect(
-              autovalidate: false,
-              titleText: "Ajouter les compétences nécessaires",
-              validator: (value) {
-                if (value == null) {
-                  return 'Please select one or more option(s)';
-                }
-              },
-              errorText: 'Please select one or more option(s)',
-              dataSource: competenceListFunction(),
-              textField: 'name',
-              valueField: 'value',
-              filterable: true,
-              required: true,
-              value: null,
-              change: (values) {
-                //selectedCategories = values;
-              },
-            );
-        final materielSelector = 
-          MultiSelect(
-              autovalidate: false,
-              titleText: "Ajouter le matériel nécessaires",
-              validator: (value) {
-                if (value == null) {
-                  return 'Please select one or more option(s)';
-                }
-              },
-              errorText: 'Please select one or more option(s)',
-              dataSource: materielListFunction(),
-              textField: 'name',
-              valueField: 'value',
-              filterable: true,
-              required: true,
-              value: null,
-              change: (values) {
-                //selectedCategories = values;
-              },
-            );
-        final contactSelector = 
-          MultiSelect(
-              autovalidate: false,
-              titleText: "Ajouter les contacts nécessaires",
-              validator: (value) {
-                if (value == null) {
-                  return 'Please select one or more option(s)';
-                }
-              },
-              errorText: 'Please select one or more option(s)',
-              dataSource: categorieListFunction(),
-              textField: 'name',
-              valueField: 'value',
-              filterable: true,
-              required: true,
-              value: null,
-              change: (values) {
-                //selectedCategories = values;
-              },
-            );
-        final besoinsComponents = Column(
-              children: [
-                SizedBox(height: 15),
-                ExpansionTileWidget(
-                  components : competencesSelector, 
-                  name: "Compétences", myColor: 
-                  Colors.blue),
-                SizedBox(height: 15),
-                ExpansionTileWidget(
-                  components : materielSelector, 
-                  name: "Matériels", myColor: 
-                  Colors.purple), 
-                SizedBox(height: 15),
-                ExpansionTileWidget(
-                  components : contactSelector, 
-                  name: "Contacts", myColor: 
-                  Colors.orange)
-              ]
-            
-            );
-        final globalInformations = ExpansionTileWidget(components : infoComponents, name: "Infos", myColor: Colors.grey[200]);
-        final besoins = ExpansionTileWidget(components : besoinsComponents, name: "Besoins", myColor: Colors.grey[200]);
-        int _value = 0;
-        final ideaStatus = Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () => setState(() => _value = 0),
-                  child: Container(
-                    height: 56,
-                    width: 56,
-                    color: _value == 0 ? Colors.red : Colors.yellow,
-                    child: Icon(Icons.call),
-                  ),
-                ),
-                SizedBox(width: 4),
-                GestureDetector(
-                  onTap: () => setState(() => _value = 1),
-                  child: Container(
-                    height: 56,
-                    width: 56,
-                    color: _value == 1 ? Colors.red : Colors.yellow,
-                    child: Icon(Icons.message),
-                  ),
-                ),
-              ],
             ),
-          );
+            RadioListTile(
+              title : Text("Public"),
+              value: "public", 
+              groupValue: selectedValue, 
+              activeColor: Colors.green,
+              onChanged: (val) {
+                print ("Radio $val");
+                setSelectedValue(val);
+              },
+            ),
+            
+        ],
+      );
+    
+      
         final validationButton = FlatButton(
           child: Icon(Icons.check_box, color: Colors.green, size: 45,),
-          onPressed: () {
-            showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                      elevation: 30,
-                      child: Container(
-                        height: 260.0,
-                        width: 360.0,
-                        padding:
-                            EdgeInsets.fromLTRB(16, 16, 16, 16),
-                        child: Text('statut'), //ideaStatus,
-                      ),
-                    );
-                  });
-          },
+          onPressed: (){
+            print (selectedCategories);
+            print (nameController.text.toString());
+            print (descriptionController.text.toString());
+            print (selectedCompetences);
+            print (selectedMateriels);
+            print (selectedContacts);
+            print (selectedValue);
+          }
+            
         );
     return SafeArea(
       child: ListView(
@@ -353,6 +319,10 @@ class _NewIdeaViewState extends State<NewIdeaView> {
           globalInformations,
           SizedBox(height: 5),
           besoins,
+          SizedBox(height: 20),
+          statustitle,
+          SizedBox(height: 5),
+          ideaStatus2,
           SizedBox(height: 20),
           validationButton
         ],)
