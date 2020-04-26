@@ -16,3 +16,11 @@ class AddingNewUserState extends InscriptionState{
   // TODO: implement props
   List<Object> get props => null;
 }
+
+class ErrorWhenAddingState extends InscriptionState{
+
+}
+
+classe NewUserAddedState extends InscriptionState{
+  
+}
