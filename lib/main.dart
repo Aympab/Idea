@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:idea/view/inscription.dart';
-
-import 'view/inscription.dart';
-import 'bloc/inscription/inscription_bloc.dart';
+import 'package:idea/view/connexion.dart';
+import 'bloc/connexion/connexion_bloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,8 +12,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Idea',
       home: BlocProvider(
-            create: (BuildContext context) => InscriptionBloc(), 
-            child: InscriptionView()
+            create: (BuildContext context) => ConnexionBloc(), 
+            child: ConnexionView()
           )
         );
   }
