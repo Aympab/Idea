@@ -15,6 +15,8 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
   Stream<InscriptionState> mapEventToState(
     InscriptionEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    // TODO: implement mapEventToState*
+
+    
   }
 }

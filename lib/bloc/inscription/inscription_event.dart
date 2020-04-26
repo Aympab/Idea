@@ -5,11 +5,17 @@ abstract class InscriptionEvent extends Equatable {
 }
 
 class AddNewUserEvent extends InscriptionEvent{
-
   User newUser;
 
   AddNewUserEvent({this.newUser});
 
   @override
   List<Object> get props => [this.newUser];
+}
+
+class CancelAddUser extends InscriptionEvent{
+  CancelAddUser();
+
+  @override
+  List<Object> get props => null;
 }
