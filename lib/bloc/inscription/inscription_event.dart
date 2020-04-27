@@ -4,6 +4,7 @@ abstract class InscriptionEvent extends Equatable {
   const InscriptionEvent();
 }
 
+//On clique sur ajouter un nouvel user
 class AddNewUserEvent extends InscriptionEvent{
   User newUser;
 
@@ -13,6 +14,7 @@ class AddNewUserEvent extends InscriptionEvent{
   List<Object> get props => [this.newUser];
 }
 
+//Quand on annule la création
 class CancelAddUser extends InscriptionEvent{
   CancelAddUser();
 
