@@ -15,8 +15,19 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
   Stream<InscriptionState> mapEventToState(
     InscriptionEvent event,
   ) async* {
-    // TODO: implement mapEventToState*
+    switch(event.runtimeType){
+      case AddNewUserEvent :
+        User user = (event as AddNewUserEvent).newUser;
 
-    
+        //TODO : En fonction de ce qu'il manque comme data pour l'user on lance une erreur ou non
+        
+      break;
+
+      case CancelAddUserEvent :
+        yield CancellingState();
+      break;
+    }
+
+
   }
 }

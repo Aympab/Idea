@@ -11,7 +11,9 @@ class InscriptionInitial extends InscriptionState {
 
 //Lorsqu'on clique sur le bouton créer un compte et qu'on est en train d'accéder à firebase etc, CHARGEMENT
 class AddingNewUserState extends InscriptionState{
-  User user;
+  final User user;
+
+  AddingNewUserState({this.user})
 
   @override
   List<Object> get props => [this.user];
@@ -19,8 +21,10 @@ class AddingNewUserState extends InscriptionState{
 
 //Si on a une erreur lors de l'ajout
 class ErrorWhenAddingState extends InscriptionState{
-  User user;
-  String messageErreur;
+  final User user;
+  final String messageErreur;
+
+  ErrorWhenAddingState({this.user, this.messageErreur});
 
   @override
   List<Object> get props => [this.user, this.messageErreur];
@@ -29,8 +33,17 @@ class ErrorWhenAddingState extends InscriptionState{
 
 //Quand l'user à bien été ajouté à la BD
 class NewUserAddedState extends InscriptionState{
-  User user;
+  final User user;
+
+  NewUserAddedState({this.user});
 
   @override
   List<Object> get props => [this.user];  
+}
+
+class CancellingState extends InscriptionState{
+  CancellingState();
+  
+  @override
+  List<Object> get props => null;  
 }
