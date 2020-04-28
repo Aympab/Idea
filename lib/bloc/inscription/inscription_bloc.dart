@@ -19,7 +19,16 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
       case AddNewUserEvent :
         User user = (event as AddNewUserEvent).newUser;
 
-        //TODO : En fonction de ce qu'il manque comme data pour l'user on lance une erreur ou non
+        //Si il manque des informations, on balance une erreur
+        if (user.pseudo.isEmpty | user.email.isEmpty |user.password.isEmpty){
+          yield ErrorWhenAddingState();
+        }
+        //Si c'est bon, on yield le AddingUser, puis on ajoute l'user dans le BD, puis on yield le UserAdded
+        else{
+          yield AddingNewUserState();
+          await addUserToDB(user);
+          yield UserAddedState();
+        }        
         
       break;
 
@@ -30,4 +39,9 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
 
 
   }
+}
+
+
+void addUserToDB(User user) async{
+  //TODO : Implement
 }
