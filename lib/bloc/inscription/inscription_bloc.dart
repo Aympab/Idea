@@ -26,10 +26,14 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
         //Si c'est bon, on yield le AddingUser, puis on ajoute l'user dans le BD, puis on yield le UserAdded
         else{
           yield AddingNewUserState();
-          await addUserToDB(user);
-          yield UserAddedState();
-        }        
-        
+
+          try{
+            await addUserToDB(user);
+            yield UserAddedState();
+          }catch(e){
+            yield ErrorWhenAddingState();
+          }
+        }    
       break;
 
       case CancelAddUserEvent :
@@ -42,6 +46,6 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
 }
 
 
-void addUserToDB(User user) async{
+Future<void> addUserToDB(User user) async{
   //TODO : Implement
 }
