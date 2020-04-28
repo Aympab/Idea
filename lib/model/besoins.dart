@@ -11,7 +11,7 @@ abstract class Besoin extends Equatable {
 
 class Competence extends Besoin{
   //FIXME : Ici ça va pas le constructeur
-  Competence(nom, nombreUtilise) : super(nom, nombreUtilise);
+  Competence(nom, nombreUtilise) : super();
 
   @override
   List<Object> get props => [this.nom, this.nombreUtilise];

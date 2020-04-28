@@ -13,7 +13,7 @@ class InscriptionInitial extends InscriptionState {
 class AddingNewUserState extends InscriptionState{
   final User user;
 
-  AddingNewUserState({this.user})
+  AddingNewUserState({this.user});
 
   @override
   List<Object> get props => [this.user];
@@ -32,10 +32,10 @@ class ErrorWhenAddingState extends InscriptionState{
 }
 
 //Quand l'user à bien été ajouté à la BD
-class NewUserAddedState extends InscriptionState{
+class UserAddedState extends InscriptionState{
   final User user;
 
-  NewUserAddedState({this.user});
+  UserAddedState({this.user});
 
   @override
   List<Object> get props => [this.user];  
@@ -43,7 +43,7 @@ class NewUserAddedState extends InscriptionState{
 
 class CancellingState extends InscriptionState{
   CancellingState();
-  
+
   @override
   List<Object> get props => null;  
 }
