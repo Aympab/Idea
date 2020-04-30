@@ -24,6 +24,11 @@ class User {
 
   int get hashCode => hashValues(infosOblig, infosFacultatives);
   //int get hashCode => hash2(infosOblig.hashCode, infosFacultatives.hashCode);
+
+  @override
+  String toString() {
+    return 'Pseudo : ${infosOblig.pseudo}\r\nMail : ${infosOblig.email}\r\nPassword : ${infosOblig.password}\r\nNaissance : ${infosOblig.dateNaissance}\r\nPrenom : ${infosFacultatives.prenom}\r\nNom : ${infosFacultatives.nom}\r\nZone : ${infosFacultatives.zoneGeographique}';
+  }
 }
 
 class InformationsObligatoiresUser extends Equatable {

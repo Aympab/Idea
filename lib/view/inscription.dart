@@ -537,33 +537,31 @@ class _InscriptionViewState extends State<InscriptionView> {
 
     final validationInscription = FlatButton(
         onPressed: () {
-          //FIXME : Je pense qu'il faudrait metre ça dans un autre fichier c'est pas dans la vue qu'i lfaut gérer
-
           //Création d'un utilisateur avec les data que l'on a dans la page
           User nouvelUser = User(
-              infosOblig: InformationsObligatoiresUser(
-                pseudo: pseudoController.text.toString(),
-                email: mailController.text.toString(),
-                password: mdpController.text.toString(),
-                dateNaissance: DateParser.parseStringToDateTime(
-                    zoneGeographiqueController.text.toString()),
+            infosOblig: InformationsObligatoiresUser(
+              pseudo: pseudoController.text.toString(),
+              email: mailController.text.toString(),
+              password: mdpController.text.toString(),
+              dateNaissance: DateParser.parseStringToDateTime(
+                dateNaissanceController.text.toString(),
               ),
-              infosFacultatives: InformationsFacultativesUser(
-                  nom: nomController.text.toString(),
-                  prenom: prenomController.text.toString(),
-                  zoneGeographique:
-                      zoneGeographiqueController.text.toString()));
+            ),
+            infosFacultatives: InformationsFacultativesUser(
+              nom: nomController.text.toString(),
+              prenom: prenomController.text.toString(),
+              zoneGeographique: zoneGeographiqueController.text.toString(),
+            ),
+          );
 
-          // print(nomController.text.toString());
-          // print(prenomController.text.toString());
-          // print(zoneGeographiqueController.text.toString());
-          // print(dateNaissanceController.text.toString());
+          
           print(selectedCompetences);
           print(selectedMateriels);
-          print("CGU : ");
-          print(_valueCheckboxCGU);
-          print("NewsLetter : ");
-          print(_valueCheckboxNewsLetter);
+          // print("CGU : ");
+          // print(_valueCheckboxCGU);
+          // print("NewsLetter : ");
+          // print(_valueCheckboxNewsLetter);
+          print('Nouvel user $nouvelUser');
         },
         padding: EdgeInsets.all(0.0),
         child: Image.asset('assets/confirmInscriptionButton.png'));
