@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:idea/bloc/inscription/inscription_bloc.dart';
 import 'package:flutter_multiselect/flutter_multiselect.dart';
+import 'package:idea/model/user.dart';
 import 'package:idea/widget/multiSelect.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
@@ -52,9 +53,9 @@ class _InscriptionViewState extends State<InscriptionView> {
   FocusNode focusNodeEmail;
   void initState() {
     super.initState();
-	focusNodePseudo = new FocusNode();
+    focusNodePseudo = new FocusNode();
     focusNodeEmail = new FocusNode();
-	focusNodePseudo.addListener(() {
+    focusNodePseudo.addListener(() {
       if (!focusNodePseudo.hasFocus) {
         setState(() {
           _PseudoValidator = true;
@@ -70,20 +71,18 @@ class _InscriptionViewState extends State<InscriptionView> {
     });
   }
 
-
-
+//FIXME
   var myCompetence_1 = {"value": 1, "name": "Bricolage"};
   var myCompetence_2 = {"value": 2, "name": "Jardinage"};
   var myCompetence_3 = {"value": 3, "name": "Mécano"};
   var myCompetence_4 = {"value": 4, "name": "Architecte"};
   var myCompetence_5 = {"value": 5, "name": "Gestion de Projet"};
-  
+
   var myMateriel_1 = {"value": 1, "name": "Marteau"};
   var myMateriel_2 = {"value": 2, "name": "Imprimante 3D"};
   var myMateriel_3 = {"value": 3, "name": "Ciseaux"};
   var myMateriel_4 = {"value": 4, "name": "Tourne-vis"};
   var myMateriel_5 = {"value": 5, "name": "Métal"};
-
 
   @override
   Widget build(BuildContext context) {
@@ -145,17 +144,16 @@ class _InscriptionViewState extends State<InscriptionView> {
       borderColor: Colors.blueGrey,
       borderWidth: 2,
       elevation: 3,
-	  radius: 60,
+      radius: 60,
       onTap: () {
         getImageGallery();
         image_to_display = showImage();
       },
     );
 
-	String validatePseudo(String value) {
-      // TODO
-	  // Check si le pseudo existe déjà 
-        return null;
+    String validatePseudo(String value) {
+      // TODO Check si le pseudo existe déjà dans la BD (fonction à mettre dans un autre fichier)
+      return null;
     }
 
     final pseudo = new TextFormField(
@@ -189,10 +187,11 @@ class _InscriptionViewState extends State<InscriptionView> {
     );
 
     String validateEmail(String value) {
-      Pattern pattern =r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+      Pattern pattern =
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
       RegExp regex = new RegExp(pattern);
       if (!regex.hasMatch(value))
-        return 'Enter Valid Email';
+        return 'Entrez un e-mail vailde.';
       else
         return null;
     }
@@ -205,7 +204,7 @@ class _InscriptionViewState extends State<InscriptionView> {
       validator: validateEmail,
       focusNode: focusNodeEmail,
       decoration: InputDecoration(
-        labelText: 'Mail *',
+        labelText: 'Mail*',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -221,7 +220,7 @@ class _InscriptionViewState extends State<InscriptionView> {
               obscureText: true,
               autofocus: false,
               decoration: InputDecoration(
-                labelText: 'Mot de passe *',
+                labelText: 'Mot de passe*',
                 contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32.0)),
@@ -235,7 +234,7 @@ class _InscriptionViewState extends State<InscriptionView> {
               obscureText: true,
               autofocus: false,
               decoration: InputDecoration(
-                labelText: 'Confirmation Mdp *',
+                labelText: 'Confirmation Mdp*',
                 contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(32.0)),
@@ -362,15 +361,15 @@ class _InscriptionViewState extends State<InscriptionView> {
       ],
     );
 
-	List competenceListFunction (){
-		List competenceList = List();
-		competenceList.add(myCompetence_1);
-		competenceList.add(myCompetence_2);
-		competenceList.add(myCompetence_3);
-		competenceList.add(myCompetence_4);
-		competenceList.add(myCompetence_5);
-		return competenceList;
-	}
+    List competenceListFunction() {
+      List competenceList = List();
+      competenceList.add(myCompetence_1);
+      competenceList.add(myCompetence_2);
+      competenceList.add(myCompetence_3);
+      competenceList.add(myCompetence_4);
+      competenceList.add(myCompetence_5);
+      return competenceList;
+    }
 
     final competences = new ConfigurableExpansionTile(
       headerExpanded: Flexible(
@@ -407,18 +406,26 @@ class _InscriptionViewState extends State<InscriptionView> {
           ),
         ),
       ),
-      children: [ new MultiSelectWidget(titleMultiSelect: 'Ajouter vos compétences', textFieldName: 'name', textFieldValue: 'value', objectList: competenceListFunction(), selectedvalues: selectedCompetences,)],
+      children: [
+        new MultiSelectWidget(
+          titleMultiSelect: 'Ajouter vos compétences',
+          textFieldName: 'name',
+          textFieldValue: 'value',
+          objectList: competenceListFunction(),
+          selectedvalues: selectedCompetences,
+        )
+      ],
     );
 
-	List materielListFunction (){
-		List materielList = List();
-		materielList.add(myMateriel_1);
-		materielList.add(myMateriel_2);
-		materielList.add(myMateriel_3);
-		materielList.add(myMateriel_4);
-		materielList.add(myMateriel_5);
-		return materielList;
-	}
+    List materielListFunction() {
+      List materielList = List();
+      materielList.add(myMateriel_1);
+      materielList.add(myMateriel_2);
+      materielList.add(myMateriel_3);
+      materielList.add(myMateriel_4);
+      materielList.add(myMateriel_5);
+      return materielList;
+    }
 
     final materiel = new ConfigurableExpansionTile(
       headerExpanded: Flexible(
@@ -450,13 +457,20 @@ class _InscriptionViewState extends State<InscriptionView> {
                 ),
               ),
               TextSpan(
-				  style: TextStyle(color: Colors.purple),
-                  text: 'Matériel'),
+                  style: TextStyle(color: Colors.purple), text: 'Matériel'),
             ],
           ),
         ),
       ),
-	  children: [ new MultiSelectWidget(titleMultiSelect: 'Ajouter un matériel', textFieldName: 'name', textFieldValue: 'value', objectList: materielListFunction(), selectedvalues: selectedMateriels,)],
+      children: [
+        new MultiSelectWidget(
+          titleMultiSelect: 'Ajouter un matériel',
+          textFieldName: 'name',
+          textFieldValue: 'value',
+          objectList: materielListFunction(),
+          selectedvalues: selectedMateriels,
+        )
+      ],
     );
 
     final checkbox = new Container(
@@ -522,10 +536,13 @@ class _InscriptionViewState extends State<InscriptionView> {
 
     final validationInscription = FlatButton(
         onPressed: () {
-          print(pseudoController.text.toString());
-          print(mailController.text.toString());
-          print(mdpController.text.toString());
-          print(confirmationmdpController.text.toString());
+          User nouvelUser = User(pseudo:pseudoController.text.toString(),
+          email:mailController.text.toString(),
+          password: mdpController.text.toString(),
+          //TODO : Formatter le String en Date
+          dateNaissance: zoneGeographiqueController.text.toString());
+
+
           print(nomController.text.toString());
           print(prenomController.text.toString());
           print(zoneGeographiqueController.text.toString());
@@ -562,7 +579,7 @@ class _InscriptionViewState extends State<InscriptionView> {
           competences,
           separator,
           SizedBox(height: 5),
-		  Theme(data: ThemeData(primaryColor: Colors.purple), child: materiel),
+          Theme(data: ThemeData(primaryColor: Colors.purple), child: materiel),
           SizedBox(height: 22),
           checkbox,
           SizedBox(height: 22),

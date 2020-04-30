@@ -6,6 +6,8 @@ class User{
   DateTime dateNaissance;
 
   InformationsFacultativesUser infosFacultatives;
+
+  User({this.pseudo, this.email, this.password, this.dateNaissance});
   
 }
   
