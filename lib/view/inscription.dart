@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:idea/bloc/inscription/inscription_bloc.dart';
 import 'package:flutter_multiselect/flutter_multiselect.dart';
 import 'package:idea/model/user.dart';
+import 'package:idea/tools/dateParser.dart';
 import 'package:idea/widget/multiSelect.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
@@ -536,17 +537,23 @@ class _InscriptionViewState extends State<InscriptionView> {
 
     final validationInscription = FlatButton(
         onPressed: () {
-          User nouvelUser = User(pseudo:pseudoController.text.toString(),
-          email:mailController.text.toString(),
-          password: mdpController.text.toString(),
-          //TODO : Formatter le String en Date
-          dateNaissance: zoneGeographiqueController.text.toString());
+          //FIXME : Je pense qu'il faudrait metre ça dans un autre fichier c'est pas dans la vue qu'i lfaut gérer
+          User nouvelUser = User(
+              pseudo: pseudoController.text.toString(),
+              email: mailController.text.toString(),
+              password: mdpController.text.toString(),
+              dateNaissance: DateParser.parseStringToDateTime(
+                  zoneGeographiqueController.text.toString()),
+              infosFacultatives: InformationsFacultativesUser(
+                  nom: nomController.text.toString(),
+                  prenom: prenomController.text.toString(),
+                  zoneGeographique:
+                      zoneGeographiqueController.text.toString()));
 
-
-          print(nomController.text.toString());
-          print(prenomController.text.toString());
-          print(zoneGeographiqueController.text.toString());
-          print(dateNaissanceController.text.toString());
+          // print(nomController.text.toString());
+          // print(prenomController.text.toString());
+          // print(zoneGeographiqueController.text.toString());
+          // print(dateNaissanceController.text.toString());
           print(selectedCompetences);
           print(selectedMateriels);
           print("CGU : ");
