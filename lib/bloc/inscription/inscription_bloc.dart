@@ -20,7 +20,7 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
         User user = (event as AddNewUserEvent).newUser;
 
         //Si il manque des informations, on balance une erreur
-        if (user.pseudo.isEmpty | user.email.isEmpty |user.password.isEmpty){
+        if (user.infosOblig.pseudo.isEmpty | user.infosOblig.email.isEmpty |user.infosOblig.password.isEmpty){
           yield ErrorWhenAddingState();
         }
         //Si c'est bon, on yield le AddingUser, puis on ajoute l'user dans le BD, puis on yield le UserAdded

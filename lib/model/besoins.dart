@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-abstract class Besoin extends Equatable {
+abstract class Besoin {
   String nom;
   int nombreUtilise;
 
@@ -9,20 +7,23 @@ abstract class Besoin extends Equatable {
   void incrNombreUtilise() => this.nombreUtilise++;
 }
 
-class Competence extends Besoin{
-  //FIXME : Ici ça va pas le constructeur
-  Competence(nom, nombreUtilise) : super();
+class Competence extends Besoin {
+  Competence.avecNbUtilis({String nom, int nombreUtilise})
+      : super(nom: nom, nombreUtilise: nombreUtilise);
 
-  @override
-  List<Object> get props => [this.nom, this.nombreUtilise];
+  Competence({String nom}) : super(nom: nom, nombreUtilise: 0);
 }
 
-class Materiel extends Besoin{
-  @override
-  List<Object> get props => [this.nom, this.nombreUtilise];
+class Materiel extends Besoin {
+  Materiel.avecNbUtilis(String nom, int nombreUtilise)
+      : super(nom: nom, nombreUtilise: nombreUtilise);
+
+  Materiel({String nom}) : super(nom: nom, nombreUtilise: 0);
 }
 
-class Contact extends Besoin{
-  @override
-  List<Object> get props => [this.nom, this.nombreUtilise];
+class Contact extends Besoin {
+  Contact.avecNbUtilis(String nom, int nombreUtilise)
+      : super(nom: nom, nombreUtilise: nombreUtilise);
+
+  Contact({String nom}) : super(nom: nom, nombreUtilise: 0);
 }
