@@ -5,13 +5,15 @@ import 'package:idea/model/besoins.dart';
 class User {
   final InformationsObligatoiresUser infosOblig;
 
-  List<Competence> competences;
+  //Il s'agit de la liste des Besoin que l'utilsateur est capable de combler
+  //Sera surement à découper dans plusieurs Listes quand nécessaire
+  List<Besoin> besoinsPossibles = List<Besoin>();
 
   final InformationsFacultativesUser infosFacultatives;
 
   User({@required this.infosOblig, this.infosFacultatives});
 
-  //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LES COMPETENCES !!
+  //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LA LIST BESOIN !!
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
