@@ -20,20 +20,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> mapEventToState(
     ProfileEvent event,
   ) async* {
-    yield LoadingProfile();
     
-    await getUserFromDB();
+    //User user = await getUserFromDB();
 
     switch (event.runtimeType) {
       case DisplayIdeas:
+      yield DisplayingProfileIdeas((event as DisplayIdeas).user);
         break;
       case DisplayInfos:
+      yield DisplayingProfileInfos((event as DisplayInfos).user);
         break;
       case DisplaySum:
+      yield DisplayingProfileSum((event as DisplaySum).user);
         break;
       case DisplayResources:
+      yield DisplayingProfileResources((event as DisplayResources).user);
         break;
       default:
+        yield ProfileError("An error occured.");
     }
   }
 }
