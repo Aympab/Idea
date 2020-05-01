@@ -4,39 +4,53 @@ abstract class ProfileState extends Equatable {
   const ProfileState();
 }
 
-class DisplayProfileInfos extends ProfileState {
+class DisplayingProfileInfos extends ProfileState {
   final User user;
 
-  DisplayProfileInfos(this.user);  
+  DisplayingProfileInfos(this.user);  
 
   @override
   List<Object> get props => [this.user];
 }
 
-class DisplayProfileIdeas extends ProfileState {
+class DisplayingProfileIdeas extends ProfileState {
   final User user;
 
-  DisplayProfileIdeas(this.user);  
+  DisplayingProfileIdeas(this.user);  
 
   @override
   List<Object> get props => [this.user];
 }
 
-class DisplayProfileSum extends ProfileState {
+class DisplayingProfileSum extends ProfileState {
   final User user;
 
-  DisplayProfileSum(this.user);  
+  DisplayingProfileSum(this.user);  
 
   @override
   List<Object> get props => [this.user];
 }
 
-class DisplayProfileResources extends ProfileState {
+class DisplayingProfileResources extends ProfileState {
   final User user;
 
-  DisplayProfileResources(this.user);  
+  DisplayingProfileResources(this.user);  
 
   @override
   List<Object> get props => [this.user];
 }
 
+class ProfileError extends ProfileState{
+  final String errorMessage;
+  final Icon errorIcon = Icons.error as Icon;
+
+  ProfileError(this.errorMessage);
+
+  @override
+  List<Object> get props => [this.errorIcon, this.errorMessage];
+}
+
+class LoadingProfile extends ProfileState{
+  @override
+  List<Object> get props => [];
+}
