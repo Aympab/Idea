@@ -15,6 +15,37 @@ class InscriptionBloc extends Bloc<InscriptionEvent, InscriptionState> {
   Stream<InscriptionState> mapEventToState(
     InscriptionEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    switch(event.runtimeType){
+      case AddNewUserEvent :
+        User user = (event as AddNewUserEvent).newUser;
+
+        //Si il manque des informations, on balance une erreur
+        if (user.infosOblig.pseudo.isEmpty | user.infosOblig.email.isEmpty |user.infosOblig.password.isEmpty){
+          yield ErrorWhenAddingState();
+        }
+        //Si c'est bon, on yield le AddingUser, puis on ajoute l'user dans le BD, puis on yield le UserAdded
+        else{
+          yield AddingNewUserState();
+
+          try{
+            await addUserToDB(user);
+            yield UserAddedState();
+          }catch(e){
+            yield ErrorWhenAddingState();
+          }
+        }    
+      break;
+
+      case CancelAddUserEvent :
+        yield CancellingState();
+      break;
+    }
+
+
   }
+}
+
+
+Future<void> addUserToDB(User user) async{
+  //TODO : Implement
 }
