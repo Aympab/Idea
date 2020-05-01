@@ -6,37 +6,21 @@ abstract class ProfileEvent extends Equatable {
 
 //Un event pour chaque clic sur une page de l'onglet
 class ClickInfos extends ProfileEvent{
-  final User user;  
-
-  ClickInfos(this.user);
-
   @override
-  List<Object> get props => [this.user];
+  List<Object> get props => [];
 }
 
 class ClickIdeas extends ProfileEvent{
-  final User user;  
-
-  ClickIdeas(this.user);
-
   @override
-  List<Object> get props => [this.user];
+  List<Object> get props => [];
 }
 
 class ClickSum extends ProfileEvent{
-  final User user;  
-
-  ClickSum(this.user);
-
   @override
-  List<Object> get props => [this.user];
+  List<Object> get props => [];
 }
 
 class ClickResources extends ProfileEvent{
-  final User user;  
-
-  ClickResources(this.user);
-
   @override
-  List<Object> get props => [this.user];
+  List<Object> get props => [];
 }
