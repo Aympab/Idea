@@ -12,16 +12,15 @@ class ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: <Widget>[
-          ProfileHeader(),
-          ProfileTabs(),
-        ],
+      child: Scaffold(
+        backgroundColor: Colors.amber[100],
+        body: Column(
+          children: <Widget>[
+            ProfileHeader(),
+            ProfileTabs(),
+          ],
+        ),
       ),
     );
   }
 }
-
-
-
-

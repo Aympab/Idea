@@ -8,6 +8,6 @@ class ProfileHeader extends StatefulWidget {
 class _ProfileHeaderState extends State<ProfileHeader> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("Hey"),);
+    return Text("Hey");
   }
 }
