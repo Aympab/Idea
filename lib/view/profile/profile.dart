@@ -16,8 +16,6 @@ class ProfileView extends StatefulWidget {
 //On a besoin du Mixin pour pouvoir gérer les scrolls multiples
 class ProfileViewState extends State<ProfileView>
     with TickerProviderStateMixin {
-  ProfileTabs _profileTabs;
-
   TabController _tabController;
   ScrollController _scrollController;
 
@@ -25,8 +23,8 @@ class ProfileViewState extends State<ProfileView>
   void initState() {
     super.initState();
     //On instancie ProfileTabs pour être sûr d'avoir la longueur des onglets
-    _profileTabs = ProfileTabs();
-    _tabController = TabController(vsync: this, length: ProfileTabs.tabs.length);
+    _tabController =
+        TabController(vsync: this, length: ProfileTabs.tabs.length);
     _scrollController = new ScrollController();
   }
 
@@ -40,15 +38,14 @@ class ProfileViewState extends State<ProfileView>
 
   @override
   Widget build(BuildContext context) {
-    _profileTabs = ProfileTabs();
-
     return Scaffold(
       body: NestedScrollView(
-          controller: _scrollController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [_buildAppBar()];
-          },
-          body: _profileTabs),
+        controller: _scrollController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [_buildAppBar()];
+        },
+        body: ProfileTabs(),
+      ),
     );
   }
 
@@ -59,7 +56,6 @@ class ProfileViewState extends State<ProfileView>
         pinned: true,
         snap: false,
         expandedHeight: 300.0,
-        flexibleSpace: ProfileHeader() 
-        );
+        flexibleSpace: ProfileHeader());
   }
 }
