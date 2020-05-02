@@ -22,7 +22,7 @@ class ProfileViewState extends State<ProfileView>
   @override
   void initState() {
     super.initState();
-    //On instancie ProfileTabs pour être sûr d'avoir la longueur des onglets
+    //On utilise des controllers pour gérer les différents scrolls
     _tabController =
         TabController(vsync: this, length: ProfileTabs.tabs.length);
     _scrollController = new ScrollController();
@@ -52,6 +52,7 @@ class ProfileViewState extends State<ProfileView>
   //La partie en tête
   Widget _buildAppBar() {
     return const SliverAppBar(
+        backgroundColor: Colors.amber,
         floating: false,
         pinned: true,
         snap: false,

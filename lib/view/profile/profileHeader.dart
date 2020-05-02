@@ -16,7 +16,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       title: Text("User 404"),
       background: Center(
         child: CircularProfileAvatar(
-          "User404",
+          "bolosse",
           child: Icon(Icons.accessibility_new),
         ),
       ),

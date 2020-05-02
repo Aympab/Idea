@@ -18,28 +18,24 @@ class ProfileTabs extends StatefulWidget {
         text: 'Infos',
         icon: Icon(
           Icons.info,
-          color: Colors.amber,
         ),
       ),
       Tab(
         text: 'Idées',
         icon: Icon(
           Icons.lightbulb_outline,
-          color: Colors.amber,
         ),
       ),
       Tab(
         text: 'Récap',
         icon: Icon(
           Icons.graphic_eq,
-          color: Colors.amber,
         ),
       ),
       Tab(
-        text: 'Ressources',
+        text: 'Skills',
         icon: Icon(
           Icons.blur_on,
-          color: Colors.amber,
         ),
       ),
     ];
@@ -52,27 +48,31 @@ class _ProfileTabsState extends State<ProfileTabs> {
     return DefaultTabController(
       length: ProfileTabs.tabs.length,
       child: Scaffold(
-        appBar: AppBar(
-          bottom: TabBar(
-            tabs: ProfileTabs.tabs,
-          ),
-        ),
+        appBar: new PreferredSize(
+            child: new Container(
+              color: Colors.amberAccent,
+              child: Column(
+                children: <Widget>[
+                  new Expanded(child: new Container()),
+                  new TabBar(tabs: ProfileTabs.tabs)
+                ],
+              ),
+            ),
+            preferredSize: Size.fromHeight(kToolbarHeight)),
+        //  AppBar(
+        //   elevation: 15.0,
+        //   titleSpacing: 0.0,
+        //   bottom: TabBar(
+        //     tabs: ProfileTabs.tabs,
+        //   ),
+        // ),
         body: TabBarView(
           children: <Widget>[
             InfosTab(),
             IdeasTab(),
             SummaryTab(),
-            ResourcesTab(),          
+            ResourcesTab(),
           ],
-          // ProfileTabs.tabs.map((Tab tab) {
-          //   final String label = tab.text.toLowerCase();
-          //   return Center(
-          //     child: Text(
-          //       'This is the $label tab',
-          //       style: const TextStyle(fontSize: 36),
-          //     ),
-          //   );
-          // }).toList(),
         ),
       ),
     );
