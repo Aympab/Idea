@@ -1,15 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:idea/model/besoins.dart';
+import 'package:idea/model/userProfile.dart';
 
 class User {
   final InformationsObligatoiresUser infosOblig;
+  final InformationsFacultativesUser infosFacultatives;
 
   //Il s'agit de la liste des Besoin que l'utilsateur est capable de combler
   //Sera surement à découper dans plusieurs Listes quand nécessaire
   List<Besoin> besoinsPossibles = List<Besoin>();
 
-  final InformationsFacultativesUser infosFacultatives;
+  ProfileInformation profileInfos = ProfileInformation();
 
   User({@required this.infosOblig, this.infosFacultatives});
 
@@ -55,3 +57,4 @@ class InformationsFacultativesUser extends Equatable {
   @override
   List<Object> get props => [this.prenom, this.nom, this.zoneGeographique];
 }
+
