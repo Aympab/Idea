@@ -4,13 +4,24 @@ import 'package:idea/model/user.dart';
 import 'package:idea/view/profile/profileHeader.dart';
 import 'package:idea/view/profile/profileTabs.dart';
 
-class ProfileView extends StatefulWidget {
+class InheritedProfile extends InheritedWidget {
   final User user;
+  
+  InheritedProfile({@required this.user, Widget child}) : super(child: child);
 
-  const ProfileView({Key key, this.user}) : super(key: key);
+  static InheritedProfile of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<InheritedProfile>();
+
+  @override
+  bool updateShouldNotify(InheritedProfile oldWidget) => true;
+}
+
+class ProfileView extends StatefulWidget {
+  const ProfileView({Key key}) : super(key: key);
 
   @override
   ProfileViewState createState() => ProfileViewState();
+
 }
 
 //On a besoin du Mixin pour pouvoir gérer les scrolls multiples
