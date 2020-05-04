@@ -29,6 +29,8 @@ dependencies:
   equatable: ^1.1.1
   flutter_bloc: ^3.2.0
   bordered_text: ^1.0.0
+  custom_radio: ^0.1.2
+  custom_radio_button: ^0.0.3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -38,7 +40,6 @@ dev_dependencies:
     sdk: flutter
 
   
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
