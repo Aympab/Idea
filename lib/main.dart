@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:idea/view/profile/profileMain.dart';
+import 'package:idea/view/connexion.dart';
 
 import 'launchingAppTest.dart';
 
@@ -12,10 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: darkTheme,
       title: 'Idea',
-      home: InheritedProfile(
-        user: TestMain.user,
-        child: ProfileView(),
-      ),
+      home: ConnexionView(),
+      // home: InheritedProfile(
+      //   user: TestMain.user,
+      //   child: ProfileView(),
+      // ),
     );
   }
 }

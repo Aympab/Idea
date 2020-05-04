@@ -2,9 +2,6 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:idea/bloc/inscription/inscription_bloc.dart';
-import 'package:flutter_multiselect/flutter_multiselect.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/tools/dateParser.dart';
 import 'package:idea/widget/multiSelect.dart';
@@ -103,19 +100,8 @@ class _InscriptionViewState extends State<InscriptionView> {
         padding: EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
         //Ici on détermine quel méthode de build on va appeler en fonctoin du state
-        child: BlocListener<InscriptionBloc, InscriptionState>(
-          //Le listener permet d'ajouter des élements graphiques (on doit wrap with new widget le BlocCuilder)
-          //Le listener return void
-          //Le builder construit L'UI et est lancé plusieurs fois alros que le listener ne se lance qu'une fois pas changement d'état
-          listener: (context, state) {},
-          child: BlocBuilder<InscriptionBloc, InscriptionState>(
-            builder: (BuildContext context, InscriptionState state) {
-              if (state is InscriptionInitial) {
-                return buildInitialInput();
-              }
-            },
-          ),
-        ),
+        child: buildInitialInput(),
+            
       ),
     );
   }
