@@ -74,7 +74,7 @@ class ProfileViewState extends State<ProfileView>
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.amberAccent, Colors.blue],
+            colors: [Colors.amberAccent, Colors.green[100]],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
           ),

@@ -5,12 +5,22 @@ import 'package:flutter/material.dart';
 //Le level du user, peut faire des classes filles pour avoir un propre style
 class Level {
   final int level;
-  final TextStyle style = TextStyle(color: Colors.red, fontSize: 30);
+  final TextStyle style =
+      TextStyle(color: Colors.red, fontSize: 40, fontWeight: FontWeight.bold);
 
   Level(this.level);
 
-  //TODO : Implement multiple with different style depending on the level (in the constructor, if level > 12, etc)
+  //TODO : Implement different style depending on the level (in the constructor, if level > 12, etc)
   //Level(this.level, this.style);
+  BorderedText toPrettyText() {
+    return BorderedText(
+      strokeWidth: 2,
+      child: Text(
+        this.toString(),
+        style: style,
+      ),
+    );
+  }
 
   //Pour récupérer juste le level en format string dans les affichage
   @override
@@ -29,7 +39,7 @@ abstract class UserTitle {
   UserTitle(this.title, this.style);
 
   //Return a pretty text with outile using the bordered_text package
-  BorderedText toPrettyText();
+  Widget toPrettyText();
 }
 
 //Les titres par défaut
@@ -39,9 +49,10 @@ class DefaultTitle extends UserTitle {
   //En gras en vert fluo
   static TextStyle _defaultStyle = new TextStyle(
     color: Colors.green,
-    fontWeight: FontWeight.bold,
+    //fontWeight: FontWeight.bold,
     fontSize: UserTitle.fontSize,
-    fontFamily: 'IndieFlower'
+    fontFamily: 'Jost',
+    fontWeight: FontWeight.bold,
   );
 
   @override
@@ -50,14 +61,10 @@ class DefaultTitle extends UserTitle {
   }
 
   @override
-  BorderedText toPrettyText() {
-    return BorderedText(
-      strokeWidth: 3.0,
-      strokeColor: Colors.black,
-      child: Text(
-        this.toString(),
-        style: _defaultStyle,
-      ),
+  Widget toPrettyText() {
+    return Text(
+      this.toString(),
+      style: _defaultStyle,
     );
   }
 }

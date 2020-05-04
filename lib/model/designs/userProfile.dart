@@ -24,6 +24,16 @@ class ProfileInformation {
     this.ideasHelped,
     this.summary,
   });
+
+  ImageProvider getProfilePicAsImageProvider() {
+    //TODO : Transform the Image profilePic as an ImageProvider
+    return NetworkImage('https://mgl.skyrock.net/big.138267340.jpg?77868592');
+  }
+
+  String getProfilePicPath() {
+    //TODO : adapt with method get...AsImageProvider
+    return 'https://mgl.skyrock.net/big.138267340.jpg?77868592';
+  }
 }
 
 class Success {

@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
-import 'package:idea/view/profile/profileMain.dart';
 
 class ProfileHeader extends StatefulWidget {
   const ProfileHeader({@required this.displayedUser});
@@ -19,9 +16,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   @override
   Widget build(BuildContext context) {
     return FlexibleSpaceBar(
-        centerTitle: true,
-        title: Text(widget.displayedUser.infosOblig.pseudo),
-        background: _buildMainBackground());
+      centerTitle: true,
+      title: Text(widget.displayedUser.infosOblig.pseudo),
+      background: _buildMainBackground(),
+    );
   }
 
   Widget _buildMainBackground() {
@@ -29,15 +27,26 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       child: Center(
         child: Column(
           children: <Widget>[
+            SizedBox(
+              height: 30,
+            ),
             Expanded(
               flex: 10,
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: _buildPictureTopLeft(),
+                    flex: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: _buildPictureTopLeft(),
+                    ),
                   ),
                   Expanded(
-                    child: _buildInfosTopRight(),
+                    flex: 7,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 30),
+                      child: _buildInfosTopRight(),
+                    ),
                   ),
                 ],
               ),
@@ -55,14 +64,26 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   }
 
   Widget _buildPictureTopLeft() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0.0),
-        child: CircleAvatar(
-          backgroundImage: getImage(widget.displayedUser),
-          radius: 70.0,
-        ),
+    return CircularProfileAvatar(
+      widget.displayedUser.profileInfos.getProfilePicPath(),
+      errorWidget: (context, url, error) => Container(
+        child: Icon(Icons.error),
       ),
+      placeHolder: (context, url) => Container(
+        width: 50,
+        height: 50,
+        child: CircularProgressIndicator(),
+      ),
+      radius: 90,
+      backgroundColor: Colors.transparent,
+      borderWidth: 2,
+      borderColor: Colors.blueGrey,
+      elevation: 1.0,
+      onTap: () {
+        //TODO Implement onTap
+        print('onTap Profile pic');
+      },
+      cacheImage: true,
     );
   }
 
@@ -71,23 +92,34 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(
-          height: 50,
+          height: 30,
         ),
+        Expanded(child: widget.displayedUser.profileInfos.title.toPrettyText()),
         Expanded(
-          child: widget.displayedUser.profileInfos.title.toPrettyText()
-        ),
-        Expanded(
-          child: Text(
-            widget.displayedUser.profileInfos.level.toString(),
-            style: widget.displayedUser.profileInfos.level.style,
-          ),
-        )
+            child: Row(
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              width: 20,
+            ),
+            Text(
+              "Niveau",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17),
+            ),
+            SizedBox(width: 15),
+            widget.displayedUser.profileInfos.level.toPrettyText(),
+          ],
+        ))
       ],
     );
   }
 }
 
-//TODO : Umplement getImage, should returns the profile pic of a given user
+//TODO : Implement getImage, should return the profile pic of a given user
 ImageProvider getImage(User user) {
-  return NetworkImage('https://mgl.skyrock.net/big.138267340.jpg?77868592');
+  return user.profileInfos.getProfilePicAsImageProvider();
 }

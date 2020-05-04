@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:idea/model/user.dart';
-import 'package:idea/view/profile/profileMain.dart';
 
 
 part 'profileheader_event.dart';
@@ -22,7 +21,6 @@ class ProfileHeaderBloc extends Bloc<ProfileHeaderEvent, ProfileHeaderState> {
   Stream<ProfileHeaderState> mapEventToState(
     ProfileHeaderEvent event,
   ) async* {
-    // TODO: implement mapEventToState
     if(event is NotConnectedProfile){
       yield ProfileHeaderInitial(this.user);
     }
