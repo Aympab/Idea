@@ -2,6 +2,8 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:idea/model/designs/userProfile.dart';
+import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/tools/dateParser.dart';
 import 'package:idea/widget/multiSelect.dart';
@@ -101,7 +103,6 @@ class _InscriptionViewState extends State<InscriptionView> {
         alignment: Alignment.center,
         //Ici on détermine quel méthode de build on va appeler en fonctoin du state
         child: buildInitialInput(),
-            
       ),
     );
   }
@@ -523,6 +524,8 @@ class _InscriptionViewState extends State<InscriptionView> {
 
     final validationInscription = FlatButton(
         onPressed: () {
+          //FIXME : Pour l'instant envoie jsuter vers une page profil avec les infos entrées
+          
           //Création d'un utilisateur avec les data que l'on a dans la page
           User nouvelUser = User(
             infosOblig: InformationsObligatoiresUser(
@@ -538,9 +541,13 @@ class _InscriptionViewState extends State<InscriptionView> {
               prenom: prenomController.text.toString(),
               zoneGeographique: zoneGeographiqueController.text.toString(),
             ),
+            //FIXME : ON envoie les infos comme ça, il faudrait envoyer l'image
+            profileInfos: ProfileInformation(
+              title: DefaultTitle('Idéateur novice'),
+              level: Level(43),
+            ),
           );
 
-          
           print(selectedCompetences);
           print(selectedMateriels);
           // print("CGU : ");
@@ -548,6 +555,9 @@ class _InscriptionViewState extends State<InscriptionView> {
           // print("NewsLetter : ");
           // print(_valueCheckboxNewsLetter);
           print('Nouvel user $nouvelUser');
+
+          Navigator.of(context)
+              .pushNamed('/userProfile', arguments: nouvelUser);
         },
         padding: EdgeInsets.all(0.0),
         child: Image.asset('assets/confirmInscriptionButton.png'));

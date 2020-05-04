@@ -15,12 +15,18 @@ class _ConnexionViewState extends State<ConnexionView> {
 
   @override
   Widget build(BuildContext context) {
-    FlatButton connexionButton = buildFlatButton("Connexion");
+    FlatButton connexionButton = buildFlatButton("Connexion", onPressed: (){
+      Navigator.of(context).pushNamed('/authentication');
+    });
 
     FlatButton continueWithoutConnexionButton =
-        buildFlatButton("Continuer \nsans \ns'inscrire");
+        buildFlatButton("Continuer \nsans \ns'inscrire", onPressed: () {
+      Navigator.of(context).pushNamed('/flux');
+    });
 
-    FlatButton inscriptionButton = buildFlatButton("Inscription");
+    FlatButton inscriptionButton = buildFlatButton("Inscription", onPressed: (){
+      Navigator.of(context).pushNamed('/inscription');
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -68,11 +74,11 @@ class _ConnexionViewState extends State<ConnexionView> {
     );
   }
 
-  FlatButton buildFlatButton(String text) {
+  FlatButton buildFlatButton(String text, {Function onPressed}) {
     return FlatButton(
       color: Colors.yellow,
       // padding: EdgeInsets.fromLTRB(40, 25, 40, 25),
-      onPressed: () {},
+      onPressed: onPressed,
       child: SizedBox(
         height: 100,
         width: 100,

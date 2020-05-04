@@ -14,7 +14,7 @@ class TestMain {
     ),
     profileInfos: ProfileInformation(
       title: DefaultTitle('Idéateur novice'),
-      level: Level(11),
+      level: Level(43),
     ),
   );
 }

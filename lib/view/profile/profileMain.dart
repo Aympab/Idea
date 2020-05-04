@@ -10,7 +10,7 @@ import 'package:idea/view/profile/bloc/profileheader_bloc.dart';
 class InheritedProfile extends InheritedWidget {
   final User user;
 
-  InheritedProfile({@required this.user, Widget child}) : super(child: child);
+  InheritedProfile({@required this.user}) : super(child: ProfileView());
 
   static InheritedProfile of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<InheritedProfile>();
