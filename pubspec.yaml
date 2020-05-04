@@ -75,7 +75,11 @@ flutter:
     - family: IndieFlower
       fonts:
         - asset: fonts/IndieFlower-Regular.ttf
-
+    - family: Jost
+      fonts:
+        - asset: fonts/Jost/Jost-ExtraLightItalic.ttf
+        - asset: fonts/Jost/Jost-Regular.ttf
+        - asset: fonts/Jost/Jost-Bold.ttf
         
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
