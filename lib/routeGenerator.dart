@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:idea/view/connexion.dart';
 import 'package:idea/view/inscription.dart';
 import 'package:idea/view/profile/profileMain.dart';
-import 'main.dart';
 import 'model/user.dart';
 
 class RouteGenerator {

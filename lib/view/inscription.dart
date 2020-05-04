@@ -6,11 +6,14 @@ import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/tools/dateParser.dart';
+import 'package:idea/tools/themes.dart';
 import 'package:idea/widget/multiSelect.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 import 'dart:io';
 import 'dart:async';
+
+import 'package:provider/provider.dart';
 
 class InscriptionView extends StatefulWidget {
   InscriptionView({Key key}) : super(key: key);
@@ -95,7 +98,9 @@ class _InscriptionViewState extends State<InscriptionView> {
         ),
         leading: IconButton(
           icon: Image.asset('assets/logo.png'),
-          onPressed: () {},
+          onPressed: () {
+          Provider.of<ThemeModel>(context, listen: false).toggleTheme();
+        },
         ),
       ),
       body: Container(
