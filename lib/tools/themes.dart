@@ -4,31 +4,33 @@ enum ThemeType { Light, Dark }
 
 class ThemeModel extends ChangeNotifier {
   ThemeData currentTheme = darkTheme;
-  ThemeType _themeType = ThemeType.Dark;
+  ThemeType themeType = ThemeType.Dark;
 
   toggleTheme() {
-    if (_themeType == ThemeType.Dark) {
+    if (themeType == ThemeType.Dark) {
       currentTheme = lightTheme;
-      _themeType = ThemeType.Light;
+      themeType = ThemeType.Light;
       return notifyListeners();
     }
 
-    if (_themeType == ThemeType.Light) {
+    if (themeType == ThemeType.Light) {
       currentTheme = darkTheme;
-      _themeType = ThemeType.Dark;
+      themeType = ThemeType.Dark;
       return notifyListeners();
     }
   }
 }
 
+
 ThemeData darkTheme = ThemeData.dark().copyWith(
-    primaryColor: Color(0xff1f655d),
-    accentColor: Color(0xff40bf7a),
-    textTheme: TextTheme(
-        title: TextStyle(color: Color(0xff40bf7a)),
-        subtitle: TextStyle(color: Colors.white),
-        subhead: TextStyle(color: Color(0xff40bf7a))),
-    appBarTheme: AppBarTheme(color: Color(0xff1f655d)));
+  primaryColor: Color(0xff1f655d),
+  accentColor: Color(0xff40bf7a),
+  textTheme: TextTheme(
+      title: TextStyle(color: Color(0xff40bf7a)),
+      subtitle: TextStyle(color: Colors.white),
+      subhead: TextStyle(color: Color(0xff40bf7a))),
+  appBarTheme: AppBarTheme(color: Color(0xff1f655d)),
+);
 
 ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: Color(0xfff5f5f5),
@@ -40,3 +42,17 @@ ThemeData lightTheme = ThemeData.light().copyWith(
     appBarTheme: AppBarTheme(
         color: Color(0xff1f655d),
         actionsIconTheme: IconThemeData(color: Colors.white)));
+
+
+//TODO : Design themes
+TabBarTheme tabBarTheme = TabBarTheme(
+  labelColor: Colors.blue[600],
+  unselectedLabelColor: Colors.blue[900],
+  indicator: UnderlineTabIndicator(
+    borderSide: BorderSide(
+      style: BorderStyle.solid,
+      width: 5.0,
+      color: Colors.blue[600],
+    ),
+  ),
+);

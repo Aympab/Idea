@@ -2,6 +2,8 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
+import 'package:idea/tools/themes.dart';
+import 'package:provider/provider.dart';
 
 class ProfileHeader extends StatefulWidget {
   const ProfileHeader({@required this.displayedUser});
@@ -15,11 +17,20 @@ class ProfileHeader extends StatefulWidget {
 class _ProfileHeaderState extends State<ProfileHeader> {
   @override
   Widget build(BuildContext context) {
-    return FlexibleSpaceBar(
-      centerTitle: true,
-      title: Text(widget.displayedUser.infosOblig.pseudo),
-      background: _buildMainBackground(),
-    );
+    return Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            //Different backgroundColor depending on what kind of theme
+            colors: (Provider.of<ThemeModel>(context).themeType == ThemeType.Dark) ? [Colors.amberAccent, Colors.green[100]] : [Colors.red, Colors.green[100]] ,
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          ),
+        ),
+        child: FlexibleSpaceBar(
+          centerTitle: true,
+          title: Text(widget.displayedUser.infosOblig.pseudo),
+          background: _buildMainBackground(),
+        ));
   }
 
   Widget _buildMainBackground() {
