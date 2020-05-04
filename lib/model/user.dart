@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:idea/model/besoins.dart';
-import 'package:idea/model/userProfile.dart';
+
+import 'designs/userProfile.dart';
+
 
 class User {
   final InformationsObligatoiresUser infosOblig;
@@ -33,6 +35,8 @@ class User {
   }
 }
 
+
+
 class InformationsObligatoiresUser extends Equatable {
   final String pseudo;
   final String email;
@@ -57,4 +61,3 @@ class InformationsFacultativesUser extends Equatable {
   @override
   List<Object> get props => [this.prenom, this.nom, this.zoneGeographique];
 }
-

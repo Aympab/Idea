@@ -65,59 +65,76 @@ class ProfileViewState extends State<ProfileView>
   //La partie en tête
   Widget _buildAppBar() {
     return SliverAppBar(
-      backgroundColor: Colors.amber,
+      //backgroundColor: Colors.amber,
       floating: false,
       pinned: true,
       snap: false,
       expandedHeight: 300.0,
       //TODO : Implement BLoC
-      flexibleSpace: ProfileHeader(),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.amberAccent, Colors.blue],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          ),
+        ),
+        child: ProfileHeader(
+          displayedUser: InheritedProfile.of(context).user,
+        ),
+      ),
       // flexibleSpace: BlocProvider(
-      //     create: (context) =>
-      //         ProfileHeaderBloc(InheritedProfile.of(context).user),
-      //     child: BlocListener<ProfileHeaderBloc, ProfileHeaderState>(
-      //       listener: (context, state){
-      //         //Le listener est appelé une seule fois par build
-      //       },
-      //       child: BlocBuilder<ProfileHeaderBloc, ProfileHeaderState>(
-      //         builder: (context, state) {
-      //           //Le builder peut être appelé plusieurs fois par build
-      //           if (state is ProfileHeaderInitial) {
-      //             return buildHeaderInitial(state.userToDisplay);
-      //           } 
-                
-      //         else {
-      //             return buildTest();
-      //           }
-      //         },
-      //       ),
-      //     )),
+      //   create: (context) =>
+      //       ProfileHeaderBloc(InheritedProfile.of(context).user),
+      //   child: BlocBuilder<ProfileHeaderBloc, ProfileHeaderState>(
+      //     builder: (context, state) {
+      //       //Le builder peut être appelé plusieurs fois par build
+      //       if (state is ProfileHeaderInitial) {
+      //         return buildHeaderInitial(state.userToDisplay);
+      //       } else if (state is TestState) {
+      //         return buildTest();
+      //       }
+      //     },
+      //   ),
+      // ),
     );
   }
 }
 
-buildHeaderInitial(User user) {
-  return FlexibleSpaceBar(
-    centerTitle: true,
-    title: Text(user.infosOblig.pseudo),
-    background: Center(
-      child: CircularProfileAvatar(
-        "bolosse",
-        child: Icon(Icons.accessibility_new),
-      ),
-    ),
-  );
-}
+//TODO : C'est pour le BLoC ça faut l'enlever ou le mettre ailleurs
+// buildHeaderInitial(User user) {
+//   return FlexibleSpaceBar(
+//     centerTitle: true,
+//     title: Text(user.infosOblig.pseudo),
+//     background: Center(
+//       child: Column(
+//         children: <Widget>[
+//           CircularProfileAvatar(
+//             "bolosse",
+//             child: Icon(Icons.accessibility_new),
+//           ),
+//           FlatButton(
+//             color: Colors.black,
+//             onPressed: () {
+//               print("Pressed !");
+//             },
+//             child: Text("Go to TestState"),
+//           )
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
-buildTest() {
-  return FlexibleSpaceBar(
-    centerTitle: true,
-    title: Text("c'est un test"),
-    background: Center(
-      child: CircularProfileAvatar(
-        "bolosse",
-        child: Icon(Icons.accessibility_new),
-      ),
-    ),
-  );
-}
+// buildTest() {
+//   return FlexibleSpaceBar(
+//     centerTitle: true,
+//     title: Text("c'est un test"),
+//     background: Center(
+//       child: CircularProfileAvatar(
+//         "bolosse",
+//         child: Icon(Icons.accessibility_new),
+//       ),
+//     ),
+//   );
+// }
