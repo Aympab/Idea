@@ -36,6 +36,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.5"
+  bordered_text:
+    dependency: "direct main"
+    description:
+      name: bordered_text
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   cached_network_image:
     dependency: transitive
     description:

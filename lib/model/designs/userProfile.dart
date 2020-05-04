@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:idea/model/designs/userProfileRelated.dart';
 
-import 'idea.dart';
+import '../idea.dart';
 
 //This class is used in the profile view
 class ProfileInformation {
   final Image profilePic;
-  final String title;
+  
+  UserTitle title;
+  Level level;
+
   List<Success> successes;
   List<Idea> inventions;
   List<Idea> ideasHelped;
@@ -14,6 +18,7 @@ class ProfileInformation {
   ProfileInformation({
     this.profilePic,
     this.title,
+    this.level,
     this.successes,
     this.inventions,
     this.ideasHelped,

@@ -1,13 +1,26 @@
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/view/profile/profileHeader.dart';
 import 'package:idea/view/profile/profileTabs.dart';
+import 'package:idea/view/profile/bloc/profileheader_bloc.dart';
 
-class ProfileView extends StatefulWidget {
+class InheritedProfile extends InheritedWidget {
   final User user;
 
-  const ProfileView({Key key, this.user}) : super(key: key);
+  InheritedProfile({@required this.user, Widget child}) : super(child: child);
+
+  static InheritedProfile of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<InheritedProfile>();
+
+  @override
+  bool updateShouldNotify(InheritedProfile oldWidget) => false;
+}
+
+class ProfileView extends StatefulWidget {
+  const ProfileView({Key key}) : super(key: key);
 
   @override
   ProfileViewState createState() => ProfileViewState();
@@ -51,12 +64,77 @@ class ProfileViewState extends State<ProfileView>
 
   //La partie en tête
   Widget _buildAppBar() {
-    return const SliverAppBar(
-        backgroundColor: Colors.amber,
-        floating: false,
-        pinned: true,
-        snap: false,
-        expandedHeight: 300.0,
-        flexibleSpace: ProfileHeader());
+    return SliverAppBar(
+      //backgroundColor: Colors.amber,
+      floating: false,
+      pinned: true,
+      snap: false,
+      expandedHeight: 300.0,
+      //TODO : Implement BLoC
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.amberAccent, Colors.blue],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          ),
+        ),
+        child: ProfileHeader(
+          displayedUser: InheritedProfile.of(context).user,
+        ),
+      ),
+      // flexibleSpace: BlocProvider(
+      //   create: (context) =>
+      //       ProfileHeaderBloc(InheritedProfile.of(context).user),
+      //   child: BlocBuilder<ProfileHeaderBloc, ProfileHeaderState>(
+      //     builder: (context, state) {
+      //       //Le builder peut être appelé plusieurs fois par build
+      //       if (state is ProfileHeaderInitial) {
+      //         return buildHeaderInitial(state.userToDisplay);
+      //       } else if (state is TestState) {
+      //         return buildTest();
+      //       }
+      //     },
+      //   ),
+      // ),
+    );
   }
 }
+
+//TODO : C'est pour le BLoC ça faut l'enlever ou le mettre ailleurs
+// buildHeaderInitial(User user) {
+//   return FlexibleSpaceBar(
+//     centerTitle: true,
+//     title: Text(user.infosOblig.pseudo),
+//     background: Center(
+//       child: Column(
+//         children: <Widget>[
+//           CircularProfileAvatar(
+//             "bolosse",
+//             child: Icon(Icons.accessibility_new),
+//           ),
+//           FlatButton(
+//             color: Colors.black,
+//             onPressed: () {
+//               print("Pressed !");
+//             },
+//             child: Text("Go to TestState"),
+//           )
+//         ],
+//       ),
+//     ),
+//   );
+// }
+
+// buildTest() {
+//   return FlexibleSpaceBar(
+//     centerTitle: true,
+//     title: Text("c'est un test"),
+//     background: Center(
+//       child: CircularProfileAvatar(
+//         "bolosse",
+//         child: Icon(Icons.accessibility_new),
+//       ),
+//     ),
+//   );
+// }

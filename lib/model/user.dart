@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:idea/model/besoins.dart';
-import 'package:idea/model/userProfile.dart';
+
+import 'designs/userProfile.dart';
+
 
 class User {
   final InformationsObligatoiresUser infosOblig;
@@ -11,9 +13,9 @@ class User {
   //Sera surement à découper dans plusieurs Listes quand nécessaire
   List<Besoin> besoinsPossibles = List<Besoin>();
 
-  ProfileInformation profileInfos = ProfileInformation();
+  final ProfileInformation profileInfos;
 
-  User({@required this.infosOblig, this.infosFacultatives});
+  User({@required this.infosOblig, this.infosFacultatives, this.profileInfos});
 
   //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LA LIST BESOIN !!
   @override
@@ -32,6 +34,8 @@ class User {
     return 'Pseudo : ${infosOblig.pseudo}\r\nMail : ${infosOblig.email}\r\nPassword : ${infosOblig.password}\r\nNaissance : ${infosOblig.dateNaissance}\r\nPrenom : ${infosFacultatives.prenom}\r\nNom : ${infosFacultatives.nom}\r\nZone : ${infosFacultatives.zoneGeographique}';
   }
 }
+
+
 
 class InformationsObligatoiresUser extends Equatable {
   final String pseudo;
@@ -57,4 +61,3 @@ class InformationsFacultativesUser extends Equatable {
   @override
   List<Object> get props => [this.prenom, this.nom, this.zoneGeographique];
 }
-
