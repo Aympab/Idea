@@ -15,8 +15,6 @@ class _ConnexionViewState extends State<ConnexionView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     FlatButton connexionButton = buildFlatButton("Connexion");
 
     FlatButton continueWithoutConnexionButton =
