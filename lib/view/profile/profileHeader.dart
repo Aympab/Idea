@@ -74,15 +74,12 @@ class _ProfileHeaderState extends State<ProfileHeader> {
           height: 50,
         ),
         Expanded(
-          child: Text(
-            widget.displayedUser.profileInfos.level.toString(),
-            style: widget.displayedUser.profileInfos.level.style,
-          ),
+          child: widget.displayedUser.profileInfos.title.toPrettyText()
         ),
         Expanded(
           child: Text(
-            widget.displayedUser.profileInfos.title.toString(),
-            style: widget.displayedUser.profileInfos.title.style,
+            widget.displayedUser.profileInfos.level.toString(),
+            style: widget.displayedUser.profileInfos.level.style,
           ),
         )
       ],

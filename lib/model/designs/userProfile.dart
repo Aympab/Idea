@@ -18,6 +18,7 @@ class ProfileInformation {
   ProfileInformation({
     this.profilePic,
     this.title,
+    this.level,
     this.successes,
     this.inventions,
     this.ideasHelped,

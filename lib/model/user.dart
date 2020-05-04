@@ -13,9 +13,9 @@ class User {
   //Sera surement à découper dans plusieurs Listes quand nécessaire
   List<Besoin> besoinsPossibles = List<Besoin>();
 
-  ProfileInformation profileInfos = ProfileInformation();
+  final ProfileInformation profileInfos;
 
-  User({@required this.infosOblig, this.infosFacultatives});
+  User({@required this.infosOblig, this.infosFacultatives, this.profileInfos});
 
   //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LA LIST BESOIN !!
   @override
