@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/view/connexion.dart';
+import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
 import 'package:idea/view/profile/profileMain.dart';
+import 'main.dart';
+import 'model/idea.dart';
 import 'model/user.dart';
 
 class RouteGenerator {
@@ -30,6 +33,14 @@ class RouteGenerator {
         }
         break;
 
+      case '/ideaPage':
+        if (args is Idea) {
+          return MaterialPageRoute(
+              builder: (_) => InheritedIdea(
+                    idea: args,
+                  ));
+        }
+        break;
       default:
         return _errorPageBuilder();
     }

@@ -17,6 +17,9 @@ class User {
 
   User({@required this.infosOblig, this.infosFacultatives, this.profileInfos});
 
+
+
+
   //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LA LIST BESOIN !!
   @override
   bool operator ==(Object other) =>
@@ -33,6 +36,11 @@ class User {
   String toString() {
     return 'Pseudo : ${infosOblig.pseudo}\r\nMail : ${infosOblig.email}\r\nPassword : ${infosOblig.password}\r\nNaissance : ${infosOblig.dateNaissance}\r\nPrenom : ${infosFacultatives.prenom}\r\nNom : ${infosFacultatives.nom}\r\nZone : ${infosFacultatives.zoneGeographique}';
   }
+
+    //Pour retourner des infos basiques rapidement
+  String get pseudo => infosOblig.pseudo;
+  String get title => profileInfos.title.title;
+  String get level => profileInfos.level.toString();
 }
 
 

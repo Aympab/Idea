@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:idea/view/connexion.dart';
+import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
 import 'package:idea/view/profile/profileMain.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +25,8 @@ class MyApp extends StatelessWidget {
       title: 'Idea',
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
-      // home: InheritedProfile(
-      //   user: TestMain.user,
-      //   child: ProfileView(),
+      // home: InheritedIdea(
+      //   child: IdeaView(),
       // ),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/model/idea.dart';
+import 'package:idea/view/inscription.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +24,8 @@ class _ConnexionViewState extends State<ConnexionView> {
 
     FlatButton continueWithoutConnexionButton =
         buildFlatButton("Continuer \nsans \ns'inscrire", onPressed: () {
-      Navigator.of(context).pushNamed('/flux');
+          Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
+      // Navigator.of(context).pushNamed('/flux');
     });
 
     FlatButton inscriptionButton =

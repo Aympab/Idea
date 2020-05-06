@@ -1,8 +1,13 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
-class Idea extends Equatable{
-  //TODO : Implement the Idea class
+import 'ideaCategory.dart';
 
+class Idea extends Equatable {
+  String title;
+  Image mainPicture;
+  String shortDescription;
+  List<IdeaCategory> categories;
 
   @override
   // TODO: implement props
