@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
-import 'package:vertical_tabs/vertical_tabs.dart';
 
 class InheritedIdea extends InheritedWidget {
   InheritedIdea({this.idea, Key key, this.child})
@@ -30,15 +29,50 @@ class IdeaView extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    //TODO : Dynamise
+                    'Fusée à roulette',
+                    style: TextStyle(
+                        fontSize: 40,
+                        fontFamily: 'Jost',
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    //TODO : Dynamise
+                    "Une fusée ambidextre qui peut rouler sur l'eau et voler dans l'espace",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontFamily: 'Jost',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width - 40,
+                      ),
+                      child: Image.network(
+                          //TODO : Dynamise and add border, maybe resize as well
+                          "https://previews.123rf.com/images/upixel123/upixel1231606/upixel123160600054/59803306-collez-figure-avec-une-fus%C3%A9e-sur-son-dos-et-patins-%C3%A0-roulettes.jpg"),
+                    ),
+                  ),
+                  _buildExpansionTileDescription(),
+                  _buildExpansionTileBesoins(),
+                  _buildExpansionTileParticipants(),
+                  _buildExpansionTilePlusInfos(),
+                ],
+              ),
+            ),
             Align(
               alignment: Alignment.centerLeft,
               child: buildColumnIcons(context),
-            ),
-            Center(
-              child: Title(
-                color: Colors.amber,
-                child: Text('Fusée'),
-              ),
             ),
           ],
         ),
@@ -58,20 +92,58 @@ class IdeaView extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          FlatButton(
+          OutlineButton(
             onPressed: () {},
             child: Icon(Icons.info_outline),
           ),
-          FlatButton(
+          OutlineButton(
             onPressed: () {},
             child: Icon(Icons.public),
           ),
-          FlatButton(
+          OutlineButton(
             onPressed: () {},
             child: Icon(Icons.message),
           ),
         ],
       ),
+    );
+  }
+
+  Text _buildTileTitle(String title) => Text(
+        title,
+        textAlign: TextAlign.center,
+      );
+
+  _buildExpansionTileDescription() {
+    return ExpansionTile(
+      title: _buildTileTitle('Description détaillée'),
+      children: <Widget>[
+        Container(
+          color: Colors.amber,
+          child: SizedBox(height: 100, width: 100),
+        ),
+      ],
+    );
+  }
+
+  _buildExpansionTileBesoins() {
+    return ExpansionTile(
+      title: _buildTileTitle('Besoins'),
+      children: <Widget>[],
+    );
+  }
+
+  _buildExpansionTileParticipants() {
+    return ExpansionTile(
+      title: _buildTileTitle('Participants'),
+      children: <Widget>[],
+    );
+  }
+
+  _buildExpansionTilePlusInfos() {
+    return ExpansionTile(
+      title: _buildTileTitle("Plus d'infos"),
+      children: <Widget>[],
     );
   }
 }

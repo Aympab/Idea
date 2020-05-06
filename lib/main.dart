@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/view/connexion.dart';
+import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
 import 'package:idea/view/profile/profileMain.dart';
 
@@ -13,15 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: darkTheme,
+     // theme: darkTheme,
       title: 'Idea',
-      initialRoute: '/',
-      onGenerateRoute: RouteGenerator.generateRoute,
-      // home: InheritedProfile(
-      //   user: TestMain.user,
-      //   child: ProfileView(),
-      // ),
+      // initialRoute: '/',
+      // onGenerateRoute: RouteGenerator.generateRoute,
 
+      home: InheritedIdea(
+        child: IdeaView(),
+      ),
     );
   }
 }
