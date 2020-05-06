@@ -71,18 +71,9 @@ class ProfileViewState extends State<ProfileView>
       snap: false,
       expandedHeight: 300.0,
       //TODO : Implement BLoC
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.amberAccent, Colors.green[100]],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          ),
-        ),
-        child: ProfileHeader(
+      flexibleSpace: ProfileHeader(
           displayedUser: InheritedProfile.of(context).user,
         ),
-      ),
       // flexibleSpace: BlocProvider(
       //   create: (context) =>
       //       ProfileHeaderBloc(InheritedProfile.of(context).user),

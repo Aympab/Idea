@@ -6,11 +6,14 @@ import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/tools/dateParser.dart';
+import 'package:idea/tools/themes.dart';
 import 'package:idea/widget/multiSelect.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 import 'dart:io';
 import 'dart:async';
+
+import 'package:provider/provider.dart';
 
 class InscriptionView extends StatefulWidget {
   InscriptionView({Key key}) : super(key: key);
@@ -95,7 +98,9 @@ class _InscriptionViewState extends State<InscriptionView> {
         ),
         leading: IconButton(
           icon: Image.asset('assets/logo.png'),
-          onPressed: () {},
+          onPressed: () {
+            Provider.of<ThemeModel>(context, listen: false).toggleTheme();
+          },
         ),
       ),
       body: Container(
@@ -525,21 +530,35 @@ class _InscriptionViewState extends State<InscriptionView> {
     final validationInscription = FlatButton(
         onPressed: () {
           //FIXME : Pour l'instant envoie jsuter vers une page profil avec les infos entrées
-          
+
           //Création d'un utilisateur avec les data que l'on a dans la page
           User nouvelUser = User(
             infosOblig: InformationsObligatoiresUser(
-              pseudo: pseudoController.text.toString(),
-              email: mailController.text.toString(),
-              password: mdpController.text.toString(),
-              dateNaissance: DateParser.parseStringToDateTime(
-                dateNaissanceController.text.toString(),
-              ),
+              pseudo: pseudoController.text == null
+                  ? ''
+                  : pseudoController.text.toString(),
+              email: mailController.text == null
+                  ? ''
+                  : mailController.text.toString(),
+              password: mdpController.text == null
+                  ? ''
+                  : mdpController.text.toString(),
+              dateNaissance: ((dateNaissanceController.text == null) | (dateNaissanceController.text.isEmpty))
+                  ? DateTime.now()
+                  : DateParser.parseStringToDateTime(
+                      dateNaissanceController.text.toString(),
+                    ),
             ),
             infosFacultatives: InformationsFacultativesUser(
-              nom: nomController.text.toString(),
-              prenom: prenomController.text.toString(),
-              zoneGeographique: zoneGeographiqueController.text.toString(),
+              nom: nomController.text == null
+                  ? ''
+                  : nomController.text.toString(),
+              prenom: prenomController.text == null
+                  ? ''
+                  : prenomController.text.toString(),
+              zoneGeographique: zoneGeographiqueController.text == null
+                  ? ''
+                  : zoneGeographiqueController.text.toString(),
             ),
             //FIXME : ON envoie les infos comme ça, il faudrait envoyer l'image
             profileInfos: ProfileInformation(

@@ -37,17 +37,7 @@ ThemeData darkTheme = ThemeData(
 
   //sliderTheme: SliderThemeData(activeTrackColor:Colors.blueGrey,overlayColor: Colors.blueGrey ),
 
-  tabBarTheme: TabBarTheme(
-    labelColor: Colors.blue[600],
-    unselectedLabelColor: Colors.blue[900],
-    indicator: UnderlineTabIndicator(
-      borderSide: BorderSide(
-        style: BorderStyle.solid,
-        width: 5.0,
-        color: Colors.blue[600],
-      ),
-    ),
-  ),
+  
 
   // Define the default font family.
   //fontFamily: 'Georgia',
