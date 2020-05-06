@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/widget/userCard.dart';
+
+import '../../launchingAppTest.dart';
 
 class InheritedIdea extends InheritedWidget {
   InheritedIdea({this.idea, Key key, this.child})
@@ -31,6 +34,8 @@ class IdeaView extends StatelessWidget {
           children: <Widget>[
             SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     //TODO : Dynamise
@@ -50,18 +55,30 @@ class IdeaView extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   Container(
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width - 40,
-                      ),
+                          maxWidth: MediaQuery.of(context).size.width - 50,
+                          maxHeight: 250),
                       child: Image.network(
                           //TODO : Dynamise and add border, maybe resize as well
                           "https://previews.123rf.com/images/upixel123/upixel1231606/upixel123160600054/59803306-collez-figure-avec-une-fus%C3%A9e-sur-son-dos-et-patins-%C3%A0-roulettes.jpg"),
                     ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                        child: Text(
+                          'Par',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      UserCard(user: TestMain.user),
+                    ],
                   ),
                   _buildExpansionTileDescription(),
                   _buildExpansionTileBesoins(),

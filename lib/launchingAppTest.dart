@@ -7,14 +7,15 @@ import 'package:idea/model/user.dart';
 class TestMain {
   static final User user = new User(
     infosOblig: new InformationsObligatoiresUser(
-      pseudo: "pseudoDynamique",
+      pseudo: 'The Rock',
       dateNaissance: DateTime.now(),
-      email: 'emailDynamique',
-      password: 'password',
+      email: 'therock@solide.com',
+      password: 'therockBG',
     ),
     profileInfos: ProfileInformation(
       title: DefaultTitle('Idéateur novice'),
       level: Level(43),
+      profilePic: Image.network('https://mgl.skyrock.net/big.138267340.jpg?77868592')
     ),
   );
 }
