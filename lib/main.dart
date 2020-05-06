@@ -14,14 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     // theme: darkTheme,
+     theme: darkTheme,
       title: 'Idea',
-      // initialRoute: '/',
-      // onGenerateRoute: RouteGenerator.generateRoute,
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
 
-      home: InheritedIdea(
-        child: IdeaView(),
-      ),
+      // home: InheritedIdea(
+      //   child: IdeaView(),
+      // ),
     );
   }
 }
