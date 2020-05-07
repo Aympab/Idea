@@ -28,14 +28,15 @@ class _ConnexionViewState extends State<ConnexionView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 50,),
             ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height /5),
-              child: Image.asset('asset/IdeaTitle.png'),
+              constraints: BoxConstraints(maxHeight:  MediaQuery.of(context).size.height /5),
+              child: Image.asset('assets/IdeaTitle.png'),
             ),
-            new SizedBox(height: 32),
+            new SizedBox(height: 20),
             ConstrainedBox(
                 constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height /5),
+                    maxHeight: MediaQuery.of(context).size.height /4),
                 child: ideaBulbLogo),
             new SizedBox(height: 40),
             new Row(
