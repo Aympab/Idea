@@ -11,7 +11,8 @@ class ConnexionView extends StatefulWidget {
 }
 
 class _ConnexionViewState extends State<ConnexionView> {
-  Image ideaLogo = new Image.asset('assets/IdeaSurAmpoule.png');
+  //TODO : Change with an animted GIF
+  Image ideaBulbLogo = new Image.asset('assets/IdeaLightBulb.png');
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +28,15 @@ class _ConnexionViewState extends State<ConnexionView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new SizedBox(height: 32),
-            new Row(
-              children: <Widget>[
-                new Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
-                  child: ideaLogo,
-                )),
-              ],
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height /5),
+              child: Image.asset('asset/IdeaTitle.png'),
             ),
+            new SizedBox(height: 32),
+            ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height /5),
+                child: ideaBulbLogo),
             new SizedBox(height: 40),
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
