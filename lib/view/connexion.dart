@@ -52,7 +52,7 @@ class _ConnexionViewState extends State<ConnexionView> {
             ),
             ConstrainedBox(
               constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height / 5),
+                  maxHeight: 50),
               child: widget.imageTitle,
             ),
             new SizedBox(height: 20),
@@ -60,7 +60,7 @@ class _ConnexionViewState extends State<ConnexionView> {
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height / 4),
                 child: ideaBulbLogo),
-            new SizedBox(height: 40),
+            new SizedBox(height: 20),
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
