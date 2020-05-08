@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1056926315957",
+    "firebase_url": "https://idea-cf36d.firebaseio.com",
+    "project_id": "idea-cf36d",
+    "storage_bucket": "idea-cf36d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056926315957:android:bfc8e28971686da61895fc",
+        "android_client_info": {
+          "package_name": "com.qbeaussart.idea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056926315957-qtkj1tj3btfd41v8ruhoh2erbouekjhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw9qjqa38I7xrv9F7sHloE8HBHMybgBQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056926315957-qtkj1tj3btfd41v8ruhoh2erbouekjhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
