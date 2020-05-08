@@ -1,62 +1,45 @@
-import 'dart:math';
-
 import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PostItButton extends StatefulWidget {
+class LongPostItButton extends StatefulWidget {
   final String text;
   final Function onTapUp;
 
-  final double maxWidth;
-  final double maxHeight;
-
-  const PostItButton({
-    Key key,
-    @required this.text,
-    @required this.onTapUp,
-    this.maxWidth: 130,
-    this.maxHeight: 130,
-  }) : super(key: key);
+  const LongPostItButton({Key key, @required this.text, @required this.onTapUp})
+      : super(key: key);
 
   @override
-  _PostItButtonState createState() => _PostItButtonState();
+  _LongPostItButtonState createState() => _LongPostItButtonState();
 }
 
-class _PostItButtonState extends State<PostItButton> {
-  Random random = new Random();
-
-  AssetImage _imageUpLeftCorner;
-  AssetImage _imageUpRightCorner;
+class _LongPostItButtonState extends State<LongPostItButton> {
+  AssetImage _upPic;
   AssetImage _downPic;
   AssetImage _currentPic;
 
   @override
   void initState() {
     super.initState();
-    _imageUpLeftCorner =
-        AssetImage('assets/images/buttonsImages/postItLeftCornerUp.png');
-    _imageUpRightCorner =
-        AssetImage('assets/images/buttonsImages/postItRightCorner.png');
-    _downPic = AssetImage('assets/images/buttonsImages/postItSquare.png');
+    _upPic = AssetImage('assets/images/buttonsImages/longPostIt/orangeLP.png');
+    _downPic =
+        AssetImage('assets/images/buttonsImages/longPostIt/orangeLPdown.png');
 
-    _currentPic = random.nextBool() ? _imageUpLeftCorner : _imageUpRightCorner;
+    _currentPic = _upPic;
   }
 
 //Used to preCache the image to get a smooth image changing transition
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    precacheImage(_imageUpLeftCorner, context);
-    precacheImage(_imageUpRightCorner, context);
+    precacheImage(_upPic, context);
+    precacheImage(_downPic, context);
     precacheImage(_downPic, context);
   }
 
   AudioCache player = new AudioCache();
   String _onTapDownSound = 'sounds/tapOnPaper.mp3';
   String _onTapUpSound = 'sounds/tapOnPaperReverse.mp3';
-
-  RenderBox renderBox;
 
   @override
   Widget build(BuildContext context) {
@@ -70,25 +53,20 @@ class _PostItButtonState extends State<PostItButton> {
       onTapUp: (TapUpDetails details) {
         widget.onTapUp();
         setState(() {
-          //Displaying either left or right corner up depending on the position of the tap
-          renderBox = context.findRenderObject();
-          _currentPic = renderBox.globalToLocal(details.globalPosition).dx < 65
-              ? _imageUpLeftCorner
-              : _imageUpRightCorner;
+          _currentPic = _upPic;
           player.play(_onTapUpSound);
         });
       },
       onTapCancel: () {
         setState(() {
-          _currentPic =
-              random.nextBool() ? _imageUpLeftCorner : _imageUpRightCorner;
+          _currentPic = _upPic;
           player.play(_onTapUpSound);
         });
       },
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: widget.maxHeight,
-          maxWidth: widget.maxWidth,
+          maxHeight: 37,
+          maxWidth: 102,
         ),
         child: Container(
           child: ConstrainedBox(

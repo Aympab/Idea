@@ -1,7 +1,8 @@
 import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../widget/postItButton.dart';
+import 'package:idea/widget/longPostItButton.dart';
+import 'package:idea/widget/postItButton.dart';
 
 class ConnexionView extends StatefulWidget {
   ConnexionView({Key key}) : super(key: key);
@@ -17,12 +18,12 @@ class _ConnexionViewState extends State<ConnexionView> {
 
   @override
   Widget build(BuildContext context) {
-    FlatButton connexionButton = buildFlatButton("Connexion");
+    Widget connexionButton = PostItButton(text: 'Connexion', onTapUp: (){});//buildFlatButton("Connexion");
 
-    Widget continueWithoutConnexionButton = PostItButton();
+    Widget continueWithoutConnexionButton = PostItButton(text: "Continuer sans se connecter", onTapUp: (){},);
     // buildFlatButton("Continuer \nsans \ns'inscrire");
 
-    FlatButton inscriptionButton = buildFlatButton("Inscription");
+    Widget inscriptionButton = LongPostItButton(text: 'Inscription', onTapUp: (){});
 
     return Scaffold(
       body: SafeArea(
