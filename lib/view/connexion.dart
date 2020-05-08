@@ -8,6 +8,8 @@ class ConnexionView extends StatefulWidget {
   ConnexionView({Key key}) : super(key: key);
   static String tag = 'connexion-page';
 
+  final Image imageTitle = Image.asset('assets/IdeaTitle.png');
+
   @override
   _ConnexionViewState createState() => _ConnexionViewState();
 }
@@ -16,14 +18,29 @@ class _ConnexionViewState extends State<ConnexionView> {
   //TODO : Change with an animted GIF
   Image ideaBulbLogo = new Image.asset('assets/IdeaLightBulb.png');
 
+//TODO :change image Title definition and precache it 
+// //To precache image so it charges everything before displaying the screen
+//   @override
+//   void didChangeDependencies() {
+//     super.didChangeDependencies();
+//     precacheImage(_upPic, context);
+//     precacheImage(_downPic, context);
+//     precacheImage(_downPic, context);
+//   }
+
   @override
   Widget build(BuildContext context) {
-    Widget connexionButton = PostItButton(text: 'Connexion', onTapUp: (){});//buildFlatButton("Connexion");
+    Widget connexionButton = PostItButton(
+        text: 'Connexion', onTapUp: () {}); //buildFlatButton("Connexion");
 
-    Widget continueWithoutConnexionButton = PostItButton(text: "Continuer sans se connecter", onTapUp: (){},);
+    Widget continueWithoutConnexionButton = PostItButton(
+      text: "Continuer sans se connecter",
+      onTapUp: () {},
+    );
     // buildFlatButton("Continuer \nsans \ns'inscrire");
 
-    Widget inscriptionButton = LongPostItButton(text: 'Inscription', onTapUp: (){});
+    Widget inscriptionButton =// PostItButton(text: 'text', onTapUp: () {});
+    LongPostItButton(text: 'Inscription', onTapUp: (){});
 
     return Scaffold(
       body: SafeArea(
@@ -36,7 +53,7 @@ class _ConnexionViewState extends State<ConnexionView> {
             ConstrainedBox(
               constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.height / 5),
-              child: Image.asset('assets/IdeaTitle.png'),
+              child: widget.imageTitle,
             ),
             new SizedBox(height: 20),
             ConstrainedBox(
@@ -84,7 +101,8 @@ class _ConnexionViewState extends State<ConnexionView> {
         child: ConstrainedBox(
           constraints: BoxConstraints.expand(),
           child: Ink.image(
-            image: AssetImage('assets/images/buttonsImages/postItLeftCornerUp.png'),
+            image: AssetImage(
+                'assets/images/buttonsImages/postItLeftCornerUp.png'),
             fit: BoxFit.fill,
             child: InkWell(
               splashColor: Colors.amber,
@@ -124,5 +142,3 @@ class _ConnexionViewState extends State<ConnexionView> {
     );
   }
 }
-
-

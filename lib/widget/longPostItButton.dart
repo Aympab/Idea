@@ -2,15 +2,30 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+//Original height and width of the picture to always hace the good ration for the image
+double originalHeight = 105;
+double originalWidth = 291;
+
 class LongPostItButton extends StatefulWidget {
   final String text;
   final Function onTapUp;
+  //TODO : Implement colorChanger
+  final LPColors color;
 
-  const LongPostItButton({Key key, @required this.text, @required this.onTapUp})
+  const LongPostItButton(
+      {Key key,
+      @required this.text,
+      @required this.onTapUp,
+      this.color = LPColors.orange})
       : super(key: key);
 
   @override
   _LongPostItButtonState createState() => _LongPostItButtonState();
+}
+
+enum LPColors {
+  orange,
 }
 
 class _LongPostItButtonState extends State<LongPostItButton> {
@@ -21,9 +36,22 @@ class _LongPostItButtonState extends State<LongPostItButton> {
   @override
   void initState() {
     super.initState();
-    _upPic = AssetImage('assets/images/buttonsImages/longPostIt/orangeLP.png');
-    _downPic =
-        AssetImage('assets/images/buttonsImages/longPostIt/orangeLPdown.png');
+
+    //TODO : switch case en fonction de LPColors
+    switch (widget.color) {
+      case LPColors.orange:
+        _upPic =
+            AssetImage('assets/images/buttonsImages/longPostIt/orangeLP.png');
+        _downPic = AssetImage(
+            'assets/images/buttonsImages/longPostIt/orangeLPdown.png');
+
+        break;
+      default:
+        _upPic =
+            AssetImage('assets/images/buttonsImages/longPostIt/orangeLP.png');
+        _downPic = AssetImage(
+            'assets/images/buttonsImages/longPostIt/orangeLPdown.png');
+    }
 
     _currentPic = _upPic;
   }
@@ -65,8 +93,8 @@ class _LongPostItButtonState extends State<LongPostItButton> {
       },
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: 37,
-          maxWidth: 102,
+          maxHeight: originalHeight,
+          maxWidth: originalWidth,
         ),
         child: Container(
           child: ConstrainedBox(
@@ -74,13 +102,10 @@ class _LongPostItButtonState extends State<LongPostItButton> {
             child: Stack(
               children: <Widget>[
                 Image(image: _currentPic),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      widget.text,
-                      textAlign: TextAlign.center,
-                    ),
+                Center(
+                  child: Text(
+                    widget.text,
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
