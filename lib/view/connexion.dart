@@ -2,6 +2,7 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/routeGenerator.dart';
 import 'package:idea/view/inscription.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class _ConnexionViewState extends State<ConnexionView> {
   //TODO : Change with an animted GIF
   Image ideaBulbLogo = new Image.asset('assets/IdeaLightBulb.png');
 
-//TODO :change image Title definition and precache it 
+//TODO :change image Title definition and precache it
 // //To precache image so it charges everything before displaying the screen
 //   @override
 //   void didChangeDependencies() {
@@ -35,17 +36,32 @@ class _ConnexionViewState extends State<ConnexionView> {
   @override
   Widget build(BuildContext context) {
     Widget connexionButton = PostItButton(
-        text: 'Connexion', onTapUp: () {}); //buildFlatButton("Connexion");
+        text: 'Connexion', onTapUp: () {
+          Navigator.of(context).pushNamed('/authenticationPage');
+        }); //buildFlatButton("Connexion");
 
     Widget continueWithoutConnexionButton = PostItButton(
       text: "Continuer sans se connecter",
-      onTapUp: () {},
+      onTapUp: () {
+        Navigator.of(context).pushNamed('/ideaPage', arguments:Idea());
+      },
     );
 
-    Widget inscriptionButton =// PostItButton(text: 'text', onTapUp: () {});
-    LongPostItButton(text: 'Inscription', onTapUp: (){});
+    Widget inscriptionButton = // PostItButton(text: 'text', onTapUp: () {});
+        LongPostItButton(
+            text: 'Inscription',
+            onTapUp: () {
+              Navigator.of(context).pushNamed('/inscription');
+            });
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Provider.of<ThemeModel>(context, listen: false).toggleTheme();
+        },
+        child: Icon(Icons.color_lens),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,25 +86,22 @@ class _ConnexionViewState extends State<ConnexionView> {
                 new Column(
                   children: <Widget>[
                     new Row(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Provider.of<ThemeModel>(context, listen: false).toggleTheme();
-        },
-        child: Icon(Icons.color_lens),
-      ),
                       children: <Widget>[
-                        inscriptionButton,
+                        connexionButton,
+                        SizedBox(width: 50),
+                        continueWithoutConnexionButton
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                    SizedBox(height: 16),
+                    inscriptionButton
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   buildCoolButton() {
@@ -122,7 +135,7 @@ class _ConnexionViewState extends State<ConnexionView> {
     );
   }
 
-  FlatButton buildFlatButton(String text) {
+  FlatButton buildFlatButton(String text, Function onPressed) {
     return FlatButton(
       color: Colors.yellow,
       // padding: EdgeInsets.fromLTRB(40, 25, 40, 25),
