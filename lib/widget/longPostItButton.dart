@@ -2,7 +2,6 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 //Original height and width of the picture to always hace the good ration for the image
 double originalHeight = 105;
 double originalWidth = 291;
@@ -102,10 +101,16 @@ class _LongPostItButtonState extends State<LongPostItButton> {
             child: Stack(
               children: <Widget>[
                 Image(image: _currentPic),
-                Center(
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20,horizontal:40 ),
                   child: Text(
                     widget.text,
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "Nanum",
+                      fontSize: 23,
+                      color:Colors.black,
+                    ),
                   ),
                 ),
               ],

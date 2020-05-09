@@ -15,8 +15,8 @@ class PostItButton extends StatefulWidget {
     Key key,
     @required this.text,
     @required this.onTapUp,
-    this.maxWidth: 130,
-    this.maxHeight: 130,
+    this.maxWidth: 150,
+    this.maxHeight: 150,
   }) : super(key: key);
 
   @override
@@ -102,6 +102,11 @@ class _PostItButtonState extends State<PostItButton> {
                     child: Text(
                       widget.text,
                       textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "Nanum",
+                        fontSize: 23,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),

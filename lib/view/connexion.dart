@@ -1,11 +1,9 @@
-import 'package:audioplayers/audio_cache.dart';
+import 'dart:math';
+
+import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
-import 'package:idea/routeGenerator.dart';
-import 'package:idea/view/inscription.dart';
-import 'package:idea/tools/themes.dart';
-import 'package:provider/provider.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/postItButton.dart';
 
@@ -21,7 +19,7 @@ class ConnexionView extends StatefulWidget {
 
 class _ConnexionViewState extends State<ConnexionView> {
   //TODO : Change with an animted GIF
-  Image ideaBulbLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
+  Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
 
 //TODO :change image Title definition and precache it
 // //To precache image so it charges everything before displaying the screen
@@ -32,6 +30,8 @@ class _ConnexionViewState extends State<ConnexionView> {
 //     precacheImage(_downPic, context);
 //     precacheImage(_downPic, context);
 //   }
+
+  bool _changingPage = true;
 
   @override
   Widget build(BuildContext context) {
@@ -49,87 +49,156 @@ class _ConnexionViewState extends State<ConnexionView> {
     );
 
     Widget inscriptionButton = // PostItButton(text: 'text', onTapUp: () {});
-        LongPostItButton(text: 'Inscription', onTapUp: () {});
+        LongPostItButton(
+      text: 'Creer un compte',
+      onTapUp: () {
+        Navigator.of(context).pushNamed('/inscription');
+      },
+    );
 
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            colors: [
-              Color(0xFFC114).withOpacity(1.0),
-              Color(0xF8EABF).withOpacity(1.0),
-            ]),
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [
+            Color(0xFFC114).withOpacity(1.0),
+            Color(0xF8EABF).withOpacity(1.0),
+          ],
+        ),
       ),
       child: Scaffold(
         floatingActionButton: IconButton(
           onPressed: () {
+            setState(() {
+              _changingPage = !_changingPage;
+            });
           },
           icon: Icon(Icons.navigate_next),
         ),
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 50,
-                ),
-                ConstrainedBox(
-                    constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height / 2.8),
-                    child: ideaBulbLogo),
-                builTitleIdea(),
-                Text(
-                  'Donnez vie a vos idees!',
-                  style: TextStyle(
-                    fontFamily: "Nanum",
-                    fontSize: 23,
-                    color: Color(0xff333232),
+          child: AnimatedCrossFade(
+            crossFadeState: _changingPage
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            duration: Duration(seconds: 2),
+            firstChild: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width,
+                maxHeight: MediaQuery.of(context).size.height,
+              ),
+              child: FirstPageConnexion(
+                ideaBulbLogo: ideaLogo,
+              ),
+            ),
+            secondChild: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width,
+                maxHeight: MediaQuery.of(context).size.height,
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    top: -50,
+                    left: -50,
+                    height: 280,
+                    child: Transform.rotate(angle: 2.4, child: ideaLogo),
                   ),
-                ),
-              ],
+                  Positioned(
+                    top: MediaQuery.of(context).size.height / 2.5,
+                    left: 30,
+                    child: continueWithoutConnexionButton,
+                  ),
+                  Positioned(
+                    top: MediaQuery.of(context).size.height / 2.5,
+                    right: 30,
+                    child: connexionButton,
+                  ),
+                  Positioned(
+                    bottom: 90,
+                    left: 30,
+                    child: inscriptionButton,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+}
 
-  // buildCoolButton() {
-  //   return ConstrainedBox(
-  //     constraints: BoxConstraints(
-  //       maxHeight: 120,
-  //       maxWidth: 120,
-  //     ),
-  //     child: Container(
-  //       child: ConstrainedBox(
-  //         constraints: BoxConstraints.expand(),
-  //         child: Ink.image(
-  //           image: AssetImage(
-  //               'assets/images/buttonsImages/postItLeftCornerUp.png'),
-  //           fit: BoxFit.fill,
-  //           child: InkWell(
-  //             splashColor: Colors.amber,
-  //             enableFeedback: false,
-  //             onTap: () {
-  //               AudioCache player = new AudioCache();
-  //               const alarmAudioPath = "sounds/tapOnPaper.mp3";
-  //               player.play(alarmAudioPath);
-  //               print('tap');
-  //             },
-  //             // onTapDown: (){},
-  //             // onTapCancel: ,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+class FirstPageConnexion extends StatefulWidget {
+  final Image ideaBulbLogo;
+  const FirstPageConnexion({
+    Key key,
+    @required this.ideaBulbLogo,
+  }) : super(key: key);
 
-  builTitleIdea() {
-    return Text('Idea',
+  @override
+  _FirstPageConnexionState createState() => _FirstPageConnexionState();
+}
+
+class _FirstPageConnexionState extends State<FirstPageConnexion> {
+  //double _screenHeight;
+  double _screenWidth; //MediaQuery.of(context).size.width;
+
+  double _logoTopPos;
+  double _logoRightPos;
+
+  double _titleTopPos;
+  double _titleRightPos;
+
+  double _subTitleTopPos;
+  double _subTitleRightPos;
+
+  @override
+  Widget build(BuildContext context) {
+    //_screenHeight = MediaQuery.of(context).size.height;
+    _screenWidth = MediaQuery.of(context).size.width;
+    _logoTopPos = 60;
+    _logoRightPos = _screenWidth / 6;
+
+    _titleTopPos = _logoTopPos + 250;
+    _titleRightPos = _screenWidth / 6;
+
+    _subTitleTopPos = _titleTopPos + 185;
+    _subTitleRightPos = _screenWidth / 4;
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: _logoTopPos,
+          right: _logoRightPos,
+          child: widget.ideaBulbLogo,
+          width: _screenWidth / 1.5,
+        ),
+        Positioned(
+          top: _titleTopPos,
+          right: _titleRightPos,
+          child: builTitleIdea(),
+        ),
+        Positioned(
+          top: _subTitleTopPos,
+          right: _subTitleRightPos,
+          child: Text(
+            'Donnez vie a vos idees!',
+            style: TextStyle(
+              fontFamily: "Nanum",
+              fontSize: 23,
+              color: Color(0xff333232),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+builTitleIdea() {
+  return BorderedText(
+    child: Text('Idea',
         style: TextStyle(
           fontFamily: "Nanum",
           fontSize: 200,
@@ -141,7 +210,6 @@ class _ConnexionViewState extends State<ConnexionView> {
               blurRadius: 6,
             ),
           ],
-        ));
-  }
+        )),
+  );
 }
-
