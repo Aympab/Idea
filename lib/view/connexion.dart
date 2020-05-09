@@ -13,7 +13,7 @@ class ConnexionView extends StatefulWidget {
   ConnexionView({Key key}) : super(key: key);
   static String tag = 'connexion-page';
 
-  final Image imageTitle = Image.asset('assets/IdeaTitle.png');
+  //final Image imageTitle = Image.asset('assets/IdeaTitle.png');
 
   @override
   _ConnexionViewState createState() => _ConnexionViewState();
@@ -21,7 +21,7 @@ class ConnexionView extends StatefulWidget {
 
 class _ConnexionViewState extends State<ConnexionView> {
   //TODO : Change with an animted GIF
-  Image ideaBulbLogo = new Image.asset('assets/IdeaLightBulb.png');
+  Image ideaBulbLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
 
 //TODO :change image Title definition and precache it
 // //To precache image so it charges everything before displaying the screen
@@ -48,57 +48,63 @@ class _ConnexionViewState extends State<ConnexionView> {
     );
 
     Widget inscriptionButton = // PostItButton(text: 'text', onTapUp: () {});
-        LongPostItButton(
-            text: 'Inscription',
-            onTapUp: () {
-              Navigator.of(context).pushNamed('/inscription');
-            });
+        LongPostItButton(text: 'Inscription', onTapUp: () {});
 
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Provider.of<ThemeModel>(context, listen: false).toggleTheme();
-        },
-        child: Icon(Icons.color_lens),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              Color(0xFFC114).withOpacity(1.0),
+              Color(0xF8EABF).withOpacity(1.0),
+            ]),
       ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 50,
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxHeight: 50),
-              child: widget.imageTitle,
-            ),
-            new SizedBox(height: 20),
-            ConstrainedBox(
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height / 4),
-                child: ideaBulbLogo),
-            new SizedBox(height: 20),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Column(
-                  children: <Widget>[
-                    new Row(
-                      children: <Widget>[
-                        connexionButton,
-                        SizedBox(width: 50),
-                        continueWithoutConnexionButton
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    inscriptionButton
-                  ],
-                ),
-              ],
-            ),
-          ],
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 50,
+              ),
+              ConstrainedBox(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height / 4),
+                  child: ideaBulbLogo),
+              new SizedBox(height: 20),
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 50),
+                child: builTitleIdea(),
+              ),
+              new SizedBox(height: 20),
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Column(
+                    children: <Widget>[
+                      new Row(
+                        children: <Widget>[
+                          connexionButton,
+                          new SizedBox(width: 45),
+                          continueWithoutConnexionButton,
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: new Row(
+                          children: <Widget>[
+                            inscriptionButton,
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -153,5 +159,21 @@ class _ConnexionViewState extends State<ConnexionView> {
         ),
       ),
     );
+  }
+
+  builTitleIdea() {
+    return Text('Idea',
+        style: TextStyle(
+          fontFamily: "NanumPen",
+          //fontSize: 200,
+          color: Color(0xfff8e8ba),
+          shadows: [
+            Shadow(
+              offset: Offset(0.00, 5.00),
+              color: Color(0xff000000).withOpacity(0.68),
+              blurRadius: 6,
+            ),
+          ],
+        ));
   }
 }
