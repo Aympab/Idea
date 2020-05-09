@@ -36,14 +36,15 @@ class _ConnexionViewState extends State<ConnexionView> {
   @override
   Widget build(BuildContext context) {
     Widget connexionButton = PostItButton(
-        text: 'Connexion', onTapUp: () {
+        text: 'Connexion',
+        onTapUp: () {
           Navigator.of(context).pushNamed('/authenticationPage');
         }); //buildFlatButton("Connexion");
 
     Widget continueWithoutConnexionButton = PostItButton(
       text: "Continuer sans se connecter",
       onTapUp: () {
-        Navigator.of(context).pushNamed('/ideaPage', arguments:Idea());
+        Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
       },
     );
 
@@ -61,79 +62,34 @@ class _ConnexionViewState extends State<ConnexionView> {
             ]),
       ),
       child: Scaffold(
+        floatingActionButton: IconButton(
+          onPressed: () {
+          },
+          icon: Icon(Icons.navigate_next),
+        ),
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: 50,
-              ),
-              ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height / 4),
-                  child: ideaBulbLogo),
-              new SizedBox(height: 20),
-              ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: 50),
-                child: builTitleIdea(),
-              ),
-              new SizedBox(height: 20),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Column(
-                    children: <Widget>[
-                      new Row(
-                        children: <Widget>[
-                          connexionButton,
-                          new SizedBox(width: 45),
-                          continueWithoutConnexionButton,
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
-                        child: new Row(
-                          children: <Widget>[
-                            inscriptionButton,
-                          ],
-                        ),
-                      ),
-                    ],
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 50,
+                ),
+                ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height / 2.8),
+                    child: ideaBulbLogo),
+                builTitleIdea(),
+                Text(
+                  'Donnez vie a vos idees!',
+                  style: TextStyle(
+                    fontFamily: "Nanum",
+                    fontSize: 23,
+                    color: Color(0xff333232),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  buildCoolButton() {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: 120,
-        maxWidth: 120,
-      ),
-      child: Container(
-        child: ConstrainedBox(
-          constraints: BoxConstraints.expand(),
-          child: Ink.image(
-            image: AssetImage(
-                'assets/images/buttonsImages/postItLeftCornerUp.png'),
-            fit: BoxFit.fill,
-            child: InkWell(
-              splashColor: Colors.amber,
-              enableFeedback: false,
-              onTap: () {
-                AudioCache player = new AudioCache();
-                const alarmAudioPath = "sounds/tapOnPaper.mp3";
-                player.play(alarmAudioPath);
-                print('tap');
-              },
-              // onTapDown: (){},
-              // onTapCancel: ,
+                ),
+              ],
             ),
           ),
         ),
@@ -141,31 +97,42 @@ class _ConnexionViewState extends State<ConnexionView> {
     );
   }
 
-  FlatButton buildFlatButton(String text, Function onPressed) {
-    return FlatButton(
-      color: Colors.yellow,
-      // padding: EdgeInsets.fromLTRB(40, 25, 40, 25),
-      onPressed: onPressed,
-      child: SizedBox(
-        height: 100,
-        width: 100,
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ),
-    );
-  }
+  // buildCoolButton() {
+  //   return ConstrainedBox(
+  //     constraints: BoxConstraints(
+  //       maxHeight: 120,
+  //       maxWidth: 120,
+  //     ),
+  //     child: Container(
+  //       child: ConstrainedBox(
+  //         constraints: BoxConstraints.expand(),
+  //         child: Ink.image(
+  //           image: AssetImage(
+  //               'assets/images/buttonsImages/postItLeftCornerUp.png'),
+  //           fit: BoxFit.fill,
+  //           child: InkWell(
+  //             splashColor: Colors.amber,
+  //             enableFeedback: false,
+  //             onTap: () {
+  //               AudioCache player = new AudioCache();
+  //               const alarmAudioPath = "sounds/tapOnPaper.mp3";
+  //               player.play(alarmAudioPath);
+  //               print('tap');
+  //             },
+  //             // onTapDown: (){},
+  //             // onTapCancel: ,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   builTitleIdea() {
     return Text('Idea',
         style: TextStyle(
-          fontFamily: "NanumPen",
-          //fontSize: 200,
+          fontFamily: "Nanum",
+          fontSize: 200,
           color: Color(0xfff8e8ba),
           shadows: [
             Shadow(
@@ -177,3 +144,4 @@ class _ConnexionViewState extends State<ConnexionView> {
         ));
   }
 }
+
