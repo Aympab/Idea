@@ -23,11 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: Provider.of<ThemeModel>(context).currentTheme,
       title: 'Idea',
-      initialRoute: '/',
-      onGenerateRoute: RouteGenerator.generateRoute,
-      // home: InheritedIdea(
-      //   child: IdeaView(),
-      // ),
+      home: ConnexionView()
     );
   }
 }
