@@ -15,6 +15,7 @@ class UserCard extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width/1.55),
               child: Card(
+                color: Color(0x5F71B3).withOpacity(1),
           child: InkWell(
             //TODO : Adapt with ThemeColor 
             splashColor: Colors.amber,
@@ -29,10 +30,11 @@ class UserCard extends StatelessWidget {
                 ListTile(
                   leading: user.profileInfos.profilePic,
                   title: Text(user.pseudo),
-                  subtitle: Text('${user.title}\nNiveau ${user.level}'),
+                  subtitle: Text('${user.title}\nNiveau ${user.level}', style: TextStyle(color: Colors.grey),),
                 ),
                 Row(
                   children: <Widget>[
+                    SizedBox(width: 10,),
                     FlatButton(
                       child: Text('PROFIL'),
                       //TODO Go to user profile
