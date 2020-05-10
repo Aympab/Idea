@@ -35,13 +35,13 @@ class _ConnexionViewState extends State<ConnexionView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget connexionButton = PostItButton(
+    Widget connexionButton = PaperButton(
         text: 'Connexion',
         onTapUp: () {
           Navigator.of(context).pushNamed('/authenticationPage');
         }); //buildFlatButton("Connexion");
 
-    Widget continueWithoutConnexionButton = PostItButton(
+    Widget continueWithoutConnexionButton = PaperButton(
       text: "Continuer sans se connecter",
       onTapUp: () {
         Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
@@ -56,6 +56,8 @@ class _ConnexionViewState extends State<ConnexionView> {
       },
     );
 
+    double topPosLogo = -50;
+    double topPosPostit = topPosLogo + MediaQuery.of(context).size.height/1.8;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -100,23 +102,23 @@ class _ConnexionViewState extends State<ConnexionView> {
               child: Stack(
                 children: <Widget>[
                   Positioned(
-                    top: -50,
+                    top: topPosLogo,
                     left: -50,
                     height: 280,
                     child: Transform.rotate(angle: 2.4, child: ideaLogo),
                   ),
                   Positioned(
-                    top: MediaQuery.of(context).size.height / 2.5,
-                    left: 30,
+                    top: topPosPostit,
+                    left: 40,
                     child: continueWithoutConnexionButton,
                   ),
                   Positioned(
-                    top: MediaQuery.of(context).size.height / 2.5,
-                    right: 30,
+                    top: topPosPostit,
+                    right: 40,
                     child: connexionButton,
                   ),
                   Positioned(
-                    bottom: 90,
+                    bottom: MediaQuery.of(context).size.height/15,
                     left: 30,
                     child: inscriptionButton,
                   ),
