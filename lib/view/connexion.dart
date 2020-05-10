@@ -1,11 +1,9 @@
-import 'package:audioplayers/audio_cache.dart';
+import 'dart:math';
+
+import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
-import 'package:idea/routeGenerator.dart';
-import 'package:idea/view/inscription.dart';
-import 'package:idea/tools/themes.dart';
-import 'package:provider/provider.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/postItButton.dart';
 
@@ -13,7 +11,7 @@ class ConnexionView extends StatefulWidget {
   ConnexionView({Key key}) : super(key: key);
   static String tag = 'connexion-page';
 
-  final Image imageTitle = Image.asset('assets/IdeaTitle.png');
+  //final Image imageTitle = Image.asset('assets/IdeaTitle.png');
 
   @override
   _ConnexionViewState createState() => _ConnexionViewState();
@@ -21,137 +19,247 @@ class ConnexionView extends StatefulWidget {
 
 class _ConnexionViewState extends State<ConnexionView> {
   //TODO : Change with an animted GIF
-  Image ideaBulbLogo = new Image.asset('assets/IdeaLightBulb.png');
+  Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
 
-//TODO :change image Title definition and precache it
-// //To precache image so it charges everything before displaying the screen
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//     precacheImage(_upPic, context);
-//     precacheImage(_downPic, context);
-//     precacheImage(_downPic, context);
-//   }
+//To precache image so it charges everything before displaying the screen
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(ideaLogo.image, context);
+  }
+
+  bool _changingPage = true;
 
   @override
   Widget build(BuildContext context) {
-    Widget connexionButton = PostItButton(
-        text: 'Connexion', onTapUp: () {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [
+            Color(0xFFC114).withOpacity(1.0),
+            Color(0xF8EABF).withOpacity(1.0),
+          ],
+        ),
+      ),
+      child: Scaffold(
+        floatingActionButton: IconButton(
+          onPressed: () {
+            setState(() {
+              _changingPage = !_changingPage;
+            });
+          },
+          icon: Icon(Icons.navigate_next),
+        ),
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: AnimatedCrossFade(
+            crossFadeState: _changingPage
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            duration: Duration(seconds: 1),
+            firstChild: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width,
+                maxHeight: MediaQuery.of(context).size.height,
+              ),
+              child: FirstPageConnexion(
+                ideaBulbLogo: ideaLogo,
+              ),
+            ),
+            secondChild: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width,
+                maxHeight: MediaQuery.of(context).size.height,
+              ),
+              child: SecondPageConnexion(
+                ideaLogo: ideaLogo,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+//
+//
+//
+//
+//
+//
+//
+class FirstPageConnexion extends StatefulWidget {
+  final Image ideaBulbLogo;
+  const FirstPageConnexion({
+    Key key,
+    @required this.ideaBulbLogo,
+  }) : super(key: key);
+
+  @override
+  _FirstPageConnexionState createState() => _FirstPageConnexionState();
+}
+
+class _FirstPageConnexionState extends State<FirstPageConnexion> {
+  //double _screenHeight;
+  double _screenWidth; //MediaQuery.of(context).size.width;
+
+  double _logoTopPos;
+  double _logoRightPos;
+
+  double _titleTopPos;
+  double _titleRightPos;
+
+  double _subTitleTopPos;
+  double _subTitleRightPos;
+
+  @override
+  Widget build(BuildContext context) {
+    //_screenHeight = MediaQuery.of(context).size.height;
+    _screenWidth = MediaQuery.of(context).size.width;
+    _logoTopPos = 60;
+    _logoRightPos = _screenWidth / 6;
+
+    _titleTopPos = _logoTopPos + 250;
+    _titleRightPos = _screenWidth / 6;
+
+    _subTitleTopPos = _titleTopPos + 185;
+    _subTitleRightPos = _screenWidth / 4;
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: _logoTopPos,
+          right: _logoRightPos,
+          child: widget.ideaBulbLogo,
+          width: _screenWidth / 1.5,
+        ),
+        Positioned(
+          top: _titleTopPos,
+          right: _titleRightPos,
+          child: builTitleIdea(),
+        ),
+        Positioned(
+          top: _subTitleTopPos,
+          right: _subTitleRightPos,
+          child: Text(
+            'Donnez vie a vos idees!',
+            style: TextStyle(
+              fontFamily: "Nanum",
+              fontSize: 23,
+              color: Color(0xff333232),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+builTitleIdea() {
+  return BorderedText(
+    child: Text('Idea',
+        style: TextStyle(
+          fontFamily: "Nanum",
+          fontSize: 200,
+          color: Color(0xfff8e8ba),
+          shadows: [
+            Shadow(
+              offset: Offset(0.00, 5.00),
+              color: Color(0xff000000).withOpacity(0.68),
+              blurRadius: 6,
+            ),
+          ],
+        )),
+  );
+}
+//
+//
+//
+//
+//
+//
+//
+class SecondPageConnexion extends StatefulWidget {
+  const SecondPageConnexion({
+    Key key,
+    @required this.ideaLogo,
+  }) : super(key: key);
+
+  final Image ideaLogo;
+
+  @override
+  _SecondPageConnexionState createState() => _SecondPageConnexionState();
+}
+
+class _SecondPageConnexionState extends State<SecondPageConnexion> {
+  @override
+  Widget build(BuildContext context) {
+    Widget connexionButton = PaperButton(
+        text: 'Connexion',
+        onTapUp: () {
           Navigator.of(context).pushNamed('/authenticationPage');
         }); //buildFlatButton("Connexion");
 
-    Widget continueWithoutConnexionButton = PostItButton(
+    Widget continueWithoutConnexionButton = PaperButton(
       text: "Continuer sans se connecter",
       onTapUp: () {
-        Navigator.of(context).pushNamed('/ideaPage', arguments:Idea());
+        Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
       },
     );
 
     Widget inscriptionButton = // PostItButton(text: 'text', onTapUp: () {});
         LongPostItButton(
-            text: 'Inscription',
-            onTapUp: () {
-              Navigator.of(context).pushNamed('/inscription');
-            });
+      text: 'Creer un compte',
+      color: LPColors.blue,
+      onTapUp: () {
+        Navigator.of(context).pushNamed('/inscription');
+      },
+    );
 
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Provider.of<ThemeModel>(context, listen: false).toggleTheme();
-        },
-        child: Icon(Icons.color_lens),
-      ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 50,
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height / 5),
-              child: widget.imageTitle,
-            ),
-            new SizedBox(height: 20),
-            ConstrainedBox(
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height / 4),
-                child: ideaBulbLogo),
-            new SizedBox(height: 40),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Column(
-                  children: <Widget>[
-                    new Row(
-                      children: <Widget>[
-                        connexionButton,
-                        SizedBox(width: 50),
-                        continueWithoutConnexionButton
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    inscriptionButton
-                  ],
-                ),
-              ],
+    double topPosLogo = -50;
+    double topPosPostit = topPosLogo + MediaQuery.of(context).size.height / 1.8;
+
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: topPosLogo,
+          left: -50,
+          height: 280,
+          child: Transform.rotate(angle: 2.4, child: widget.ideaLogo),
+        ),
+        Positioned(
+          top: topPosPostit,
+          left: 40,
+          child: continueWithoutConnexionButton,
+        ),
+        Positioned(
+          top: topPosPostit,
+          right: 40,
+          child: connexionButton,
+        ),
+        Positioned(
+          bottom: MediaQuery.of(context).size.height / 15,
+          left: 40,
+          child: inscriptionButton,
+        ),
+      ],
+    );
+  }
+
+  builTitleIdea() {
+    return Text('Idea',
+        style: TextStyle(
+          fontFamily: "NanumPen",
+          //fontSize: 200,
+          color: Color(0xfff8e8ba),
+          shadows: [
+            Shadow(
+              offset: Offset(0.00, 5.00),
+              color: Color(0xff000000).withOpacity(0.68),
+              blurRadius: 6,
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  buildCoolButton() {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: 120,
-        maxWidth: 120,
-      ),
-      child: Container(
-        child: ConstrainedBox(
-          constraints: BoxConstraints.expand(),
-          child: Ink.image(
-            image: AssetImage(
-                'assets/images/buttonsImages/postItLeftCornerUp.png'),
-            fit: BoxFit.fill,
-            child: InkWell(
-              splashColor: Colors.amber,
-              enableFeedback: false,
-              onTap: () {
-                AudioCache player = new AudioCache();
-                const alarmAudioPath = "sounds/tapOnPaper.mp3";
-                player.play(alarmAudioPath);
-                print('tap');
-              },
-              // onTapDown: (){},
-              // onTapCancel: ,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  FlatButton buildFlatButton(String text, Function onPressed) {
-    return FlatButton(
-      color: Colors.yellow,
-      // padding: EdgeInsets.fromLTRB(40, 25, 40, 25),
-      onPressed: onPressed,
-      child: SizedBox(
-        height: 100,
-        width: 100,
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ),
-    );
+        ));
   }
 }
