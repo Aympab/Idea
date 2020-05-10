@@ -21,44 +21,17 @@ class _ConnexionViewState extends State<ConnexionView> {
   //TODO : Change with an animted GIF
   Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
 
-//TODO :change image Title definition and precache it
-// //To precache image so it charges everything before displaying the screen
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//     precacheImage(_upPic, context);
-//     precacheImage(_downPic, context);
-//     precacheImage(_downPic, context);
-//   }
+//To precache image so it charges everything before displaying the screen
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(ideaLogo.image, context);
+  }
 
   bool _changingPage = true;
 
   @override
   Widget build(BuildContext context) {
-    Widget connexionButton = PaperButton(
-        text: 'Connexion',
-        onTapUp: () {
-          Navigator.of(context).pushNamed('/authenticationPage');
-        }); //buildFlatButton("Connexion");
-
-    Widget continueWithoutConnexionButton = PaperButton(
-      text: "Continuer sans se connecter",
-      onTapUp: () {
-        Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
-      },
-    );
-
-    Widget inscriptionButton = // PostItButton(text: 'text', onTapUp: () {});
-        LongPostItButton(
-      text: 'Creer un compte',
-      color: LPColors.blue,
-      onTapUp: () {
-        Navigator.of(context).pushNamed('/inscription');
-      },
-    );
-
-    double topPosLogo = -50;
-    double topPosPostit = topPosLogo + MediaQuery.of(context).size.height/1.8;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -85,7 +58,7 @@ class _ConnexionViewState extends State<ConnexionView> {
             crossFadeState: _changingPage
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
-            duration: Duration(seconds: 2),
+            duration: Duration(seconds: 1),
             firstChild: ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width,
@@ -100,30 +73,8 @@ class _ConnexionViewState extends State<ConnexionView> {
                 maxWidth: MediaQuery.of(context).size.width,
                 maxHeight: MediaQuery.of(context).size.height,
               ),
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: topPosLogo,
-                    left: -50,
-                    height: 280,
-                    child: Transform.rotate(angle: 2.4, child: ideaLogo),
-                  ),
-                  Positioned(
-                    top: topPosPostit,
-                    left: 40,
-                    child: continueWithoutConnexionButton,
-                  ),
-                  Positioned(
-                    top: topPosPostit,
-                    right: 40,
-                    child: connexionButton,
-                  ),
-                  Positioned(
-                    bottom: MediaQuery.of(context).size.height/15,
-                    left: 40,
-                    child: inscriptionButton,
-                  ),
-                ],
+              child: SecondPageConnexion(
+                ideaLogo: ideaLogo,
               ),
             ),
           ),
@@ -132,7 +83,13 @@ class _ConnexionViewState extends State<ConnexionView> {
     );
   }
 }
-
+//
+//
+//
+//
+//
+//
+//
 class FirstPageConnexion extends StatefulWidget {
   final Image ideaBulbLogo;
   const FirstPageConnexion({
@@ -215,4 +172,78 @@ builTitleIdea() {
           ],
         )),
   );
+}
+//
+//
+//
+//
+//
+//
+//
+class SecondPageConnexion extends StatefulWidget {
+  const SecondPageConnexion({
+    Key key,
+    @required this.ideaLogo,
+  }) : super(key: key);
+
+  final Image ideaLogo;
+
+  @override
+  _SecondPageConnexionState createState() => _SecondPageConnexionState();
+}
+
+class _SecondPageConnexionState extends State<SecondPageConnexion> {
+  @override
+  Widget build(BuildContext context) {
+    Widget connexionButton = PaperButton(
+        text: 'Connexion',
+        onTapUp: () {
+          Navigator.of(context).pushNamed('/authenticationPage');
+        }); //buildFlatButton("Connexion");
+
+    Widget continueWithoutConnexionButton = PaperButton(
+      text: "Continuer sans se connecter",
+      onTapUp: () {
+        Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
+      },
+    );
+
+    Widget inscriptionButton = // PostItButton(text: 'text', onTapUp: () {});
+        LongPostItButton(
+      text: 'Creer un compte',
+      color: LPColors.blue,
+      onTapUp: () {
+        Navigator.of(context).pushNamed('/inscription');
+      },
+    );
+
+    double topPosLogo = -50;
+    double topPosPostit = topPosLogo + MediaQuery.of(context).size.height / 1.8;
+
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: topPosLogo,
+          left: -50,
+          height: 280,
+          child: Transform.rotate(angle: 2.4, child: widget.ideaLogo),
+        ),
+        Positioned(
+          top: topPosPostit,
+          left: 40,
+          child: continueWithoutConnexionButton,
+        ),
+        Positioned(
+          top: topPosPostit,
+          right: 40,
+          child: connexionButton,
+        ),
+        Positioned(
+          bottom: MediaQuery.of(context).size.height / 15,
+          left: 40,
+          child: inscriptionButton,
+        ),
+      ],
+    );
+  }
 }

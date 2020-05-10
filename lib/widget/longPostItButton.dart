@@ -7,6 +7,7 @@ double originalHeight = 105;
 double originalWidth = 291;
 
 class LongPostItButton extends StatefulWidget {
+  final double fontSize;
   final String text;
   final Function onTapUp;
   //TODO : Implement colorChanger
@@ -16,7 +17,8 @@ class LongPostItButton extends StatefulWidget {
       {Key key,
       @required this.text,
       @required this.onTapUp,
-      this.color = LPColors.orange})
+      this.color = LPColors.orange,
+      this.fontSize = 27})
       : super(key: key);
 
   @override
@@ -104,8 +106,8 @@ class _LongPostItButtonState extends State<LongPostItButton> {
       },
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: originalHeight*0.8,
-          maxWidth: originalWidth*0.8,
+          maxHeight: originalHeight * 0.8,
+          maxWidth: originalWidth * 0.8,
         ),
         child: Container(
           child: ConstrainedBox(
@@ -120,14 +122,16 @@ class _LongPostItButtonState extends State<LongPostItButton> {
                     ),
                     child: Image(image: _pic)),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
                   child: Text(
                     widget.text,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: "Nanum",
-                      fontSize: 23,
+                      fontSize: widget.fontSize,
                       color: Colors.black,
                     ),
                   ),
