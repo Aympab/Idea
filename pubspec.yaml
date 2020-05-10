@@ -44,7 +44,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  image_path: "assets/logo.png" 
+  image_path: 'assets/appIconDraw.png' 
   android: true
   ios: true  
 
@@ -66,6 +66,7 @@ flutter:
     - assets/sounds/tapOnPaperReverse.mp3
     - assets/images/buttonsImages/ 
     - assets/images/buttonsImages/longPostIt/
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -81,18 +82,20 @@ flutter:
   fonts:
     - family: Oswald
       fonts:
-        - asset: fonts/Oswald/Oswald-Light.ttf
-        - asset: fonts/Oswald/Oswald-Regular.ttf
-        - asset: fonts/Oswald/Oswald-SemiBold.ttf
+        - asset: assets/fonts/Oswald/Oswald-Light.ttf
+        - asset: assets/fonts/Oswald/Oswald-Regular.ttf
+        - asset: assets/fonts/Oswald/Oswald-SemiBold.ttf
     - family: IndieFlower
       fonts:
-        - asset: fonts/IndieFlower-Regular.ttf
+        - asset: assets/fonts/IndieFlower-Regular.ttf
     - family: Jost
       fonts:
-        - asset: fonts/Jost/Jost-ExtraLightItalic.ttf
-        - asset: fonts/Jost/Jost-Regular.ttf
-        - asset: fonts/Jost/Jost-Bold.ttf
-        
+        - asset: assets/fonts/Jost/Jost-ExtraLightItalic.ttf
+        - asset: assets/fonts/Jost/Jost-Regular.ttf
+        - asset: assets/fonts/Jost/Jost-Bold.ttf
+    - family: Nanum
+      fonts:
+        - asset: assets/fonts/NanumPenScript-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

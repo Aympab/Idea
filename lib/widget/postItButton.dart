@@ -15,8 +15,8 @@ class PostItButton extends StatefulWidget {
     Key key,
     @required this.text,
     @required this.onTapUp,
-    this.maxWidth: 130,
-    this.maxHeight: 130,
+    this.maxWidth: 150,
+    this.maxHeight: 150,
   }) : super(key: key);
 
   @override
@@ -87,8 +87,12 @@ class _PostItButtonState extends State<PostItButton> {
       },
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: widget.maxHeight,
-          maxWidth: widget.maxWidth,
+          maxHeight: widget.maxHeight > MediaQuery.of(context).size.width / 3
+              ? MediaQuery.of(context).size.width / 3
+              : widget.maxHeight,
+          maxWidth: widget.maxWidth > MediaQuery.of(context).size.width / 3
+              ? MediaQuery.of(context).size.width / 3
+              : widget.maxWidth,
         ),
         child: Container(
           child: ConstrainedBox(
@@ -102,6 +106,128 @@ class _PostItButtonState extends State<PostItButton> {
                     child: Text(
                       widget.text,
                       textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "Nanum",
+                        fontSize: 23,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PaperButton extends StatefulWidget {
+  final String text;
+  final Function onTapUp;
+
+  final double maxWidth;
+  final double maxHeight;
+
+  const PaperButton({
+    Key key,
+    @required this.text,
+    @required this.onTapUp,
+    this.maxWidth: 130,
+    this.maxHeight: 130,
+  }) : super(key: key);
+
+  @override
+  _PaperButtonState createState() => _PaperButtonState();
+}
+
+class _PaperButtonState extends State<PaperButton> {
+  AssetImage _picture =
+      AssetImage('assets/images/buttonsImages/pieceOfPaper.png');
+
+//Used to preCache the image to get a smooth image changing transition
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(_picture, context);
+  }
+
+  AudioCache player = new AudioCache();
+  String _onTapDownSound = 'sounds/tapOnPaper.mp3';
+
+  RenderBox renderBox;
+  BoxShadow _initBoxShadow = BoxShadow(
+    color: Colors.black.withOpacity(0.8),
+    spreadRadius: -10,
+    blurRadius: 8,
+    offset: Offset(12, 12), // changes position of shadow
+  );
+
+  BoxShadow _currentBoxShadow;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentBoxShadow = _initBoxShadow;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (TapDownDetails details) {
+        setState(() {
+          player.play(_onTapDownSound);
+          _currentBoxShadow = BoxShadow(
+            color: Colors.black.withOpacity(1),
+            spreadRadius: -10,
+            blurRadius: 8,
+            offset: Offset(6, 6), // changes position of shadow
+          );
+        });
+      },
+      onTapUp: (TapUpDetails details) {
+        widget.onTapUp();
+        setState(() {
+          _currentBoxShadow = _initBoxShadow;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          _currentBoxShadow = _initBoxShadow;
+        });
+      },
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: widget.maxHeight,
+          maxWidth: widget.maxWidth,
+        ),
+        child: Container(
+          child: ConstrainedBox(
+            constraints: BoxConstraints.expand(),
+            child: Stack(
+              children: <Widget>[
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      _currentBoxShadow,
+                    ],
+                  ),
+                  child: Image(
+                      image: AssetImage(
+                          'assets/images/buttonsImages/pieceOfPaper.png')),
+                ), // _currentPic),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.text,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "Nanum",
+                        fontSize: 23,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
