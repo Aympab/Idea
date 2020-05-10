@@ -4,9 +4,7 @@ import 'package:idea/model/idea.dart';
 import 'ideaInfosPage/ideaInfosPage.dart';
 
 class InheritedIdea extends InheritedWidget {
-  InheritedIdea({this.idea, Key key})
-      : super(key: key, child: IdeaView());
-
+  InheritedIdea({this.idea, Key key}) : super(key: key, child: IdeaView());
 
   final Idea idea;
 
@@ -25,18 +23,32 @@ class IdeaView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            SingleChildScrollView(
-              child: IdeaInfosPage(),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: buildColumnIcons(context),
-            ),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [
+            Color(0xF8EABF).withOpacity(1.0),
+            // Colors.white,
+            Color(0xFFC114).withOpacity(1.0),
           ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              SingleChildScrollView(
+                child: IdeaInfosPage(),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: buildColumnIcons(context),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -69,7 +81,5 @@ class IdeaView extends StatelessWidget {
         ],
       ),
     );
-  } 
+  }
 }
-
-

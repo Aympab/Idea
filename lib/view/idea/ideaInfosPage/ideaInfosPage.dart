@@ -16,7 +16,6 @@ class IdeaInfosPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          color: Colors.amber,
           child: Center(
               child: Text(
             //TODO : Dynamise
@@ -26,7 +25,6 @@ class IdeaInfosPage extends StatelessWidget {
           )),
         ),
         Container(
-          color: Colors.amber[300],
           child: Center(
             child: Text(
               //TODO : Dynamise
@@ -40,13 +38,7 @@ class IdeaInfosPage extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          child: SizedBox(
-            height: 20,
-            width: MediaQuery.of(context).size.width,
-          ),
-          color: Colors.amber[200],
-        ),
+        SizedBox(height:30),
         Container(
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -59,13 +51,14 @@ class IdeaInfosPage extends StatelessWidget {
         ),
         SizedBox(height: 20),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Text(
-                'Par',
+                'Par :',
                 textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black,fontStyle: FontStyle.italic),
               ),
             ),
             //TODO : Dynamise
@@ -83,10 +76,12 @@ class IdeaInfosPage extends StatelessWidget {
   Text _buildTileTitle(String title) => Text(
         title,
         textAlign: TextAlign.center,
+        style: TextStyle( color: Colors.black, fontSize: 20),
       );
 
   _buildExpansionTileDescription() {
     return ExpansionTile(
+      initiallyExpanded: true,
       title: _buildTileTitle('Description détaillée'),
       children: <Widget>[
         Container(
