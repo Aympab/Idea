@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/tools/themes.dart';
-import 'package:idea/view/connexion.dart';
-import 'package:idea/view/idea/ideaMainView.dart';
-import 'package:idea/view/inscription.dart';
-import 'package:idea/view/profile/profileMain.dart';
 import 'package:provider/provider.dart';
-
-import 'launchingAppTest.dart';
 
 void main() => runApp(
       ChangeNotifierProvider(

@@ -130,7 +130,3 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   }
 }
 
-//TODO : Implement getImage, should return the profile pic of a given user
-ImageProvider getImage(User user) {
-  return user.profileInfos.getProfilePicAsImageProvider();
-}

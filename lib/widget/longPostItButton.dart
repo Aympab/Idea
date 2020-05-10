@@ -10,7 +10,6 @@ class LongPostItButton extends StatefulWidget {
   final double fontSize;
   final String text;
   final Function onTapUp;
-  //TODO : Implement colorChanger
   final LPColors color;
 
   const LongPostItButton(

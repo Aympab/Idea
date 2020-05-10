@@ -4,7 +4,6 @@ import 'package:idea/view/connexion.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
 import 'package:idea/view/profile/profileMain.dart';
-import 'main.dart';
 import 'model/idea.dart';
 import 'model/user.dart';
 
@@ -28,7 +27,7 @@ class RouteGenerator {
           return MaterialPageRoute(
               builder: (_) => InheritedProfile(user: args));
         } else {
-          //TODO : Implement a nice error page (not in this file)
+          //TODO : Implement a nice error page
           return _errorPageBuilder();
         }
         break;
@@ -44,6 +43,8 @@ class RouteGenerator {
       default:
         return _errorPageBuilder();
     }
+
+    return _errorPageBuilder();
   }
 
   static MaterialPageRoute _errorPageBuilder() {

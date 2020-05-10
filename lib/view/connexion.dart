@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,6 @@ class ConnexionView extends StatefulWidget {
 }
 
 class _ConnexionViewState extends State<ConnexionView> {
-  //TODO : Change with an animted GIF
   Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
 
 //To precache image so it charges everything before displaying the screen

@@ -17,10 +17,10 @@ class UserCard extends StatelessWidget {
               child: Card(
                 color: Color(0x5F71B3).withOpacity(1),
           child: InkWell(
-            //TODO : Adapt with ThemeColor 
             splashColor: Colors.amber,
             onTap: () {
               //TODO Go to user profile
+              // Navigator.of(context).popAndPushNamed('qsdqsdqsd', arguments:this.user);
               print('Card tapped.');
             },
             child: Column(
@@ -42,10 +42,9 @@ class UserCard extends StatelessWidget {
                     ),
                     FlatButton(
                       child: Text('SUIVRE'),
-                      //TODO Follow this user with actual user
+                      //TODO Follow this user with current user
                       onPressed: () {/* ... */},
                     ),
-                    //TODO : Add more infos like how many idead he made for example
                   ],
                 ),
               ],
