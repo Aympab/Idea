@@ -23,93 +23,112 @@ class LongPostItButton extends StatefulWidget {
   _LongPostItButtonState createState() => _LongPostItButtonState();
 }
 
-enum LPColors {
-  orange,
-}
+enum LPColors { orange, pink, red, blue, lightBlue, green }
+
+AssetImage getAsset(String color) =>
+    AssetImage('assets/images/buttonsImages/longPostIt/${color}LP.png');
 
 class _LongPostItButtonState extends State<LongPostItButton> {
-  AssetImage _upPic;
-  AssetImage _downPic;
-  AssetImage _currentPic;
+  AssetImage _pic;
+
+  static BoxShadow _initShadow = BoxShadow(
+      blurRadius: 10,
+      color: Colors.black.withOpacity(0.7),
+      offset: Offset(10, 2));
+
+  BoxShadow _currentShadow = _initShadow;
 
   @override
   void initState() {
     super.initState();
 
-    //TODO : switch case en fonction de LPColors
     switch (widget.color) {
       case LPColors.orange:
-        _upPic =
-            AssetImage('assets/images/buttonsImages/longPostIt/orangeLP.png');
-        _downPic = AssetImage(
-            'assets/images/buttonsImages/longPostIt/orangeLPdown.png');
-
+        _pic = getAsset('orange');
+        break;
+      case LPColors.blue:
+        _pic = getAsset('blue');
+        break;
+      case LPColors.green:
+        _pic = getAsset('green');
+        break;
+      case LPColors.lightBlue:
+        _pic = getAsset('lightBlue');
+        break;
+      case LPColors.red:
+        _pic = getAsset('red');
+        break;
+      case LPColors.pink:
+        _pic = getAsset('pink');
         break;
       default:
-        _upPic =
-            AssetImage('assets/images/buttonsImages/longPostIt/orangeLP.png');
-        _downPic = AssetImage(
-            'assets/images/buttonsImages/longPostIt/orangeLPdown.png');
-    }
+        _pic = getAsset('orange');
 
-    _currentPic = _upPic;
+        _currentShadow = _initShadow;
+    }
   }
 
 //Used to preCache the image to get a smooth image changing transition
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    precacheImage(_upPic, context);
-    precacheImage(_downPic, context);
-    precacheImage(_downPic, context);
+    precacheImage(_pic, context);
   }
 
   AudioCache player = new AudioCache();
   String _onTapDownSound = 'sounds/tapOnPaper.mp3';
-  String _onTapUpSound = 'sounds/tapOnPaperReverse.mp3';
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: (TapDownDetails details) {
         setState(() {
-          _currentPic = _downPic;
+          _currentShadow = BoxShadow(
+            blurRadius: 4,
+            color: Colors.black.withOpacity(0.7),
+            offset: Offset(5, 0),
+          );
           player.play(_onTapDownSound);
         });
       },
       onTapUp: (TapUpDetails details) {
         widget.onTapUp();
         setState(() {
-          _currentPic = _upPic;
-          player.play(_onTapUpSound);
+          _currentShadow = _initShadow;
         });
       },
       onTapCancel: () {
         setState(() {
-          _currentPic = _upPic;
-          player.play(_onTapUpSound);
+          _currentShadow = _initShadow;
         });
       },
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: originalHeight,
-          maxWidth: originalWidth,
+          maxHeight: originalHeight*0.8,
+          maxWidth: originalWidth*0.8,
         ),
         child: Container(
           child: ConstrainedBox(
             constraints: BoxConstraints.expand(),
             child: Stack(
               children: <Widget>[
-                Image(image: _currentPic),
+                DecoratedBox(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        _currentShadow,
+                      ],
+                    ),
+                    child: Image(image: _pic)),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20,horizontal:40 ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   child: Text(
                     widget.text,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: "Nanum",
                       fontSize: 23,
-                      color:Colors.black,
+                      color: Colors.black,
                     ),
                   ),
                 ),

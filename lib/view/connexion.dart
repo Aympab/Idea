@@ -51,6 +51,7 @@ class _ConnexionViewState extends State<ConnexionView> {
     Widget inscriptionButton = // PostItButton(text: 'text', onTapUp: () {});
         LongPostItButton(
       text: 'Creer un compte',
+      color: LPColors.blue,
       onTapUp: () {
         Navigator.of(context).pushNamed('/inscription');
       },
@@ -119,7 +120,7 @@ class _ConnexionViewState extends State<ConnexionView> {
                   ),
                   Positioned(
                     bottom: MediaQuery.of(context).size.height/15,
-                    left: 30,
+                    left: 40,
                     child: inscriptionButton,
                   ),
                 ],
