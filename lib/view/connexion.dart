@@ -246,4 +246,20 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
       ],
     );
   }
+
+  builTitleIdea() {
+    return Text('Idea',
+        style: TextStyle(
+          fontFamily: "NanumPen",
+          //fontSize: 200,
+          color: Color(0xfff8e8ba),
+          shadows: [
+            Shadow(
+              offset: Offset(0.00, 5.00),
+              color: Color(0xff000000).withOpacity(0.68),
+              blurRadius: 6,
+            ),
+          ],
+        ));
+  }
 }

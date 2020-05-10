@@ -43,6 +43,7 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.0"
+<<<<<<< HEAD
   bordered_text:
     dependency: "direct main"
     description:
@@ -50,6 +51,8 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.0"
+=======
+>>>>>>> 765818c3d6de59b7a176b281eeac502c7214059a
   cached_network_image:
     dependency: transitive
     description:
@@ -448,6 +451,7 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.6.1"
+<<<<<<< HEAD
   yaml:
     dependency: transitive
     description:
@@ -455,6 +459,8 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.2.1"
+=======
+>>>>>>> 765818c3d6de59b7a176b281eeac502c7214059a
 sdks:
   dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.17.0 <2.0.0"
