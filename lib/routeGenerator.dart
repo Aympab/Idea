@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:idea/view/connexion.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
+import 'package:idea/view/newIdea.dart';
 import 'package:idea/view/profile/profileMain.dart';
 import 'main.dart';
 import 'model/idea.dart';
@@ -41,6 +42,14 @@ class RouteGenerator {
                   ));
         }
         break;
+
+      case '/newIdeaPage':
+        if (args is Idea) {
+          return MaterialPageRoute(
+              builder: (_) => NewIdeaView());
+        }
+        break;
+        
       default:
         return _errorPageBuilder();
     }

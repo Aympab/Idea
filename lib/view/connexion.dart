@@ -204,7 +204,8 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
     Widget continueWithoutConnexionButton = PaperButton(
       text: "Continuer sans se connecter",
       onTapUp: () {
-        Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
+        Navigator.of(context).pushNamed('/newIdeaPage');
+        //Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
       },
     );
 
