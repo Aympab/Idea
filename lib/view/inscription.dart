@@ -7,6 +7,7 @@ import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/tools/dateParser.dart';
 import 'package:idea/tools/themes.dart';
+import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/multiSelect.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
@@ -91,11 +92,7 @@ class _InscriptionViewState extends State<InscriptionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          "Inscription",
-          style: TextStyle(color: Colors.black),
-        ),
+        title: Text("Inscription"),
         leading: IconButton(
           icon: Image.asset('assets/logo.png'),
           onPressed: () {
@@ -104,13 +101,18 @@ class _InscriptionViewState extends State<InscriptionView> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
         //Ici on détermine quel méthode de build on va appeler en fonctoin du state
         child: buildInitialInput(),
       ),
     );
   }
+
+  Text _buildTileTitle(String title) => Text(
+        title,
+        textAlign: TextAlign.center,
+        style: TextStyle( color: Colors.black, fontSize: 20),
+      );
 
   Widget showImage() {
     return image == null ? Icon(Icons.person) : Image.file(image);
@@ -270,44 +272,11 @@ class _InscriptionViewState extends State<InscriptionView> {
       )
     ]);
 
-    final infosFacultatives = new ConfigurableExpansionTile(
-      headerExpanded: Flexible(
-        child: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.title,
-            children: [
-              WidgetSpan(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: Icon(Icons.keyboard_arrow_down),
-                ),
-              ),
-              TextSpan(
-                text: 'Infos Facultatives',
-              ),
-            ],
-          ),
-        ),
-      ),
-      header: Container(
-        child: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.title,
-            children: [
-              WidgetSpan(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Icon(Icons.keyboard_arrow_right),
-                ),
-              ),
-              TextSpan(
-                text: 'Infos Facultatives',
-              ),
-            ],
-          ),
-        ),
-      ),
-      children: [
+    _buildExpansionTileInfoFacultative() {
+    return ExpansionTile(
+      initiallyExpanded: false,
+      title: _buildTileTitle('Infos Facultatives'),
+      children: <Widget>[
         SizedBox(height: 22),
         Row(
           children: [
@@ -352,7 +321,7 @@ class _InscriptionViewState extends State<InscriptionView> {
           ),
         ),
       ],
-    );
+    );}
 
     List competenceListFunction() {
       List competenceList = List();
@@ -363,52 +332,23 @@ class _InscriptionViewState extends State<InscriptionView> {
       competenceList.add(myCompetence_5);
       return competenceList;
     }
-
-    final competences = new ConfigurableExpansionTile(
-      headerExpanded: Flexible(
-        child: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.title,
-            children: [
-              WidgetSpan(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Icon(Icons.keyboard_arrow_down),
-                ),
-              ),
-              TextSpan(
-                  text: 'Compétences', style: TextStyle(color: Colors.blue)),
-            ],
-          ),
-        ),
-      ),
-      header: Container(
-        child: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.title,
-            children: [
-              WidgetSpan(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Icon(Icons.keyboard_arrow_right),
-                ),
-              ),
-              TextSpan(
-                  text: 'Compétences', style: TextStyle(color: Colors.blue)),
-            ],
-          ),
-        ),
-      ),
-      children: [
-        new MultiSelectWidget(
+    _buildExpansionTileCompetence() {
+    return ExpansionTile(
+      initiallyExpanded: false,
+      title: _buildTileTitle('Compétences'),
+      children: <Widget>[
+        Container(
+          color: Colors.amber,
+          child: new MultiSelectWidget(
           titleMultiSelect: 'Ajouter vos compétences',
           textFieldName: 'name',
           textFieldValue: 'value',
           objectList: competenceListFunction(),
           selectedvalues: selectedCompetences,
         )
+        ),
       ],
-    );
+    );}
 
     List materielListFunction() {
       List materielList = List();
@@ -420,51 +360,23 @@ class _InscriptionViewState extends State<InscriptionView> {
       return materielList;
     }
 
-    final materiel = new ConfigurableExpansionTile(
-      headerExpanded: Flexible(
-        child: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.title,
-            children: [
-              WidgetSpan(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Icon(Icons.keyboard_arrow_down),
-                ),
-              ),
-              TextSpan(
-                  text: 'Matériel', style: TextStyle(color: Colors.purple)),
-            ],
-          ),
-        ),
-      ),
-      header: Container(
-        child: RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.title,
-            children: [
-              WidgetSpan(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Icon(Icons.keyboard_arrow_right),
-                ),
-              ),
-              TextSpan(
-                  style: TextStyle(color: Colors.purple), text: 'Matériel'),
-            ],
-          ),
-        ),
-      ),
-      children: [
-        new MultiSelectWidget(
+    _buildExpansionTileMateriel() {
+    return ExpansionTile(
+      initiallyExpanded: false,
+      title: _buildTileTitle('Matériels'),
+      children: <Widget>[
+        Container(
+          color: Colors.amber,
+          child: new MultiSelectWidget(
           titleMultiSelect: 'Ajouter un matériel',
           textFieldName: 'name',
           textFieldValue: 'value',
           objectList: materielListFunction(),
           selectedvalues: selectedMateriels,
         )
+        ),
       ],
-    );
+    );}
 
     final checkbox = new Container(
       padding: new EdgeInsets.all(32.0),
@@ -527,9 +439,12 @@ class _InscriptionViewState extends State<InscriptionView> {
       ),
     );
 
-    final validationInscription = FlatButton(
-        onPressed: () {
-          //FIXME : Pour l'instant envoie jsuter vers une page profil avec les infos entrées
+    Widget inscriptionButton = // PostItButton(text: 'text', onTapUp: () {});
+        LongPostItButton(
+      text: "Valider l'inscription",
+      color: LPColors.blue,
+      onTapUp: () {
+        //FIXME : Pour l'instant envoie jsuter vers une page profil avec les infos entrées
 
           //Création d'un utilisateur avec les data que l'on a dans la page
           User nouvelUser = User(
@@ -577,38 +492,47 @@ class _InscriptionViewState extends State<InscriptionView> {
 
           Navigator.of(context)
               .pushNamed('/userProfile', arguments: nouvelUser);
-        },
-        padding: EdgeInsets.all(0.0),
-        child: Image.asset('assets/confirmInscriptionButton.png'));
-
-    return SafeArea(
-      child: ListView(
-        padding: EdgeInsets.only(left: 24.0, right: 24.0),
-        children: <Widget>[
-          identity_widget,
-          SizedBox(height: 22),
-          separator,
-          SizedBox(height: 5),
-          mail,
-          SizedBox(height: 22),
-          password,
-          SizedBox(height: 22),
-          date,
-          separator,
-          SizedBox(height: 5),
-          infosFacultatives,
-          SizedBox(height: 5),
-          separator,
-          SizedBox(height: 5),
-          competences,
-          separator,
-          SizedBox(height: 5),
-          Theme(data: ThemeData(primaryColor: Colors.purple), child: materiel),
-          SizedBox(height: 22),
-          checkbox,
-          SizedBox(height: 22),
-          validationInscription,
-        ],
+      },
+    );
+    
+    
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [
+            Color(0xFFC114).withOpacity(1.0),
+            Color(0xF8EABF).withOpacity(1.0),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.only(left: 24.0, right: 24.0),
+          children: <Widget>[
+            SizedBox(height: 10),
+            identity_widget,
+            SizedBox(height: 22),
+            separator,
+            SizedBox(height: 5),
+            mail,
+            SizedBox(height: 22),
+            password,
+            SizedBox(height: 22),
+            date,
+            SizedBox(height: 5),
+            _buildExpansionTileInfoFacultative(),
+            SizedBox(height: 5),
+            _buildExpansionTileCompetence(),
+            SizedBox(height: 5),
+            _buildExpansionTileMateriel(),
+            SizedBox(height: 22),
+            checkbox,
+            SizedBox(height: 22),            
+            Center(child: inscriptionButton),
+          ],
+        ),
       ),
     );
   }
