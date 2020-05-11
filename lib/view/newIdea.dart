@@ -1,14 +1,15 @@
-import 'package:custom_radio_button/custom_radio_button.dart';
+
 import 'package:flutter/material.dart';
 import 'package:idea/bloc/newIdea/newidea_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:idea/model/idea.dart';
+import 'package:idea/tools/themes.dart';
 import 'package:idea/widget/expansionTileWidget.dart';
-import 'package:custom_radio_button/radio_model.dart';
 import 'package:idea/widget/multiSelect.dart';
+import 'package:provider/provider.dart';
 
 class NewIdeaView extends StatefulWidget {
   NewIdeaView({Key key}) : super(key: key);
-  static String tag = 'new-idea';
 
   @override
   _NewIdeaViewState createState() => _NewIdeaViewState();
@@ -105,48 +106,23 @@ class _NewIdeaViewState extends State<NewIdeaView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          "Nouvelle Idée",
-          style: TextStyle(color: Colors.black),
-        ),
+        title: Text("Une nouvelle idée ?"),
         leading: IconButton(
           icon: Image.asset('assets/logo.png'),
-          onPressed: () {},
+          onPressed: () {
+            Provider.of<ThemeModel>(context, listen: false).toggleTheme();
+          },
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
         //Ici on détermine quel méthode de build on va appeler en fonctoin du state
-        child: BlocListener<NewideaBloc, NewideaState>(
-          //Le listener permet d'ajouter des élements graphiques (on doit wrap with new widget le BlocCuilder)
-          //Le listener return void
-          //Le builder construit L'UI et est lancé plusieurs fois alros que le listener ne se lance qu'une fois pas changement d'état
-          listener: (context, state) {},
-          child: BlocBuilder<NewideaBloc, NewideaState>(
-            builder: (BuildContext context, NewideaState state) {
-              if (state is NewideaInitial) {
-                return buildInitialInput();
-              }
-            },
-          ),
-        ),
+        child: buildInitialInput(),
       ),
     );
   }
 
   Widget buildInitialInput() {
-    final separator = new Row(children: <Widget>[
-      Expanded(
-        child: new Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-            child: Divider(
-              color: Colors.black,
-              height: 60,
-            )),
-      )
-    ]);
 
     final title = new Text(
       "Notez la maintenant...", 
@@ -301,31 +277,46 @@ class _NewIdeaViewState extends State<NewIdeaView> {
             print (selectedMateriels);
             print (selectedContacts);
             print (selectedValue);
+            Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
           }
             
         );
-    return SafeArea(
-      child: ListView(
-        padding: EdgeInsets.only(left: 24.0, right: 24.0),
-        children: <Widget>[
-          title,
-          SizedBox(height: 5),
-          titleComment,
-          SizedBox(height: 22),
-          categorytitle, 
-          SizedBox(height: 5),
-          categorySelector,
-          SizedBox(height: 25),
-          globalInformations,
-          SizedBox(height: 5),
-          besoins,
-          SizedBox(height: 20),
-          statustitle,
-          SizedBox(height: 5),
-          ideaStatus2,
-          SizedBox(height: 20),
-          validationButton
-        ],)
+  
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [
+            Color(0xFFC114).withOpacity(1.0),
+            Color(0xF8EABF).withOpacity(1.0),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.only(left: 24.0, right: 24.0),
+          children: <Widget>[
+            SizedBox(height: 10),
+            title,
+            SizedBox(height: 5),
+            titleComment,
+            SizedBox(height: 22),
+            categorytitle, 
+            SizedBox(height: 5),
+            categorySelector,
+            SizedBox(height: 25),
+            globalInformations,
+            SizedBox(height: 5),
+            besoins,
+            SizedBox(height: 20),
+            statustitle,
+            SizedBox(height: 5),
+            ideaStatus2,
+            SizedBox(height: 20),
+            validationButton
+          ],)
+      ),
     );
   }
 }
