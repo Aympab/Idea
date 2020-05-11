@@ -1,5 +1,4 @@
-import 'dart:math';
-
+//TODO : Remove boolean changing state
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +28,7 @@ class _ConnexionViewState extends State<ConnexionView> {
   }
 
   bool _changingPage = true;
+  final controller = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,8 @@ class _ConnexionViewState extends State<ConnexionView> {
       child: Scaffold(
         floatingActionButton: IconButton(
           onPressed: () {
+            controller.animateToPage(controller.page.round()+1%2,
+                duration: Duration(milliseconds: 500), curve: Curves.linear);
             setState(() {
               _changingPage = !_changingPage;
             });
@@ -54,35 +56,58 @@ class _ConnexionViewState extends State<ConnexionView> {
         ),
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: AnimatedCrossFade(
-            crossFadeState: _changingPage
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond,
-            duration: Duration(seconds: 1),
-            firstChild: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width,
-                maxHeight: MediaQuery.of(context).size.height,
+          child: PageView(
+            controller: controller,
+            children: <Widget>[
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width,
+                  maxHeight: MediaQuery.of(context).size.height,
+                ),
+                child: FirstPageConnexion(
+                  ideaBulbLogo: ideaLogo,
+                ),
               ),
-              child: FirstPageConnexion(
-                ideaBulbLogo: ideaLogo,
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width,
+                  maxHeight: MediaQuery.of(context).size.height,
+                ),
+                child: SecondPageConnexion(
+                  ideaLogo: ideaLogo,
+                ),
               ),
-            ),
-            secondChild: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width,
-                maxHeight: MediaQuery.of(context).size.height,
-              ),
-              child: SecondPageConnexion(
-                ideaLogo: ideaLogo,
-              ),
-            ),
+            ],
           ),
         ),
       ),
     );
+    //                 child: AnimatedCrossFade(
+    //         firstChild: ConstrainedBox(
+    //           constraints: BoxConstraints(
+    //             maxWidth: MediaQuery.of(context).size.width,
+    //             maxHeight: MediaQuery.of(context).size.height,
+    //           ),
+    //           child: FirstPageConnexion(
+    //             ideaBulbLogo: ideaLogo,
+    //           ),
+    //         ),
+    //         secondChild: ConstrainedBox(
+    //           constraints: BoxConstraints(
+    //             maxWidth: MediaQuery.of(context).size.width,
+    //             maxHeight: MediaQuery.of(context).size.height,
+    //           ),
+    //           child: SecondPageConnexion(
+    //             ideaLogo: ideaLogo,
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
+
 //
 //
 //
@@ -173,6 +198,7 @@ builTitleIdea() {
         )),
   );
 }
+
 //
 //
 //
