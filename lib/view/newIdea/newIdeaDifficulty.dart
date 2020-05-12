@@ -39,18 +39,19 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
               buildTitle(posTitle, sidePadding, context),
               buildSubtitle(posSubTitle, sidePadding),
               buildInstruction(posInstructions, sidePadding),
-              Positioned(
-                top: posCardView,
-                left: sidePadding,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 200, 8.0, 0),
                 child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Row(
-                    children: <Widget>[
-                      NoDifficultyIdea(),
-                      EasyDifficultyIdea(),
-                      MediumDifficultyIdea(),
-                      HardDifficultyIdea(),
-                    ],
+                  scrollDirection: Axis.horizontal,
+                  child: Container(
+                    child: Row(
+                      children: <Widget>[
+                        NoDifficultyIdea(),
+                        EasyDifficultyIdea(),
+                        MediumDifficultyIdea(),
+                        HardDifficultyIdea(),
+                      ],
+                    ),
                   ),
                 ),
               )

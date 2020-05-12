@@ -105,7 +105,7 @@ class EasyDifficultyIdea extends DifficultyCard {
           borderAndSplashColor: Colors.green,
           cardColor: Colors.amber[50],
           cardWidth: 138,
-          cardHeight: 100 * 2.0,
+          cardHeight: 100 * 1.5,
           starNumber: 2,
           listeElements: "Texte court\nImage",
         );
@@ -117,7 +117,7 @@ class MediumDifficultyIdea extends DifficultyCard {
           borderAndSplashColor: Colors.blue,
           cardColor: Colors.amber[50],
           cardWidth: 138,
-          cardHeight: 100 * 3.0,
+          cardHeight: 100 * 2.0,
           starNumber: 3,
           listeElements: "Texte court\nImage",
         );
@@ -129,7 +129,7 @@ class HardDifficultyIdea extends DifficultyCard {
           borderAndSplashColor: Colors.red[900],
           cardColor: Colors.amber[50],
           cardWidth: 138,
-          cardHeight: 100 * 4.0,
+          cardHeight: 100 * 2.5,
           starNumber: 4,
           listeElements: "Texte court\nImage",
         );
