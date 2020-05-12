@@ -4,6 +4,7 @@ import 'package:idea/view/connexion.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
 import 'package:idea/view/newIdea./newIdea.dart';
+import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
 import 'package:idea/view/profile/profileMain.dart';
 import 'model/idea.dart';
 import 'model/user.dart';
@@ -43,7 +44,7 @@ class RouteGenerator {
         break;
 
       case '/newIdeaPage':
-        return MaterialPageRoute(builder: (_) => NewIdeaView());
+        return MaterialPageRoute(builder: (_) => NewIdeaDifficulty());
 
         break;
 

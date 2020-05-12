@@ -96,6 +96,9 @@ flutter:
     - family: Nanum
       fonts:
         - asset: assets/fonts/NanumPenScript-Regular.ttf
+    - family: ComingSoon
+      fonts:
+        - asset: assets/fonts/ComingSoon-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
