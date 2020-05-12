@@ -55,6 +55,7 @@ class _DifficultyCardsRowState extends State<DifficultyCardsRow> {
     );
   }
 }
+
 //
 //
 //
@@ -114,8 +115,7 @@ class _DifficultyCardState extends State<DifficultyCard> {
                 cardKey.currentState.disable();
               }
               widget.buttonKey.currentState.enable();
-            }
-            else{
+            } else {
               widget.buttonKey.currentState.disable();
             }
           });
@@ -256,6 +256,7 @@ class HardDifficultyIdea extends DifficultyCard {
           buttonKey: buttonKey,
         );
 }
+
 //
 //
 //
@@ -265,10 +266,7 @@ class HardDifficultyIdea extends DifficultyCard {
 class ArrowButton extends StatefulWidget {
   ArrowButton({
     Key key,
-    @required this.pvController,
   }) : super(key: key);
-
-  final PageController pvController;
 
   @override
   ArrowButtonState createState() => ArrowButtonState();
@@ -283,7 +281,7 @@ class ArrowButtonState extends State<ArrowButton> {
     });
   }
 
-  void disable(){
+  void disable() {
     setState(() {
       isButtonEnabled = false;
     });
@@ -294,9 +292,32 @@ class ArrowButtonState extends State<ArrowButton> {
     return FlatButton(
       onPressed: isButtonEnabled
           ? () {
-              widget.pvController.nextPage(
-                  duration: Duration(milliseconds: 1000),
-                  curve: Curves.easeInOutExpo);
+              //TODO : Route to next page nicely
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: Duration(seconds: 3),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+
+                    animation = CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.easeInExpo,
+                    );
+
+                    return ScaleTransition(
+                      scale: animation,
+                      child: child,
+                      alignment: Alignment.center,
+                    );
+                  },
+                  pageBuilder: (BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secAnimation) {
+                    return CreateNoDifficultyIdea();
+                  },
+                ),
+              );
             }
           : () {
               Scaffold.of(context).showSnackBar(SnackBar(
@@ -306,5 +327,17 @@ class ArrowButtonState extends State<ArrowButton> {
             },
       child: Image.asset('assets/images/buttonsImages/nextWhite.png'),
     );
+  }
+}
+
+class CreateNoDifficultyIdea extends StatefulWidget {
+  @override
+  _CreateNoDifficultyIdeaState createState() => _CreateNoDifficultyIdeaState();
+}
+
+class _CreateNoDifficultyIdeaState extends State<CreateNoDifficultyIdea> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

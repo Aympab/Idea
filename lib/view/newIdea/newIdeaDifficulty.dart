@@ -9,8 +9,6 @@ class NewIdea extends StatefulWidget {
 }
 
 class _NewIdeaState extends State<NewIdea> {
-  PageController pvController = PageController(initialPage: 0);
-
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -24,11 +22,7 @@ class _NewIdeaState extends State<NewIdea> {
           ],
         ),
       ),
-      child: PageView(
-        physics: ClampingScrollPhysics(),
-        controller: pvController,
-        children: <Widget>[FirstPageNewIdea(pvController: pvController,), Text('data')],
-      ),
+      child: FirstPageNewIdea(),
     );
   }
 }
@@ -37,10 +31,7 @@ class FirstPageNewIdea extends StatefulWidget {
   final Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
   FirstPageNewIdea({
     Key key,
-    this.pvController,
   }) : super(key: key);
-
-  final PageController pvController;
   @override
   _FirstPageNewIdeaState createState() => _FirstPageNewIdeaState();
 }
@@ -82,7 +73,7 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
                 width: 100,
                 right: posButton,
                 child: ArrowButton(
-                    key: buttonKey, pvController: widget.pvController),
+                    key: buttonKey),
               ),
             ],
           ),
