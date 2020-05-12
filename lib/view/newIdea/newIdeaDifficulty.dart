@@ -1,5 +1,6 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/view/newIdea/difficultyCard.dart';
 
 class NewIdeaDifficulty extends StatefulWidget {
   final Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
@@ -13,9 +14,9 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
   Widget build(BuildContext context) {
     double sidePadding = 20;
     double posTitle = 30;
-    double posSubTitle = posTitle + 125;
-    double posInstructions = posSubTitle + 100;
-    double posCardView = posInstructions + 50;
+    double posSubTitle = posTitle + 120;
+    double posInstructions = posSubTitle + 80;
+    double posCardView = posInstructions + 80;
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -39,19 +40,20 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
               buildSubtitle(posSubTitle, sidePadding),
               buildInstruction(posInstructions, sidePadding),
               Positioned(
-                  top: posCardView,
-                  left: sidePadding,
-                  child: Card(
-                    elevation: 4,
-                    clipBehavior: Clip.antiAlias,
-                    shape: CircleBorder(
-                        side:
-                            BorderSide(color: Colors.grey.shade200, width: 5)),
-                    child: Image.asset(
-                      "assets/logo.png",
-                      fit: BoxFit.cover,
-                    ),
-                  ))
+                top: posCardView,
+                left: sidePadding,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Row(
+                    children: <Widget>[
+                      NoDifficultyIdea(),
+                      EasyDifficultyIdea(),
+                      MediumDifficultyIdea(),
+                      HardDifficultyIdea(),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -133,7 +135,7 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
     return Positioned(
       top: posTitle,
       left: sidePadding,
-      width: MediaQuery.of(context).size.width / 2 + 20,
+      width: MediaQuery.of(context).size.width / 2 + 50,
       child: Text(
         "J'ai une bonne idée !",
         style: TextStyle(
