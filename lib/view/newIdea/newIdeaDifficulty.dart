@@ -13,7 +13,7 @@ class NewIdeaDifficulty extends StatefulWidget {
 class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
   PageController pvController = PageController(initialPage: 0);
 
-  bool _isButtonEnabled = false;
+  GlobalKey buttonKey = GlobalKey<ArrowButtonState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,9 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         child: Container(
-                          child: DifficultyCardsRow(),
+                          child: DifficultyCardsRow(
+                            buttonKey: buttonKey,
+                          ),
                         ),
                       ),
                     ),
@@ -63,22 +65,8 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
                       bottom: 20,
                       width: 100,
                       right: posButton,
-                      child: FlatButton(
-                        onPressed: _isButtonEnabled
-                            ? () {
-                                pvController.nextPage(
-                                    duration: Duration(milliseconds: 1000),
-                                    curve: Curves.easeInOutExpo);
-                              }
-                            : () {
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text('Selectionnez une difficulté'),
-                                  duration: Duration(seconds: 2),
-                                ));
-                              },
-                        child: Image.asset(
-                            'assets/images/buttonsImages/nextWhite.png'),
-                      ),
+                      child: ArrowButton(
+                          key: buttonKey, pvController: pvController),
                     ),
                   ],
                 ),
@@ -212,6 +200,53 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
         angle: 0.2,
         child: widget.ideaLogo,
       ),
+    );
+  }
+}
+
+class ArrowButton extends StatefulWidget {
+  ArrowButton({
+    Key key,
+    @required this.pvController,
+  }) : super(key: key);
+
+  final PageController pvController;
+
+  @override
+  ArrowButtonState createState() => ArrowButtonState();
+}
+
+class ArrowButtonState extends State<ArrowButton> {
+  bool isButtonEnabled = false;
+
+  void enable() {
+    setState(() {
+      isButtonEnabled = true;
+    });
+  }
+
+  void disable(){
+    setState(() {
+      isButtonEnabled = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      onPressed: isButtonEnabled
+          ? () {
+              widget.pvController.nextPage(
+                  duration: Duration(milliseconds: 1000),
+                  curve: Curves.easeInOutExpo);
+            }
+          : () {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('Selectionnez une difficulté'),
+                duration: Duration(seconds: 2),
+              ));
+            },
+      child: Image.asset('assets/images/buttonsImages/nextWhite.png'),
     );
   }
 }

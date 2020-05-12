@@ -1,14 +1,14 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 
-class DifficultyCardsRow extends StatefulWidget {
-final GlobalKey<_DifficultyCardState> noDiffKey;
-final GlobalKey<_DifficultyCardState> easyKey;
-final GlobalKey<_DifficultyCardState> medKey;
-final GlobalKey<_DifficultyCardState> hardKey;
+import 'newIdeaDifficulty.dart';
 
-  const DifficultyCardsRow({
-    Key key, this.noDiffKey, this.easyKey, this.medKey, this.hardKey,
+class DifficultyCardsRow extends StatefulWidget {
+  GlobalKey<ArrowButtonState> buttonKey;
+
+  DifficultyCardsRow({
+    Key key,
+    @required this.buttonKey,
   }) : super(key: key);
 
   @override
@@ -25,17 +25,24 @@ class _DifficultyCardsRowState extends State<DifficultyCardsRow> {
   static GlobalKey<_DifficultyCardState> hardKey =
       GlobalKey<_DifficultyCardState>();
 
-  NoDifficultyIdea noDifficultyIdea =
-      NoDifficultyIdea(key: noDiffKey, cardKeys: [easyKey, medKey, hardKey]);
-  EasyDifficultyIdea easyDifficultyIdea =
-      EasyDifficultyIdea(key: easyKey, cardKeys: [noDiffKey, medKey, hardKey]);
-  MediumDifficultyIdea mediumDifficultyIdea = MediumDifficultyIdea(
-      key: medKey, cardKeys: [easyKey, noDiffKey, hardKey]);
-  HardDifficultyIdea hardDifficultyIdea =
-      HardDifficultyIdea(key: hardKey, cardKeys: [easyKey, medKey, noDiffKey]);
-
   @override
   Widget build(BuildContext context) {
+    NoDifficultyIdea noDifficultyIdea = NoDifficultyIdea(
+        key: noDiffKey,
+        cardKeys: [easyKey, medKey, hardKey],
+        buttonKey: widget.buttonKey);
+    EasyDifficultyIdea easyDifficultyIdea = EasyDifficultyIdea(
+        key: easyKey,
+        cardKeys: [noDiffKey, medKey, hardKey],
+        buttonKey: widget.buttonKey);
+    MediumDifficultyIdea mediumDifficultyIdea = MediumDifficultyIdea(
+        key: medKey,
+        cardKeys: [easyKey, noDiffKey, hardKey],
+        buttonKey: widget.buttonKey);
+    HardDifficultyIdea hardDifficultyIdea = HardDifficultyIdea(
+        key: hardKey,
+        cardKeys: [easyKey, medKey, noDiffKey],
+        buttonKey: widget.buttonKey);
 
     return Row(
       children: <Widget>[
@@ -56,6 +63,7 @@ class _DifficultyCardsRowState extends State<DifficultyCardsRow> {
 //
 class DifficultyCard extends StatefulWidget {
   final List<GlobalKey<_DifficultyCardState>> cardKeys;
+  final GlobalKey<ArrowButtonState> buttonKey;
 
   DifficultyCard({
     Key key,
@@ -66,6 +74,7 @@ class DifficultyCard extends StatefulWidget {
     @required this.starNumber,
     @required this.listeElements,
     this.cardKeys,
+    this.buttonKey,
   }) : super(key: key);
 
   final Color borderAndSplashColor; //
@@ -100,8 +109,14 @@ class _DifficultyCardState extends State<DifficultyCard> {
         onTap: () {
           setState(() {
             widget.isSelected = !widget.isSelected;
-            for (GlobalKey<_DifficultyCardState> cardKey in widget.cardKeys) {
-              if (cardKey != null) cardKey.currentState.disabled();
+            if (widget.isSelected) {
+              for (GlobalKey<_DifficultyCardState> cardKey in widget.cardKeys) {
+                cardKey.currentState.disable();
+              }
+              widget.buttonKey.currentState.enable();
+            }
+            else{
+              widget.buttonKey.currentState.disable();
             }
           });
         },
@@ -157,7 +172,7 @@ class _DifficultyCardState extends State<DifficultyCard> {
     );
   }
 
-  void disabled() {
+  void disable() {
     setState(() {
       widget.isSelected = false;
     });
@@ -165,55 +180,74 @@ class _DifficultyCardState extends State<DifficultyCard> {
 }
 
 class NoDifficultyIdea extends DifficultyCard {
-  NoDifficultyIdea({Key key, List<GlobalKey<_DifficultyCardState>> cardKeys})
+  NoDifficultyIdea(
+      {Key key,
+      List<GlobalKey<_DifficultyCardState>> cardKeys,
+      GlobalKey<ArrowButtonState> buttonKey})
       : super(
-            borderAndSplashColor: Colors.brown,
-            cardColor: Colors.amber[50],
-            cardWidth: 138,
-            cardHeight: 100,
-            starNumber: 1,
-            listeElements: "Texte court\nImage",
-            key: key,
-            cardKeys: cardKeys);
+          borderAndSplashColor: Colors.brown,
+          cardColor: Colors.amber[50],
+          cardWidth: 138,
+          cardHeight: 100,
+          starNumber: 1,
+          listeElements: "Texte court\nImage",
+          key: key,
+          cardKeys: cardKeys,
+          buttonKey: buttonKey,
+        );
 }
 
 class EasyDifficultyIdea extends DifficultyCard {
-  EasyDifficultyIdea({Key key, List<GlobalKey<_DifficultyCardState>> cardKeys})
+  EasyDifficultyIdea(
+      {Key key,
+      List<GlobalKey<_DifficultyCardState>> cardKeys,
+      GlobalKey<ArrowButtonState> buttonKey})
       : super(
-            borderAndSplashColor: Colors.green,
-            cardColor: Colors.green[50],
-            cardWidth: 138,
-            cardHeight: 100 * 1.5,
-            starNumber: 2,
-            listeElements: "+ Description",
-            key: key,
-            cardKeys: cardKeys);
+          borderAndSplashColor: Colors.green,
+          cardColor: Colors.green[50],
+          cardWidth: 138,
+          cardHeight: 100 * 1.5,
+          starNumber: 2,
+          listeElements: "+ Description",
+          key: key,
+          cardKeys: cardKeys,
+          buttonKey: buttonKey,
+        );
 }
 
 class MediumDifficultyIdea extends DifficultyCard {
   MediumDifficultyIdea(
-      {Key key, List<GlobalKey<_DifficultyCardState>> cardKeys})
+      {Key key,
+      List<GlobalKey<_DifficultyCardState>> cardKeys,
+      GlobalKey<ArrowButtonState> buttonKey})
       : super(
-            borderAndSplashColor: Colors.blue,
-            cardColor: Colors.blue[50],
-            cardWidth: 138,
-            cardHeight: 100 * 2.0,
-            starNumber: 3,
-            listeElements: "+ Besoins\n\t+ compétences\n\t+ matériel",
-            key: key,
-            cardKeys: cardKeys);
+          borderAndSplashColor: Colors.blue,
+          cardColor: Colors.blue[50],
+          cardWidth: 138,
+          cardHeight: 100 * 2.0,
+          starNumber: 3,
+          listeElements: "+ Besoins\n\t+ compétences\n\t+ matériel",
+          key: key,
+          cardKeys: cardKeys,
+          buttonKey: buttonKey,
+        );
 }
 
 class HardDifficultyIdea extends DifficultyCard {
-  HardDifficultyIdea({Key key, List<GlobalKey<_DifficultyCardState>> cardKeys})
+  HardDifficultyIdea(
+      {Key key,
+      List<GlobalKey<_DifficultyCardState>> cardKeys,
+      GlobalKey<ArrowButtonState> buttonKey})
       : super(
-            borderAndSplashColor: Colors.red[900],
-            cardColor: Colors.red[50],
-            cardWidth: 138,
-            cardHeight: 100 * 2.5,
-            starNumber: 4,
-            listeElements:
-                "+ Contacts\n+ Plan d'action\n+ Finance\n\n\tet d'autres...",
-            key: key,
-            cardKeys: cardKeys);
+          borderAndSplashColor: Colors.red[900],
+          cardColor: Colors.red[50],
+          cardWidth: 138,
+          cardHeight: 100 * 2.5,
+          starNumber: 4,
+          listeElements:
+              "+ Contacts\n+ Plan d'action\n+ Finance\n\n\tet d'autres...",
+          key: key,
+          cardKeys: cardKeys,
+          buttonKey: buttonKey,
+        );
 }
