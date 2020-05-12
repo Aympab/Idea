@@ -42,19 +42,23 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(8.0, 200, 8.0, 0),
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   child: Container(
-                    child: Row(
-                      children: <Widget>[
-                        NoDifficultyIdea(),
-                        EasyDifficultyIdea(),
-                        MediumDifficultyIdea(),
-                        HardDifficultyIdea(),
-                      ],
-                    ),
+                    child: DifficultyCardsRow(),
                   ),
                 ),
-              )
+              ),
+              Positioned(
+                bottom: 20,
+                width: 100,
+                right: MediaQuery.of(context).size.width/2 -50,
+                  child: FlatButton(
+                onPressed: () {
+                  //TODO 
+                },
+                child: Image.asset('assets/images/buttonsImages/nextWhite.png'),
+              )),
             ],
           ),
         ),

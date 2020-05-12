@@ -1,7 +1,45 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 
-class DifficultyCard extends StatelessWidget {
+class DifficultyCardsRow extends StatefulWidget {
+  const DifficultyCardsRow({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _DifficultyCardsRowState createState() => _DifficultyCardsRowState();
+}
+
+class _DifficultyCardsRowState extends State<DifficultyCardsRow> {
+  NoDifficultyIdea noDifficultyIdea = NoDifficultyIdea();
+  EasyDifficultyIdea easyDifficultyIdea = EasyDifficultyIdea();
+  MediumDifficultyIdea mediumDifficultyIdea = MediumDifficultyIdea();
+  HardDifficultyIdea hardDifficultyIdea = HardDifficultyIdea();
+
+  @override
+  Widget build(BuildContext context) {
+    easyDifficultyIdea = EasyDifficultyIdea();
+    mediumDifficultyIdea = MediumDifficultyIdea();
+    hardDifficultyIdea = HardDifficultyIdea();
+
+    return Row(
+      children: <Widget>[
+        noDifficultyIdea,
+        easyDifficultyIdea,
+        mediumDifficultyIdea,
+        hardDifficultyIdea
+      ],
+    );
+  }
+}
+
+//
+//
+//
+//
+//
+//
+class DifficultyCard extends StatefulWidget {
   DifficultyCard({
     Key key,
     @required this.borderAndSplashColor,
@@ -18,27 +56,39 @@ class DifficultyCard extends StatelessWidget {
   final double cardHeight; // = 100;
   final int starNumber; // = 1;
   final String listeElements;
+  bool isSelected = false;
+  @override
+  _DifficultyCardState createState() => _DifficultyCardState();
+}
 
+class _DifficultyCardState extends State<DifficultyCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
         side: BorderSide(
-          color: borderAndSplashColor,
+          color: widget.borderAndSplashColor,
           width: 3,
         ),
       ),
       elevation: 20,
       shadowColor: Colors.black.withOpacity(1),
-      color: cardColor,
+      color: widget.isSelected
+          ? widget.borderAndSplashColor.withOpacity(0.5)
+          : widget.cardColor,
       child: InkWell(
-        onTap: () => print('hello'),
-        splashColor: borderAndSplashColor,
+        //TODO :
+        onTap: () {
+          setState(() {
+            widget.isSelected = !widget.isSelected;
+          });
+        },
+        splashColor: widget.borderAndSplashColor,
         borderRadius: BorderRadius.circular(15.0),
         child: Container(
-          width: cardWidth,
-          height: cardHeight,
+          width: widget.cardWidth,
+          height: widget.cardHeight,
           child: ConstrainedBox(
             constraints: BoxConstraints.expand(),
             child: Center(
@@ -50,16 +100,16 @@ class DifficultyCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
-                          starNumber,
+                          widget.starNumber,
                           (_) => Icon(
                                 Icons.star,
-                                color: borderAndSplashColor,
+                                color: widget.borderAndSplashColor,
                               )).toList(),
                     ),
                   ),
                   Container(
                     height: 2,
-                    color: borderAndSplashColor,
+                    color: widget.borderAndSplashColor,
                   ),
                   // SizedBox(
                   //   height: 10,
@@ -67,8 +117,8 @@ class DifficultyCard extends StatelessWidget {
                   Expanded(
                     child: Center(
                       child: Text(
-                        listeElements,
-                        textAlign: TextAlign.center,
+                        widget.listeElements,
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: "ComingSoon",
                           fontSize: 18,
@@ -103,11 +153,11 @@ class EasyDifficultyIdea extends DifficultyCard {
   EasyDifficultyIdea()
       : super(
           borderAndSplashColor: Colors.green,
-          cardColor: Colors.amber[50],
+          cardColor: Colors.green[50],
           cardWidth: 138,
           cardHeight: 100 * 1.5,
           starNumber: 2,
-          listeElements: "Texte court\nImage",
+          listeElements: "+ Description",
         );
 }
 
@@ -115,11 +165,11 @@ class MediumDifficultyIdea extends DifficultyCard {
   MediumDifficultyIdea()
       : super(
           borderAndSplashColor: Colors.blue,
-          cardColor: Colors.amber[50],
+          cardColor: Colors.blue[50],
           cardWidth: 138,
           cardHeight: 100 * 2.0,
           starNumber: 3,
-          listeElements: "Texte court\nImage",
+          listeElements: "+ Besoins\n\t+ compétences\n\t+ matériel",
         );
 }
 
@@ -127,10 +177,11 @@ class HardDifficultyIdea extends DifficultyCard {
   HardDifficultyIdea()
       : super(
           borderAndSplashColor: Colors.red[900],
-          cardColor: Colors.amber[50],
+          cardColor: Colors.red[50],
           cardWidth: 138,
           cardHeight: 100 * 2.5,
           starNumber: 4,
-          listeElements: "Texte court\nImage",
+          listeElements:
+              "+ Contacts\n+ Plan d'action\n+ Finance\n\n\tet d'autres...",
         );
 }
