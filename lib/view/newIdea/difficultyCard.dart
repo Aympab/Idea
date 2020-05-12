@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'newIdeaDifficulty.dart';
 
+//The row containing all the cards,
 class DifficultyCardsRow extends StatefulWidget {
   GlobalKey<ArrowButtonState> buttonKey;
 
@@ -54,13 +55,12 @@ class _DifficultyCardsRowState extends State<DifficultyCardsRow> {
     );
   }
 }
-
 //
 //
 //
 //
 //
-//
+//One card
 class DifficultyCard extends StatefulWidget {
   final List<GlobalKey<_DifficultyCardState>> cardKeys;
   final GlobalKey<ArrowButtonState> buttonKey;
@@ -179,6 +179,11 @@ class _DifficultyCardState extends State<DifficultyCard> {
   }
 }
 
+//
+//
+//
+//
+//The differents difficulties
 class NoDifficultyIdea extends DifficultyCard {
   NoDifficultyIdea(
       {Key key,
@@ -250,4 +255,56 @@ class HardDifficultyIdea extends DifficultyCard {
           cardKeys: cardKeys,
           buttonKey: buttonKey,
         );
+}
+//
+//
+//
+//
+//
+//The Arrow button displayed at the bottom
+class ArrowButton extends StatefulWidget {
+  ArrowButton({
+    Key key,
+    @required this.pvController,
+  }) : super(key: key);
+
+  final PageController pvController;
+
+  @override
+  ArrowButtonState createState() => ArrowButtonState();
+}
+
+class ArrowButtonState extends State<ArrowButton> {
+  bool isButtonEnabled = false;
+
+  void enable() {
+    setState(() {
+      isButtonEnabled = true;
+    });
+  }
+
+  void disable(){
+    setState(() {
+      isButtonEnabled = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      onPressed: isButtonEnabled
+          ? () {
+              widget.pvController.nextPage(
+                  duration: Duration(milliseconds: 1000),
+                  curve: Curves.easeInOutExpo);
+            }
+          : () {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('Selectionnez une difficulté'),
+                duration: Duration(seconds: 2),
+              ));
+            },
+      child: Image.asset('assets/images/buttonsImages/nextWhite.png'),
+    );
+  }
 }

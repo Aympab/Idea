@@ -44,7 +44,7 @@ class RouteGenerator {
         break;
 
       case '/newIdeaPage':
-        return MaterialPageRoute(builder: (_) => NewIdeaDifficulty());
+        return MaterialPageRoute(builder: (_) => NewIdea());
 
         break;
 

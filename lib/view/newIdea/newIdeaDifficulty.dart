@@ -3,26 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:idea/view/newIdea/difficultyCard.dart';
 import 'package:idea/view/newIdea/newIdea.dart';
 
-class NewIdeaDifficulty extends StatefulWidget {
-  final Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
-
+class NewIdea extends StatefulWidget {
   @override
-  _NewIdeaDifficultyState createState() => _NewIdeaDifficultyState();
+  _NewIdeaState createState() => _NewIdeaState();
 }
 
-class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
+class _NewIdeaState extends State<NewIdea> {
   PageController pvController = PageController(initialPage: 0);
-
-  GlobalKey buttonKey = GlobalKey<ArrowButtonState>();
 
   @override
   Widget build(BuildContext context) {
-    double sidePadding = 20;
-    double posTitle = 30;
-    double posSubTitle = posTitle + 120;
-    double posInstructions = posSubTitle + 80;
-    double posButton = MediaQuery.of(context).size.width / 2 - 50;
-
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -37,45 +27,67 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
       child: PageView(
         physics: ClampingScrollPhysics(),
         controller: pvController,
-        children: <Widget>[
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Builder(builder: (context) {
-              return SafeArea(
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    buildImageLogo(context, sidePadding),
-                    buildTitle(posTitle, sidePadding, context),
-                    buildSubtitle(posSubTitle, sidePadding),
-                    buildInstruction(posInstructions, sidePadding),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 200, 8.0, 0),
-                      child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Container(
-                          child: DifficultyCardsRow(
-                            buttonKey: buttonKey,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 20,
-                      width: 100,
-                      right: posButton,
-                      child: ArrowButton(
-                          key: buttonKey, pvController: pvController),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ),
-          Text('data')
-        ],
+        children: <Widget>[FirstPageNewIdea(pvController: pvController,), Text('data')],
       ),
+    );
+  }
+}
+
+class FirstPageNewIdea extends StatefulWidget {
+  final Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
+  FirstPageNewIdea({
+    Key key,
+    this.pvController,
+  }) : super(key: key);
+
+  final PageController pvController;
+  @override
+  _FirstPageNewIdeaState createState() => _FirstPageNewIdeaState();
+}
+
+class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
+  GlobalKey buttonKey = GlobalKey<ArrowButtonState>();
+  @override
+  Widget build(BuildContext context) {
+    double sidePadding = 20;
+    double posTitle = 30;
+    double posSubTitle = posTitle + 120;
+    double posInstructions = posSubTitle + 80;
+    double posButton = MediaQuery.of(context).size.width / 2 - 50;
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Builder(builder: (context) {
+        return SafeArea(
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              buildImageLogo(context, sidePadding),
+              buildTitle(posTitle, sidePadding, context),
+              buildSubtitle(posSubTitle, sidePadding),
+              buildInstruction(posInstructions, sidePadding),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 200, 8.0, 0),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  child: Container(
+                    child: DifficultyCardsRow(
+                      buttonKey: buttonKey,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                width: 100,
+                right: posButton,
+                child: ArrowButton(
+                    key: buttonKey, pvController: widget.pvController),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -145,9 +157,6 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
     );
   }
 
-  //
-  //
-  //Build des différents elements
   Positioned buildTitle(
       double posTitle, double sidePadding, BuildContext context) {
     return Positioned(
@@ -200,53 +209,6 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
         angle: 0.2,
         child: widget.ideaLogo,
       ),
-    );
-  }
-}
-
-class ArrowButton extends StatefulWidget {
-  ArrowButton({
-    Key key,
-    @required this.pvController,
-  }) : super(key: key);
-
-  final PageController pvController;
-
-  @override
-  ArrowButtonState createState() => ArrowButtonState();
-}
-
-class ArrowButtonState extends State<ArrowButton> {
-  bool isButtonEnabled = false;
-
-  void enable() {
-    setState(() {
-      isButtonEnabled = true;
-    });
-  }
-
-  void disable(){
-    setState(() {
-      isButtonEnabled = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      onPressed: isButtonEnabled
-          ? () {
-              widget.pvController.nextPage(
-                  duration: Duration(milliseconds: 1000),
-                  curve: Curves.easeInOutExpo);
-            }
-          : () {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text('Selectionnez une difficulté'),
-                duration: Duration(seconds: 2),
-              ));
-            },
-      child: Image.asset('assets/images/buttonsImages/nextWhite.png'),
     );
   }
 }
