@@ -194,29 +194,7 @@ packages:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.flutter-io.cn"
     source: hosted
-<<<<<<< HEAD
-<<<<<<< dev
-    version: "1.0.6"
-=======
     version: "1.0.7"
-  flutter_bloc:
-    dependency: "direct dev"
-    description:
-      name: flutter_bloc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.0"
-  flutter_multiselect:
-    dependency: "direct main"
-    description:
-      name: flutter_multiselect
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
->>>>>>> creation page nouvelle idee (structure globale)
-=======
-    version: "1.0.7"
->>>>>>> PageNouvelleIdee
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -254,7 +232,7 @@ packages:
       name: image_cropper
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   image_picker:
     dependency: "direct main"
     description:
@@ -310,7 +288,7 @@ packages:
       name: path_provider
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.6.7"
+    version: "1.6.8"
   path_provider_macos:
     dependency: transitive
     description:
@@ -359,22 +337,7 @@ packages:
       name: provider
       url: "https://pub.flutter-io.cn"
     source: hosted
-<<<<<<< HEAD
-<<<<<<< dev
-    version: "4.0.5+1"
-=======
-    version: "4.0.5"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.5"
->>>>>>> creation page nouvelle idee (structure globale)
-=======
     version: "4.1.1"
->>>>>>> PageNouvelleIdee
   quiver:
     dependency: transitive
     description:
@@ -494,14 +457,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-<<<<<<< HEAD
-<<<<<<< dev
-  flutter: ">=1.12.13 <2.0.0"
-=======
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
-  dart: ">=2.6.0 <3.0.0"
-  flutter: ">=1.12.1"
->>>>>>> creation page nouvelle idee (structure globale)
-=======
   flutter: ">=1.17.0 <2.0.0"
->>>>>>> PageNouvelleIdee

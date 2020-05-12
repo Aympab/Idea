@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:idea/view/connexion.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
-import 'package:idea/view/newIdea.dart';
+import 'package:idea/view/newIdea./newIdea.dart';
 import 'package:idea/view/profile/profileMain.dart';
 import 'model/idea.dart';
 import 'model/user.dart';
@@ -43,12 +43,10 @@ class RouteGenerator {
         break;
 
       case '/newIdeaPage':
-        if (args is Idea) {
-          return MaterialPageRoute(
-              builder: (_) => NewIdeaView());
-        }
+        return MaterialPageRoute(builder: (_) => NewIdeaView());
+
         break;
-        
+
       default:
         return _errorPageBuilder();
     }
