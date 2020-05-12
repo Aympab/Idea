@@ -1,6 +1,7 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/view/newIdea/difficultyCard.dart';
+import 'package:idea/view/newIdea/newIdea.dart';
 
 class NewIdeaDifficulty extends StatefulWidget {
   final Image ideaLogo = new Image.asset('assets/images/mainLightBulbLogo.png');
@@ -10,13 +11,17 @@ class NewIdeaDifficulty extends StatefulWidget {
 }
 
 class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
+  PageController pvController = PageController(initialPage: 0);
+
+  bool _isButtonEnabled = false;
+
   @override
   Widget build(BuildContext context) {
     double sidePadding = 20;
     double posTitle = 30;
     double posSubTitle = posTitle + 120;
     double posInstructions = posSubTitle + 80;
-    double posCardView = posInstructions + 80;
+    double posButton = MediaQuery.of(context).size.width / 2 - 50;
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -29,39 +34,59 @@ class _NewIdeaDifficultyState extends State<NewIdeaDifficulty> {
           ],
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              buildImageLogo(context, sidePadding),
-              buildTitle(posTitle, sidePadding, context),
-              buildSubtitle(posSubTitle, sidePadding),
-              buildInstruction(posInstructions, sidePadding),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 200, 8.0, 0),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  child: Container(
-                    child: DifficultyCardsRow(),
-                  ),
+      child: PageView(
+        physics: ClampingScrollPhysics(),
+        controller: pvController,
+        children: <Widget>[
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Builder(builder: (context) {
+              return SafeArea(
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    buildImageLogo(context, sidePadding),
+                    buildTitle(posTitle, sidePadding, context),
+                    buildSubtitle(posSubTitle, sidePadding),
+                    buildInstruction(posInstructions, sidePadding),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 200, 8.0, 0),
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        child: Container(
+                          child: DifficultyCardsRow(),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 20,
+                      width: 100,
+                      right: posButton,
+                      child: FlatButton(
+                        onPressed: _isButtonEnabled
+                            ? () {
+                                pvController.nextPage(
+                                    duration: Duration(milliseconds: 1000),
+                                    curve: Curves.easeInOutExpo);
+                              }
+                            : () {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text('Selectionnez une difficulté'),
+                                  duration: Duration(seconds: 2),
+                                ));
+                              },
+                        child: Image.asset(
+                            'assets/images/buttonsImages/nextWhite.png'),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Positioned(
-                bottom: 20,
-                width: 100,
-                right: MediaQuery.of(context).size.width/2 -50,
-                  child: FlatButton(
-                onPressed: () {
-                  //TODO 
-                },
-                child: Image.asset('assets/images/buttonsImages/nextWhite.png'),
-              )),
-            ],
+              );
+            }),
           ),
-        ),
+          Text('data')
+        ],
       ),
     );
   }
