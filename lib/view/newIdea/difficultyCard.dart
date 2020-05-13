@@ -13,18 +13,35 @@ class DifficultyCardsRow extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DifficultyCardsRowState createState() => _DifficultyCardsRowState();
+  DifficultyCardsRowState createState() => DifficultyCardsRowState();
 }
 
-class _DifficultyCardsRowState extends State<DifficultyCardsRow> {
-  static GlobalKey<_DifficultyCardState> noDiffKey =
-      GlobalKey<_DifficultyCardState>();
-  static GlobalKey<_DifficultyCardState> easyKey =
-      GlobalKey<_DifficultyCardState>();
-  static GlobalKey<_DifficultyCardState> medKey =
-      GlobalKey<_DifficultyCardState>();
-  static GlobalKey<_DifficultyCardState> hardKey =
-      GlobalKey<_DifficultyCardState>();
+class DifficultyCardsRowState extends State<DifficultyCardsRow> {
+
+  int whichOnIsSelected(){
+    if(noDiffKey.currentState.widget.isSelected){
+      return 0;
+    }
+    else if(easyKey.currentState.widget.isSelected){
+      return 1;
+    }
+    else if(medKey.currentState.widget.isSelected){
+      return 2;
+    }
+    else if(hardKey.currentState.widget.isSelected){
+      return 3;
+    }
+    }
+  
+
+  static GlobalKey<DifficultyCardState> noDiffKey =
+      GlobalKey<DifficultyCardState>();
+  static GlobalKey<DifficultyCardState> easyKey =
+      GlobalKey<DifficultyCardState>();
+  static GlobalKey<DifficultyCardState> medKey =
+      GlobalKey<DifficultyCardState>();
+  static GlobalKey<DifficultyCardState> hardKey =
+      GlobalKey<DifficultyCardState>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +80,7 @@ class _DifficultyCardsRowState extends State<DifficultyCardsRow> {
 //
 //One card
 class DifficultyCard extends StatefulWidget {
-  final List<GlobalKey<_DifficultyCardState>> cardKeys;
+  final List<GlobalKey<DifficultyCardState>> cardKeys;
   final GlobalKey<ArrowButtonState> buttonKey;
 
   DifficultyCard({
@@ -86,10 +103,10 @@ class DifficultyCard extends StatefulWidget {
   final String listeElements;
   bool isSelected = false;
   @override
-  _DifficultyCardState createState() => _DifficultyCardState();
+  DifficultyCardState createState() => DifficultyCardState();
 }
 
-class _DifficultyCardState extends State<DifficultyCard> {
+class DifficultyCardState extends State<DifficultyCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -111,7 +128,7 @@ class _DifficultyCardState extends State<DifficultyCard> {
           setState(() {
             widget.isSelected = !widget.isSelected;
             if (widget.isSelected) {
-              for (GlobalKey<_DifficultyCardState> cardKey in widget.cardKeys) {
+              for (GlobalKey<DifficultyCardState> cardKey in widget.cardKeys) {
                 cardKey.currentState.disable();
               }
               widget.buttonKey.currentState.enable();
@@ -187,7 +204,7 @@ class _DifficultyCardState extends State<DifficultyCard> {
 class NoDifficultyIdea extends DifficultyCard {
   NoDifficultyIdea(
       {Key key,
-      List<GlobalKey<_DifficultyCardState>> cardKeys,
+      List<GlobalKey<DifficultyCardState>> cardKeys,
       GlobalKey<ArrowButtonState> buttonKey})
       : super(
           borderAndSplashColor: Colors.brown,
@@ -205,7 +222,7 @@ class NoDifficultyIdea extends DifficultyCard {
 class EasyDifficultyIdea extends DifficultyCard {
   EasyDifficultyIdea(
       {Key key,
-      List<GlobalKey<_DifficultyCardState>> cardKeys,
+      List<GlobalKey<DifficultyCardState>> cardKeys,
       GlobalKey<ArrowButtonState> buttonKey})
       : super(
           borderAndSplashColor: Colors.green,
@@ -223,7 +240,7 @@ class EasyDifficultyIdea extends DifficultyCard {
 class MediumDifficultyIdea extends DifficultyCard {
   MediumDifficultyIdea(
       {Key key,
-      List<GlobalKey<_DifficultyCardState>> cardKeys,
+      List<GlobalKey<DifficultyCardState>> cardKeys,
       GlobalKey<ArrowButtonState> buttonKey})
       : super(
           borderAndSplashColor: Colors.blue,
@@ -241,7 +258,7 @@ class MediumDifficultyIdea extends DifficultyCard {
 class HardDifficultyIdea extends DifficultyCard {
   HardDifficultyIdea(
       {Key key,
-      List<GlobalKey<_DifficultyCardState>> cardKeys,
+      List<GlobalKey<DifficultyCardState>> cardKeys,
       GlobalKey<ArrowButtonState> buttonKey})
       : super(
           borderAndSplashColor: Colors.red[900],
@@ -260,84 +277,4 @@ class HardDifficultyIdea extends DifficultyCard {
 //
 //
 //
-//
-//
-//The Arrow button displayed at the bottom
-class ArrowButton extends StatefulWidget {
-  ArrowButton({
-    Key key,
-  }) : super(key: key);
 
-  @override
-  ArrowButtonState createState() => ArrowButtonState();
-}
-
-class ArrowButtonState extends State<ArrowButton> {
-  bool isButtonEnabled = false;
-
-  void enable() {
-    setState(() {
-      isButtonEnabled = true;
-    });
-  }
-
-  void disable() {
-    setState(() {
-      isButtonEnabled = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      onPressed: isButtonEnabled
-          ? () {
-              //TODO : Route to next page nicely
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  transitionDuration: Duration(seconds: 3),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-
-                    animation = CurvedAnimation(
-                      parent: animation,
-                      curve: Curves.easeInExpo,
-                    );
-
-                    return ScaleTransition(
-                      scale: animation,
-                      child: child,
-                      alignment: Alignment.center,
-                    );
-                  },
-                  pageBuilder: (BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secAnimation) {
-                    return CreateNoDifficultyIdea();
-                  },
-                ),
-              );
-            }
-          : () {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text('Selectionnez une difficulté'),
-                duration: Duration(seconds: 2),
-              ));
-            },
-      child: Image.asset('assets/images/buttonsImages/nextWhite.png'),
-    );
-  }
-}
-
-class CreateNoDifficultyIdea extends StatefulWidget {
-  @override
-  _CreateNoDifficultyIdeaState createState() => _CreateNoDifficultyIdeaState();
-}
-
-class _CreateNoDifficultyIdeaState extends State<CreateNoDifficultyIdea> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}

@@ -69,3 +69,29 @@ class RouteGenerator {
     );
   }
 }
+
+void transitionPushToPage(BuildContext context, Widget child) {
+  Navigator.push(
+    context,
+    PageRouteBuilder(
+      transitionDuration: Duration(seconds: 1),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        animation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeInExpo,
+        );
+
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+          alignment: Alignment.centerRight,
+        );
+      },
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secAnimation) {
+        //The actual page
+        return child;
+      },
+    ),
+  );
+}

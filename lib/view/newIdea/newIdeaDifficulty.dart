@@ -1,7 +1,12 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/routeGenerator.dart';
 import 'package:idea/view/newIdea/difficultyCard.dart';
 import 'package:idea/view/newIdea/newIdea.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/easyIdea.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/hardIdea.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/mediumIdea.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/noDifficultyIdea.dart';
 
 class NewIdea extends StatefulWidget {
   @override
@@ -38,6 +43,8 @@ class FirstPageNewIdea extends StatefulWidget {
 
 class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
   GlobalKey buttonKey = GlobalKey<ArrowButtonState>();
+  GlobalKey rowCardKey = GlobalKey<DifficultyCardsRowState>();
+
   @override
   Widget build(BuildContext context) {
     double sidePadding = 20;
@@ -57,12 +64,14 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
               buildSubtitle(posSubTitle, sidePadding),
               buildInstruction(posInstructions, sidePadding),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 200, 8.0, 0),
+                padding: const EdgeInsets.fromLTRB(8.0, 300, 8.0, 100),
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  child: Container(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: 400),
                     child: DifficultyCardsRow(
+                      key: rowCardKey,
                       buttonKey: buttonKey,
                     ),
                   ),
@@ -73,7 +82,9 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
                 width: 100,
                 right: posButton,
                 child: ArrowButton(
-                    key: buttonKey),
+                  key: buttonKey,
+                  rowCardKey: rowCardKey,
+                ),
               ),
             ],
           ),
@@ -118,20 +129,18 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
               color: Color(0xff000000),
             ),
           ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  // offset: Offset(5, 5),
-                  blurRadius: 2,
-                  color: Color(0xff91ccff),
-                ),
-              ],
-            ),
-            child: InkWell(
-              //TODO : show a little popUp that explains what is the difficulty of an idea
-              onTap: () => print('hey'),
-              splashColor: Colors.blueGrey,
+          InkWell(
+            onTap: () => print('hey'),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    // offset: Offset(5, 5),
+                    blurRadius: 2,
+                    color: Color(0xff91ccff),
+                  ),
+                ],
+              ),
               child: Text(
                 "difficulté",
                 style: TextStyle(
@@ -200,6 +209,75 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
         angle: 0.2,
         child: widget.ideaLogo,
       ),
+    );
+  }
+}
+
+//
+//
+//The Arrow button displayed at the bottom
+class ArrowButton extends StatefulWidget {
+  final GlobalKey<DifficultyCardsRowState> rowCardKey;
+
+  ArrowButton({
+    Key key,
+    @required this.rowCardKey,
+  }) : super(key: key);
+
+  @override
+  ArrowButtonState createState() => ArrowButtonState();
+}
+
+class ArrowButtonState extends State<ArrowButton> {
+  bool isButtonEnabled = false;
+
+  void enable() {
+    setState(() {
+      isButtonEnabled = true;
+    });
+  }
+
+  void disable() {
+    setState(() {
+      isButtonEnabled = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      onPressed: isButtonEnabled
+          ? () {
+              //TODO : Route to next page nicely
+              switch (widget.rowCardKey.currentState.whichOnIsSelected()) {
+                case (0):
+                  //Nodifficulty
+                  transitionPushToPage(context, CreateNoDifficultyIdea());
+                  break;
+                case (1):
+                  transitionPushToPage(context, CreateEasyIdea());
+                  break;
+                case (2):
+                  transitionPushToPage(context, CreateMediumIdea());
+                  break;
+                case (3):
+                  transitionPushToPage(context, CreateHardIdea());
+                  break;
+                default:
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text('Selectionnez une difficulté'),
+                    duration: Duration(seconds: 2),
+                  ));
+                  break;
+              }
+            }
+          : () {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('Selectionnez une difficulté'),
+                duration: Duration(seconds: 2),
+              ));
+            },
+      child: Image.asset('assets/images/buttonsImages/nextWhite.png'),
     );
   }
 }
