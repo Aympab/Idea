@@ -27,7 +27,27 @@ class _ConnexionViewState extends State<ConnexionView> {
     precacheImage(ideaLogo.image, context);
   }
 
-  final controller = PageController(initialPage: 0);
+  PageController controller;
+  IconButton floatingButton;
+
+  @override
+  void initState() {
+    controller = PageController(initialPage: 0);
+    floatingButton = IconButton(
+      onPressed: () {
+        controller.nextPage(
+            duration: Duration(milliseconds: 500), curve: Curves.easeInSine);
+      },
+      icon: Icon(Icons.navigate_next),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +56,24 @@ class _ConnexionViewState extends State<ConnexionView> {
         gradient: Provider.of<ThemeModel>(context).globalGradient,
       ),
       child: Scaffold(
-        floatingActionButton: controller.page < 0.5 ? IconButton(
-          onPressed: () {
-            controller.animateToPage(controller.page.round() + 1 % 2,
-                duration: Duration(milliseconds: 500),
-                curve: Curves.easeInSine);
-          },
-          icon: Icon(Icons.navigate_next),
-        ) : null,
+        floatingActionButton: floatingButton,
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: PageView(
             controller: controller,
             onPageChanged: (value) {
               setState(() {
-                //Pour mettre à jour le Floating Button
+                floatingButton = controller.page < 0.5
+                    ? IconButton(
+                        onPressed: () {
+                          controller.animateToPage(
+                              controller.page.round() + 1 % 2,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeInSine);
+                        },
+                        icon: Icon(Icons.navigate_next),
+                      )
+                    : null;
               });
             },
             children: <Widget>[
