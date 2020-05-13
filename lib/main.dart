@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: Provider.of<ThemeModel>(context).currentTheme,
-      // title: 'Idea',
-      // initialRoute: '/',
-      // onGenerateRoute: RouteGenerator.generateRoute,
-      home: LoadingScreen(),
+      title: 'Idea',
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
+      // home: LoadingScreen(),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:idea/tools/themes.dart';
 
 import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
+import 'package:provider/provider.dart';
 
 class CreateEasyIdea extends StatefulWidget {
   CreateEasyIdea({Key key}) : super(key: key);
@@ -26,7 +28,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: SafeArea(child: Text('Easy', style: globalIdeaStyle)),
+          child: SafeArea(child: Text('Easy', style: Provider.of<ThemeModel>(context).globalTextStyle)),
         ),
       ),
     );

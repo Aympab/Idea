@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:idea/tools/themes.dart';
 
 import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
+import 'package:provider/provider.dart';
 
 class CreateMediumIdea extends StatefulWidget {
   CreateMediumIdea({Key key}) : super(key: key);
@@ -26,7 +28,9 @@ class _CreateMediumIdeaState extends State<CreateMediumIdea> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: SafeArea(child: Text('Med', style: globalIdeaStyle)),
+          child: SafeArea(
+              child: Text('Med',
+                  style: Provider.of<ThemeModel>(context).globalTextStyle)),
         ),
       ),
     );

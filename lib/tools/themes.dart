@@ -15,6 +15,12 @@ class ThemeModel extends ChangeNotifier {
     ],
   );
 
+  final TextStyle globalTextStyle = TextStyle(
+    fontFamily: "ComingSoon",
+    fontSize: 24,
+    color: Color(0xff000000),
+  );
+
   toggleTheme() {
     if (themeType == ThemeType.Dark) {
       currentTheme = lightTheme;

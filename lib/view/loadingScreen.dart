@@ -18,10 +18,34 @@ class _LoadingScreenState extends State<LoadingScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: ConstrainedBox(
-            constraints: BoxConstraints.expand(),
+          child: Center(
             child: Column(
-              children: <Widget>[Image.asset('assets/images/loadingGIF.gif')],
+              children: <Widget>[
+                SizedBox(
+                  height: 100,
+                ),
+                Expanded(
+                  child: Image.asset('assets/loadingGIF.gif'),
+                ),
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Chargement...',
+                        style: TextStyle(
+                          fontFamily: "ComingSoon",
+                          fontSize: 50,
+                          color: Color(0xff000000),
+                        ),
+                      ),
+                      Text(
+                        'Veuillez patientez.',
+                        style: Provider.of<ThemeModel>(context).globalTextStyle,
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
