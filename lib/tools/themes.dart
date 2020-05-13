@@ -22,21 +22,22 @@ class ThemeModel extends ChangeNotifier {
 }
 
 ThemeData darkTheme = ThemeData.dark().copyWith(
-  primaryColor: Color(0xff1f655d),
-  accentColor: Color(0xff40bf7a),
-  textTheme: Typography.whiteMountainView,
-  appBarTheme: AppBarTheme(color: Color(0xff1f655d)),
-);
+    primaryColor: Color(0xff1f655d),
+    accentColor: Color(0xff40bf7a),
+    textTheme: Typography.whiteMountainView,
+    // appBarTheme: AppBarTheme(color: Color(0xff1f655d)),
+    appBarTheme: AppBarTheme(color: Colors.blue));
 
 ThemeData lightTheme = ThemeData.light().copyWith(
-  primaryColor: Colors.black,
-  accentColor: Color(0xff40bf7a),
-  textTheme:Typography.blackMountainView,
-  appBarTheme: AppBarTheme(
-    color: Color(0xff1f655d),
-    actionsIconTheme: IconThemeData(color: Colors.white),
-  ),
-);
+    primaryColor: Colors.black,
+    accentColor: Color(0xff40bf7a),
+    textTheme: Typography.blackMountainView,
+    // appBarTheme: AppBarTheme(color: Colors.amber[600])
+    appBarTheme: AppBarTheme(
+      color: Color(0xff1f655d),
+      actionsIconTheme: IconThemeData(color: Colors.white),
+    ),
+    );
 
 TabBarTheme tabBarTheme = TabBarTheme(
   labelColor: Colors.blue[600],

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:idea/view/connexion.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
+import 'package:idea/view/newIdea./newIdea.dart';
+import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
 import 'package:idea/view/profile/profileMain.dart';
 import 'model/idea.dart';
 import 'model/user.dart';
@@ -40,6 +42,12 @@ class RouteGenerator {
                   ));
         }
         break;
+
+      case '/newIdeaPage':
+        return MaterialPageRoute(builder: (_) => NewIdea());
+
+        break;
+
       default:
         return _errorPageBuilder();
     }
@@ -60,4 +68,32 @@ class RouteGenerator {
       ),
     );
   }
+}
+
+void transitionPushToPage(BuildContext context, Widget child) {
+  Navigator.push(
+    context,
+    PageRouteBuilder(
+      transitionDuration: Duration(seconds: 1),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        animation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeInExpo,
+        );
+
+        return SlideTransition(
+          child: child,
+          position: Tween<Offset>(
+            begin: Offset(1, 0),
+            end: Offset.zero,
+          ).animate(animation),
+        );
+      },
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secAnimation) {
+        //The actual page
+        return child;
+      },
+    ),
+  );
 }
