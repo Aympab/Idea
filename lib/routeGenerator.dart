@@ -81,10 +81,12 @@ void transitionPushToPage(BuildContext context, Widget child) {
           curve: Curves.easeInExpo,
         );
 
-        return ScaleTransition(
-          scale: animation,
+        return SlideTransition(
           child: child,
-          alignment: Alignment.centerRight,
+          position: Tween<Offset>(
+            begin: Offset(1, 0),
+            end: Offset.zero,
+          ).animate(animation),
         );
       },
       pageBuilder: (BuildContext context, Animation<double> animation,

@@ -2,11 +2,16 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/view/newIdea/difficultyCard.dart';
-import 'package:idea/view/newIdea/newIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/easyIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/hardIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/mediumIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/noDifficultyIdea.dart';
+
+final TextStyle globalIdeaStyle = TextStyle(
+  fontFamily: "ComingSoon",
+  fontSize: 24,
+  color: Color(0xff000000),
+);
 
 class NewIdea extends StatefulWidget {
   @override
@@ -130,7 +135,31 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
             ),
           ),
           InkWell(
-            onTap: () => print('hey'),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text(
+                    "Les difficultés ? ",
+                    style: TextStyle(
+                      fontFamily: "ComingSoon",
+                      fontSize: 24,
+                      color: Color(0xff000000),
+                    ),
+                  ),
+                  //TODO : Write a little tutorial about what are difficulties (export widget)
+                  content: Text('Blablabla'),
+                  actions: <Widget>[
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('OK'))
+                  ],
+                  elevation: 24.0,
+                ),
+              );
+            },
             child: DecoratedBox(
               decoration: BoxDecoration(
                 boxShadow: [
