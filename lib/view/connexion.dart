@@ -41,18 +41,14 @@ class _ConnexionViewState extends State<ConnexionView> {
         ),
       ),
       child: Scaffold(
-        floatingActionButton: controller.page < 0.5
-            ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    controller.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.easeInSine);
-                  });
-                },
-                icon: Icon(Icons.navigate_next),
-              )
-            : null,
+        floatingActionButton: IconButton(
+          onPressed: () {
+            controller.animateToPage(controller.page.round() + 1 % 2,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInSine);
+          },
+          icon: Icon(Icons.navigate_next),
+        ),
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: PageView(
