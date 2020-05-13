@@ -7,11 +7,7 @@ import 'package:idea/view/newIdea/secondPossiblePages/hardIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/mediumIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/noDifficultyIdea.dart';
 
-final TextStyle globalIdeaStyle = TextStyle(
-  fontFamily: "ComingSoon",
-  fontSize: 24,
-  color: Color(0xff000000),
-);
+
 
 class NewIdea extends StatefulWidget {
   @override

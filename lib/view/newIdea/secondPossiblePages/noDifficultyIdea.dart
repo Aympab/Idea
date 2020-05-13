@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:idea/tools/themes.dart';
 import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
+import 'package:provider/provider.dart';
 
 class CreateNoDifficultyIdea extends StatefulWidget {
   CreateNoDifficultyIdea({Key key}) : super(key: key);
@@ -25,7 +27,8 @@ class _CreateNoDifficultyIdeaState extends State<CreateNoDifficultyIdea> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: Text('NoDifficulty', style: globalIdeaStyle),
+          child: Text('NoDifficulty',
+              style: Provider.of<ThemeModel>(context).globalTextStyle),
         ),
       ),
     );

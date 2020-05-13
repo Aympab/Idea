@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/tools/themes.dart';
+import 'package:idea/view/loadingScreen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
@@ -20,9 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Idea',
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
-      // home: InheritedIdea(
-      //   child: IdeaView(),
-      // ),
+      // home: LoadingScreen(),
     );
   }
 }

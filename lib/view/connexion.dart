@@ -2,8 +2,10 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/tools/themes.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/postItButton.dart';
+import 'package:provider/provider.dart';
 
 class ConnexionView extends StatefulWidget {
   ConnexionView({Key key}) : super(key: key);
@@ -25,37 +27,53 @@ class _ConnexionViewState extends State<ConnexionView> {
     precacheImage(ideaLogo.image, context);
   }
 
-  final controller = PageController(initialPage: 0);
+  PageController controller;
+  IconButton floatingButton;
+
+  @override
+  void initState() {
+    controller = PageController(initialPage: 0);
+    floatingButton = IconButton(
+      onPressed: () {
+        controller.nextPage(
+            duration: Duration(milliseconds: 500), curve: Curves.easeInSine);
+      },
+      icon: Icon(Icons.navigate_next),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-          colors: [
-            Color(0xFFC114).withOpacity(1.0),
-            Color(0xF8EABF).withOpacity(1.0),
-          ],
-        ),
+        gradient: Provider.of<ThemeModel>(context).globalGradient,
       ),
       child: Scaffold(
-        floatingActionButton: IconButton(
-          onPressed: () {
-            controller.animateToPage(controller.page.round() + 1 % 2,
-                duration: Duration(milliseconds: 500),
-                curve: Curves.easeInSine);
-          },
-          icon: Icon(Icons.navigate_next),
-        ),
+        floatingActionButton: floatingButton,
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: PageView(
             controller: controller,
             onPageChanged: (value) {
               setState(() {
-                //Pour mettre à jour le Floating Button
+                floatingButton = controller.page < 0.5
+                    ? IconButton(
+                        onPressed: () {
+                          controller.animateToPage(
+                              controller.page.round() + 1 % 2,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeInSine);
+                        },
+                        icon: Icon(Icons.navigate_next),
+                      )
+                    : null;
               });
             },
             children: <Widget>[
