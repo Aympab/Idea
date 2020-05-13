@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/view/connexion.dart';
+import 'package:idea/view/flux/fluxMain.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
 import 'package:idea/view/newIdea./newIdea.dart';
@@ -45,8 +46,10 @@ class RouteGenerator {
 
       case '/newIdeaPage':
         return MaterialPageRoute(builder: (_) => NewIdea());
-
         break;
+
+      case '/flux':
+        return MaterialPageRoute(builder: (_) => FluxMainView());
 
       default:
         return _errorPageBuilder();
