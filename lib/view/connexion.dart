@@ -25,7 +25,6 @@ class _ConnexionViewState extends State<ConnexionView> {
     precacheImage(ideaLogo.image, context);
   }
 
-  bool _changingPage = true;
   final controller = PageController(initialPage: 0);
 
   @override
@@ -44,11 +43,9 @@ class _ConnexionViewState extends State<ConnexionView> {
       child: Scaffold(
         floatingActionButton: IconButton(
           onPressed: () {
-            controller.animateToPage(controller.page.round()+1%2,
-                duration: Duration(milliseconds: 500), curve: Curves.linear);
-            setState(() {
-              _changingPage = !_changingPage;
-            });
+            controller.animateToPage(controller.page.round() + 1 % 2,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInSine);
           },
           icon: Icon(Icons.navigate_next),
         ),
@@ -80,29 +77,6 @@ class _ConnexionViewState extends State<ConnexionView> {
         ),
       ),
     );
-    //                 child: AnimatedCrossFade(
-    //         firstChild: ConstrainedBox(
-    //           constraints: BoxConstraints(
-    //             maxWidth: MediaQuery.of(context).size.width,
-    //             maxHeight: MediaQuery.of(context).size.height,
-    //           ),
-    //           child: FirstPageConnexion(
-    //             ideaBulbLogo: ideaLogo,
-    //           ),
-    //         ),
-    //         secondChild: ConstrainedBox(
-    //           constraints: BoxConstraints(
-    //             maxWidth: MediaQuery.of(context).size.width,
-    //             maxHeight: MediaQuery.of(context).size.height,
-    //           ),
-    //           child: SecondPageConnexion(
-    //             ideaLogo: ideaLogo,
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
 
@@ -228,8 +202,7 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
     Widget continueWithoutConnexionButton = PaperButton(
       text: "Continuer sans se connecter",
       onTapUp: () {
-        Navigator.of(context).pushNamed('/newIdeaPage');
-        //Navigator.of(context).pushNamed('/ideaPage', arguments: Idea());
+        Navigator.of(context).pushNamed('/flux', arguments: Idea());
       },
     );
 
@@ -249,9 +222,12 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
       children: <Widget>[
         Positioned(
           top: topPosLogo,
-          left: -50,
+          right: -50,
           height: 280,
-          child: Transform.rotate(angle: 2.4, child: widget.ideaLogo),
+          child: GestureDetector(
+            child: Transform.rotate(angle: -2.4, child: widget.ideaLogo),
+            onDoubleTap: () => Navigator.of(context).pushNamed('/newIdeaPage'),
+          ),
         ),
         Positioned(
           top: topPosPostit,
