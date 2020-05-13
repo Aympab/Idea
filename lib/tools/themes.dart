@@ -6,6 +6,15 @@ class ThemeModel extends ChangeNotifier {
   ThemeData currentTheme = lightTheme;
   ThemeType themeType = ThemeType.Dark;
 
+  LinearGradient globalGradient = LinearGradient(
+    begin: Alignment.bottomCenter,
+    end: Alignment.topCenter,
+    colors: [
+      Color(0xFFC114).withOpacity(1.0),
+      Color(0xF8EABF).withOpacity(1.0),
+    ],
+  );
+
   toggleTheme() {
     if (themeType == ThemeType.Dark) {
       currentTheme = lightTheme;
@@ -29,15 +38,15 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
     appBarTheme: AppBarTheme(color: Colors.blue));
 
 ThemeData lightTheme = ThemeData.light().copyWith(
-    primaryColor: Colors.black,
-    accentColor: Color(0xff40bf7a),
-    textTheme: Typography.blackMountainView,
-    // appBarTheme: AppBarTheme(color: Colors.amber[600])
-    appBarTheme: AppBarTheme(
-      color: Color(0xff1f655d),
-      actionsIconTheme: IconThemeData(color: Colors.white),
-    ),
-    );
+  primaryColor: Colors.black,
+  accentColor: Color(0xff40bf7a),
+  textTheme: Typography.blackMountainView,
+  // appBarTheme: AppBarTheme(color: Colors.amber[600])
+  appBarTheme: AppBarTheme(
+    color: Color(0xff1f655d),
+    actionsIconTheme: IconThemeData(color: Colors.white),
+  ),
+);
 
 TabBarTheme tabBarTheme = TabBarTheme(
   labelColor: Colors.blue[600],

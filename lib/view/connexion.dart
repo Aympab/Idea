@@ -2,8 +2,10 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/tools/themes.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/postItButton.dart';
+import 'package:provider/provider.dart';
 
 class ConnexionView extends StatefulWidget {
   ConnexionView({Key key}) : super(key: key);
@@ -31,14 +33,7 @@ class _ConnexionViewState extends State<ConnexionView> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-          colors: [
-            Color(0xFFC114).withOpacity(1.0),
-            Color(0xF8EABF).withOpacity(1.0),
-          ],
-        ),
+        gradient: Provider.of<ThemeModel>(context).globalGradient,
       ),
       child: Scaffold(
         floatingActionButton: IconButton(
