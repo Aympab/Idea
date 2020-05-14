@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AuthService {
 
@@ -8,8 +9,12 @@ class AuthService {
   Future signInAnonym() async{
     try{
       AuthResult result = await _auth.signInAnonymously();
+      FirebaseUser user = result.user;
+      return user;
     } catch(e){
-
+      //TODO : implement page on nul return
+      print(e.toString());
+      return null;
     }
   }
 

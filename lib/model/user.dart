@@ -4,8 +4,14 @@ import 'package:idea/model/besoins.dart';
 
 import 'designs/userProfile.dart';
 
+abstract class GlobalUser {}
 
-class User {
+class AnonymousUser extends GlobalUser{
+  final String uuid;
+  AnonymousUser(this.uuid);
+}
+
+class User extends GlobalUser{
   final InformationsObligatoiresUser infosOblig;
   final InformationsFacultativesUser infosFacultatives;
 
@@ -16,9 +22,6 @@ class User {
   final ProfileInformation profileInfos;
 
   User({@required this.infosOblig, this.infosFacultatives, this.profileInfos});
-
-
-
 
   //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LA LIST BESOIN !!
   @override
@@ -37,13 +40,11 @@ class User {
     return 'Pseudo : ${infosOblig.pseudo}\r\nMail : ${infosOblig.email}\r\nPassword : ${infosOblig.password}\r\nNaissance : ${infosOblig.dateNaissance}\r\nPrenom : ${infosFacultatives.prenom}\r\nNom : ${infosFacultatives.nom}\r\nZone : ${infosFacultatives.zoneGeographique}';
   }
 
-    //Pour retourner des infos basiques rapidement
+  //Pour retourner des infos basiques rapidement
   String get pseudo => infosOblig.pseudo;
   String get title => profileInfos.title.title;
   String get level => profileInfos.level.toString();
 }
-
-
 
 class InformationsObligatoiresUser extends Equatable {
   final String pseudo;

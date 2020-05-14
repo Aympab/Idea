@@ -1,7 +1,10 @@
 import 'package:bordered_text/bordered_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/model/user.dart';
+import 'package:idea/services/auth.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/postItButton.dart';
@@ -214,18 +217,28 @@ class SecondPageConnexion extends StatefulWidget {
 }
 
 class _SecondPageConnexionState extends State<SecondPageConnexion> {
+  final AuthService _authAnonym = AuthService();
+
   @override
   Widget build(BuildContext context) {
     Widget connexionButton = PaperButton(
         text: 'Connexion',
         onTapUp: () {
-          Navigator.of(context).pushNamed('/authenticationPage');
+          Navigator.of(context).pushNamed('/signIn');
         }); //buildFlatButton("Connexion");
 
     Widget continueWithoutConnexionButton = PaperButton(
       text: "Continuer sans se connecter",
-      onTapUp: () {
-        Navigator.of(context).pushNamed('/flux', arguments: Idea());
+      onTapUp: () async {
+        dynamic authResult = await _authAnonym.signInAnonym();
+
+        //if =null means that the anonym authentication didn't work
+        if (authResult == null) {
+          Navigator.of(context).pushNamed('/error');
+        } else{
+          //Route to next page
+          Navigator.of(context).pushNamed('/flux', arguments: AnonymousUser((authResult as FirebaseUser).uid));
+        }
       },
     );
 

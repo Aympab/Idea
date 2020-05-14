@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:idea/view/connexion.dart';
+import 'package:idea/view/welcomePages/signIn.dart';
+import 'package:idea/view/welcomePages/connexion.dart';
 import 'package:idea/view/flux/fluxMain.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/inscription.dart';
@@ -22,6 +23,12 @@ class RouteGenerator {
       case '/inscription':
         return MaterialPageRoute(
           builder: (_) => InscriptionView(),
+        );
+        break;
+
+      case '/signIn':
+        return MaterialPageRoute(
+          builder: (_) => SignInPage(),
         );
         break;
 
