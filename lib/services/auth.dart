@@ -6,12 +6,12 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //create user object based on FirebaseUser
-  GlobalUser _anonymUserFromFirebaseUser(FirebaseUser fbUser) {
-    return fbUser != null ? AnonymousUser(uid:fbUser.uid) : null;
+  User _anonymUserFromFirebaseUser(FirebaseUser fbUser) {
+    return fbUser != null ? User(isAnonymous: true,uid:fbUser.uid) : null;
   }
 
   //stream changes whenever user logs in or out
-  Stream<GlobalUser> get user {
+  Stream<User> get user {
     return _auth.onAuthStateChanged
       //.map((FirebaseUser user) => _anonymUserFromFirebaseUser(user));
     .map(_anonymUserFromFirebaseUser); //Identique à la ligne au dessus

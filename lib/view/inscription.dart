@@ -448,6 +448,7 @@ class _InscriptionViewState extends State<InscriptionView> {
 
           //Création d'un utilisateur avec les data que l'on a dans la page
           User nouvelUser = User(
+            isAnonymous: false,
             infosOblig: InformationsObligatoiresUser(
               pseudo: pseudoController.text == null
                   ? ''

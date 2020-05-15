@@ -1,20 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/model/user.dart';
 import 'package:idea/routeGenerator.dart';
+import 'package:idea/services/auth.dart';
 import 'package:idea/tools/themes.dart';
-import 'package:idea/view/loadingScreen.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(
+void main() { 
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (BuildContext context) => ThemeModel(),
-          ),
+              create: (BuildContext context) => ThemeModel()),
+          StreamProvider<User>.value(value: AuthService().user)
         ],
         child: MyApp(),
       ),
     );
+}
 
 class MyApp extends StatelessWidget {
   @override
