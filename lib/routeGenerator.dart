@@ -56,7 +56,7 @@ class RouteGenerator {
         break;
 
       case '/flux':
-        return MaterialPageRoute(builder: (_) => FluxMainView());
+        return MaterialPageRoute(builder: (_) => InheritedFlux(authUser: args,));
 
       default:
         return _errorPageBuilder();

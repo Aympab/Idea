@@ -4,14 +4,17 @@ import 'package:idea/model/besoins.dart';
 
 import 'designs/userProfile.dart';
 
-abstract class GlobalUser {}
+abstract class GlobalUser {
+  final String uid;
 
-class AnonymousUser extends GlobalUser{
-  final String uuid;
-  AnonymousUser(this.uuid);
+  GlobalUser({this.uid});
 }
 
-class User extends GlobalUser{
+class AnonymousUser extends GlobalUser {
+  AnonymousUser({String uid}) : super(uid: uid);
+}
+
+class User extends GlobalUser {
   final InformationsObligatoiresUser infosOblig;
   final InformationsFacultativesUser infosFacultatives;
 
@@ -21,7 +24,8 @@ class User extends GlobalUser{
 
   final ProfileInformation profileInfos;
 
-  User({@required this.infosOblig, this.infosFacultatives, this.profileInfos});
+  User({String uid, this.infosOblig, this.infosFacultatives, this.profileInfos})
+      : super(uid: uid);
 
   //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LA LIST BESOIN !!
   @override

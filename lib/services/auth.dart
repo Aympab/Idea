@@ -1,17 +1,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/model/user.dart';
 
 class AuthService {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  //create user object based on FirebaseUser
+  GlobalUser _anonymUserFromFirebaseUser(FirebaseUser fbUser) {
+    return fbUser != null ? AnonymousUser(uid:fbUser.uid) : null;
+  }
+
+  //stream changes whenever user logs in or out
+  Stream<GlobalUser> get user {
+    return _auth.onAuthStateChanged
+      //.map((FirebaseUser user) => _anonymUserFromFirebaseUser(user));
+    .map(_anonymUserFromFirebaseUser); //Identique à la ligne au dessus
+  }
+
+
   //sign-in anonymously
-  Future signInAnonym() async{
-    try{
+  Future signInAnonym() async {
+    try {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
-      return user;
-    } catch(e){
+      return _anonymUserFromFirebaseUser(user);
+    } catch (e) {
       //TODO : implement page on nul return
       print(e.toString());
       return null;

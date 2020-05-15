@@ -1,4 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:idea/model/user.dart';
+
+class InheritedFlux extends InheritedWidget {
+  InheritedFlux({Key key, @required this.authUser}) : super(key: key, child: FluxMainView());
+
+  final GlobalUser authUser; 
+
+  static InheritedFlux of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<InheritedFlux>();
+
+  @override
+  bool updateShouldNotify( InheritedFlux oldWidget) {
+    return false;
+  }
+}
 
 class FluxMainView extends StatefulWidget {
   FluxMainView({Key key}) : super(key: key);
@@ -10,6 +24,8 @@ class FluxMainView extends StatefulWidget {
 class _FluxMainViewState extends State<FluxMainView> {
   @override
   Widget build(BuildContext context) {
+    GlobalUser authUser = InheritedFlux.of(context).authUser;
+    
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -24,7 +40,7 @@ class _FluxMainViewState extends State<FluxMainView> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: Text('Flux'),
+          child: authUser is AnonymousUser ? Text('Flux Anonyme de ${authUser.uid}') :Text('Flux de ${(authUser as User).pseudo}') ,
         ),
       ),
     );

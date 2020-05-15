@@ -6,14 +6,17 @@ import 'package:idea/view/loadingScreen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
-      ChangeNotifierProvider(
-        create: (BuildContext context) => ThemeModel(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (BuildContext context) => ThemeModel(),
+          ),
+        ],
         child: MyApp(),
       ),
     );
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

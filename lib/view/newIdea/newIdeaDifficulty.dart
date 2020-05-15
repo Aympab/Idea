@@ -65,7 +65,7 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
               buildSubtitle(posSubTitle, sidePadding),
               buildInstruction(posInstructions, sidePadding),
               Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 300, 8.0, 100),
+                padding: const EdgeInsets.fromLTRB(0, 300, 0, 100),
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
