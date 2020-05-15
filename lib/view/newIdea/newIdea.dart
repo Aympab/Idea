@@ -1,7 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:idea/bloc/newIdea/newidea_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:idea/model/idea.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:idea/widget/expansionTileWidget.dart';
