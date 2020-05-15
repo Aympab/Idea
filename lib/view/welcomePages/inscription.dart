@@ -5,8 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
+import 'package:idea/services/auth.dart';
 import 'package:idea/tools/dateParser.dart';
 import 'package:idea/tools/themes.dart';
+import 'package:idea/view/loadingScreen.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/multiSelect.dart';
 import 'package:image_picker/image_picker.dart';
@@ -88,24 +90,28 @@ class _InscriptionViewState extends State<InscriptionView> {
   var myMateriel_4 = {"value": 4, "name": "Tourne-vis"};
   var myMateriel_5 = {"value": 5, "name": "Métal"};
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Inscription"),
-        leading: IconButton(
-          icon: Image.asset('assets/logo.png'),
-          onPressed: () {
-            Provider.of<ThemeModel>(context, listen: false).toggleTheme();
-          },
-        ),
-      ),
-      body: Container(
-        alignment: Alignment.center,
-        //Ici on détermine quel méthode de build on va appeler en fonctoin du state
-        child: buildInitialInput(),
-      ),
-    );
+    return loading
+        ? LoadingScreen()
+        : Scaffold(
+            appBar: AppBar(
+              title: Text("Inscription"),
+              leading: IconButton(
+                icon: Image.asset('assets/logo.png'),
+                onPressed: () {
+                  Provider.of<ThemeModel>(context, listen: false).toggleTheme();
+                },
+              ),
+            ),
+            body: Container(
+              alignment: Alignment.center,
+              //Ici on détermine quel méthode de build on va appeler en fonctoin du state
+              child: buildInitialInput(),
+            ),
+          );
   }
 
   Text _buildTileTitle(String title) => Text(
@@ -461,7 +467,7 @@ class _InscriptionViewState extends State<InscriptionView> {
         LongPostItButton(
       text: "Valider l'inscription",
       color: LPColors.blue,
-      onTapUp: () {
+      onTapUp: () async {
         //FIXME : Pour l'instant envoie jsuter vers une page profil avec les infos entrées
 
         //Création d'un utilisateur avec les data que l'on a dans la page
@@ -500,9 +506,24 @@ class _InscriptionViewState extends State<InscriptionView> {
           ),
         );
 
-        print('Nouvel user :\r\n' + nouvelUser.toString());
+        AuthService _auth = AuthService();
 
-        Navigator.of(context).pushNamed('/userProfile', arguments: nouvelUser);
+        print('Nouvel user :\r\n' + nouvelUser.toString());
+        setState(() {
+          loading = true;
+        });
+        await _auth.registerWithEmailAndPassword(
+            nouvelUser.email, nouvelUser.password);
+        dynamic result = await _auth.signInWithEmailAndPassword(
+            nouvelUser.email, nouvelUser.password);
+        if (result == null) {
+          setState(() {
+            loading = false;
+          });
+        } else {
+          Navigator.of(context).pushNamed('/flux');
+        }
+        // Navigator.of(context).pushNamed('/userProfile', arguments: nouvelUser);
       },
     );
 

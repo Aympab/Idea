@@ -6,6 +6,7 @@ import 'package:idea/model/idea.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/auth.dart';
 import 'package:idea/tools/themes.dart';
+import 'package:idea/view/loadingScreen.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/postItButton.dart';
 import 'package:provider/provider.dart';
@@ -219,6 +220,8 @@ class SecondPageConnexion extends StatefulWidget {
 class _SecondPageConnexionState extends State<SecondPageConnexion> {
   final AuthService _authAnonym = AuthService();
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     Widget connexionButton = PaperButton(
@@ -230,12 +233,18 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
     Widget continueWithoutConnexionButton = PaperButton(
       text: "Continuer sans se connecter",
       onTapUp: () async {
+        setState(() {
+          loading = true;
+        });
         dynamic authResult = await _authAnonym.signInAnonym();
 
         //if =null means that the anonym authentication didn't work
         if (authResult == null) {
+          setState(() {
+            loading = false;
+          });
           Navigator.of(context).pushNamed('/error');
-        } else{
+        } else {
           //Route to next page
           Navigator.of(context).pushNamed('/flux');
         }
@@ -254,34 +263,37 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
     double topPosLogo = -50;
     double topPosPostit = topPosLogo + MediaQuery.of(context).size.height / 1.8;
 
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: topPosLogo,
-          right: -50,
-          height: 280,
-          child: GestureDetector(
-            child: Transform.rotate(angle: -2.4, child: widget.ideaLogo),
-            onDoubleTap: () => Navigator.of(context).pushNamed('/newIdeaPage'),
-          ),
-        ),
-        Positioned(
-          top: topPosPostit,
-          left: 40,
-          child: continueWithoutConnexionButton,
-        ),
-        Positioned(
-          top: topPosPostit,
-          right: 40,
-          child: connexionButton,
-        ),
-        Positioned(
-          bottom: MediaQuery.of(context).size.height / 15,
-          left: 40,
-          child: inscriptionButton,
-        ),
-      ],
-    );
+    return loading
+        ? LoadingScreen()
+        : Stack(
+            children: <Widget>[
+              Positioned(
+                top: topPosLogo,
+                right: -50,
+                height: 280,
+                child: GestureDetector(
+                  child: Transform.rotate(angle: -2.4, child: widget.ideaLogo),
+                  onDoubleTap: () =>
+                      Navigator.of(context).pushNamed('/newIdeaPage'),
+                ),
+              ),
+              Positioned(
+                top: topPosPostit,
+                left: 40,
+                child: continueWithoutConnexionButton,
+              ),
+              Positioned(
+                top: topPosPostit,
+                right: 40,
+                child: connexionButton,
+              ),
+              Positioned(
+                bottom: MediaQuery.of(context).size.height / 15,
+                left: 40,
+                child: inscriptionButton,
+              ),
+            ],
+          );
   }
 
   builTitleIdea() {
