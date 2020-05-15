@@ -1,3 +1,5 @@
+
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:idea/model/besoins.dart';
@@ -10,6 +12,9 @@ class User {
 
   final InformationsObligatoiresUser infosOblig;
   final InformationsFacultativesUser infosFacultatives;
+  final CompetencesUser competences;
+  final MaterialsUser materials;
+  final CheckboxSelectionUser checkboxValues;
 
   //Il s'agit de la liste des Besoin que l'utilsateur est capable de combler
   //Sera surement à découper dans plusieurs Listes quand nécessaire
@@ -17,7 +22,7 @@ class User {
 
   final ProfileInformation profileInfos;
 
-  User({this.uid, @required this.isAnonymous, this.infosOblig, this.infosFacultatives, this.profileInfos});
+  User({this.uid, @required this.isAnonymous, this.infosOblig, this.infosFacultatives, this.competences, this.materials, this.checkboxValues, this.profileInfos});
 
   //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LA LIST BESOIN !!
   @override
@@ -28,12 +33,12 @@ class User {
           infosFacultatives == other.infosFacultatives &&
           infosOblig == other.infosOblig;
 
-  int get hashCode => hashValues(infosOblig, infosFacultatives);
+  int get hashCode => hashValues(infosOblig, infosFacultatives, competences, materials, checkboxValues);
   //int get hashCode => hash2(infosOblig.hashCode, infosFacultatives.hashCode);
 
   @override
   String toString() {
-    return 'Pseudo : ${infosOblig.pseudo}\r\nMail : ${infosOblig.email}\r\nPassword : ${infosOblig.password}\r\nNaissance : ${infosOblig.dateNaissance}\r\nPrenom : ${infosFacultatives.prenom}\r\nNom : ${infosFacultatives.nom}\r\nZone : ${infosFacultatives.zoneGeographique}';
+    return 'Pseudo : ${infosOblig.pseudo}\r\nMail : ${infosOblig.email}\r\nPassword : ${infosOblig.password}\r\nNaissance : ${infosOblig.dateNaissance}\r\nPrenom : ${infosFacultatives.prenom}\r\nNom : ${infosFacultatives.nom}\r\nZone : ${infosFacultatives.zoneGeographique}\r\nCompetences : ${competences.competences}\r\nMaterials : ${materials.materials}\r\nCGU : ${checkboxValues.checkboxCGU}\r\nNews Letter : ${checkboxValues.checkboxNewsLetter}';
   }
 
   //Pour retourner des infos basiques rapidement
@@ -66,3 +71,33 @@ class InformationsFacultativesUser extends Equatable {
   @override
   List<Object> get props => [this.prenom, this.nom, this.zoneGeographique];
 }
+
+class CompetencesUser extends Equatable {
+  final List competences;
+
+  CompetencesUser({this.competences});
+
+  @override
+  List<Object> get props => [this.competences];
+}
+
+class MaterialsUser extends Equatable {
+  final List materials;
+
+  MaterialsUser({this.materials});
+
+  @override
+  List<Object> get props => [this.materials];
+}
+
+class CheckboxSelectionUser extends Equatable {
+  final bool checkboxCGU;
+  final bool checkboxNewsLetter;
+
+  CheckboxSelectionUser({this.checkboxCGU, this.checkboxNewsLetter});
+
+  @override
+  List<Object> get props => [this.checkboxCGU, this.checkboxNewsLetter];
+}
+
+

@@ -36,7 +36,7 @@ class _InscriptionViewState extends State<InscriptionView> {
   DateTime _dateTime;
 
   List selectedCompetences = [];
-  List selectedMateriels = [];
+  List selectedMaterials = [];
 
   bool _valueCheckboxCGU = false;
   bool _valueCheckboxNewsLetter = false;
@@ -332,6 +332,11 @@ class _InscriptionViewState extends State<InscriptionView> {
       competenceList.add(myCompetence_5);
       return competenceList;
     }
+    refresh_competence(dynamic competenceList) {
+      setState(() {
+        selectedCompetences = competenceList;
+      });
+    }
     _buildExpansionTileCompetence() {
     return ExpansionTile(
       initiallyExpanded: false,
@@ -340,12 +345,14 @@ class _InscriptionViewState extends State<InscriptionView> {
         Container(
           color: Colors.amber,
           child: new MultiSelectWidget(
-          titleMultiSelect: 'Ajouter vos compétences',
-          textFieldName: 'name',
-          textFieldValue: 'value',
-          objectList: competenceListFunction(),
-          selectedvalues: selectedCompetences,
-        )
+            notifyParent: refresh_competence,
+            titleMultiSelect: 'Ajouter vos compétences',
+            textFieldName: 'name',
+            textFieldValue: 'value',
+            objectList: competenceListFunction(),
+            selectedvalues: selectedCompetences,
+
+          )
         ),
       ],
     );}
@@ -359,7 +366,11 @@ class _InscriptionViewState extends State<InscriptionView> {
       materielList.add(myMateriel_5);
       return materielList;
     }
-
+    refresh_material(dynamic materialList) {
+      setState(() {
+        selectedMaterials = materialList;
+      });
+    }
     _buildExpansionTileMateriel() {
     return ExpansionTile(
       initiallyExpanded: false,
@@ -368,12 +379,13 @@ class _InscriptionViewState extends State<InscriptionView> {
         Container(
           color: Colors.amber,
           child: new MultiSelectWidget(
-          titleMultiSelect: 'Ajouter un matériel',
-          textFieldName: 'name',
-          textFieldValue: 'value',
-          objectList: materielListFunction(),
-          selectedvalues: selectedMateriels,
-        )
+            notifyParent: refresh_material,
+            titleMultiSelect: 'Ajouter un matériel',
+            textFieldName: 'name',
+            textFieldValue: 'value',
+            objectList: materielListFunction(),
+            selectedvalues: selectedMaterials,
+          )
         ),
       ],
     );}
@@ -459,12 +471,12 @@ class _InscriptionViewState extends State<InscriptionView> {
               password: mdpController.text == null
                   ? ''
                   : mdpController.text.toString(),
-              dateNaissance: ((dateNaissanceController.text == null) | (dateNaissanceController.text.isEmpty))
+              /* dateNaissance: ((dateNaissanceController.text == null) | (dateNaissanceController.text.isEmpty))
                   ? DateTime.now()
                   : DateParser.parseStringToDateTime(
                       dateNaissanceController.text.toString(),
-                    ),
-            ),
+                    ),*/
+            ), 
             infosFacultatives: InformationsFacultativesUser(
               nom: nomController.text == null
                   ? ''
@@ -476,20 +488,18 @@ class _InscriptionViewState extends State<InscriptionView> {
                   ? ''
                   : zoneGeographiqueController.text.toString(),
             ),
+
+            competences: CompetencesUser(competences: selectedCompetences),
+            materials: MaterialsUser(materials: selectedMaterials),
+            checkboxValues: CheckboxSelectionUser(checkboxCGU: _valueCheckboxCGU, checkboxNewsLetter: _valueCheckboxNewsLetter),
             //FIXME : ON envoie les infos comme ça, il faudrait envoyer l'image
             profileInfos: ProfileInformation(
               title: DefaultTitle('Idéateur novice'),
               level: Level(43),
             ),
           );
-
-          print(selectedCompetences);
-          print(selectedMateriels);
-          // print("CGU : ");
-          // print(_valueCheckboxCGU);
-          // print("NewsLetter : ");
-          // print(_valueCheckboxNewsLetter);
-          print('Nouvel user $nouvelUser');
+          
+          print('Nouvel user :\r\n' + nouvelUser.toString());
 
           Navigator.of(context)
               .pushNamed('/userProfile', arguments: nouvelUser);
@@ -521,8 +531,8 @@ class _InscriptionViewState extends State<InscriptionView> {
             SizedBox(height: 22),
             password,
             SizedBox(height: 22),
-            date,
-            SizedBox(height: 5),
+            //date,
+            //SizedBox(height: 5),
             _buildExpansionTileInfoFacultative(),
             SizedBox(height: 5),
             _buildExpansionTileCompetence(),
