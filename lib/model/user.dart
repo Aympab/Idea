@@ -1,3 +1,5 @@
+
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:idea/model/besoins.dart';
@@ -10,6 +12,10 @@ class User {
 
   final InformationsObligatoiresUser infosOblig;
   final InformationsFacultativesUser infosFacultatives;
+
+  // final CompetencesUser competences;
+  // final MaterialsUser materials;
+  // final CheckboxSelectionUser checkboxValues;
 
   //Il s'agit de la liste des Besoin que l'utilsateur est capable de combler
   //Sera surement à découper dans plusieurs Listes quand nécessaire
@@ -33,7 +39,7 @@ class User {
 
   @override
   String toString() {
-    return 'Pseudo : ${infosOblig.pseudo}\r\nMail : ${infosOblig.email}\r\nPassword : ${infosOblig.password}\r\nNaissance : ${infosOblig.dateNaissance}\r\nPrenom : ${infosFacultatives.prenom}\r\nNom : ${infosFacultatives.nom}\r\nZone : ${infosFacultatives.zoneGeographique}';
+    return 'Pseudo : ${infosOblig.pseudo}\r\nMail : ${infosOblig.email}\r\nPassword : ${infosOblig.password}\r\nNaissance : ${infosOblig.dateNaissance}\r\nPrenom : ${infosFacultatives.prenom}\r\nNom : ${infosFacultatives.nom}\r\nZone : ${infosFacultatives.zoneGeographique}\r\n';
   }
 
   //Pour retourner des infos basiques rapidement
@@ -60,9 +66,30 @@ class InformationsFacultativesUser extends Equatable {
   final String prenom;
   final String nom;
   final String zoneGeographique;
+  final bool checkboxNewsLetter;
 
-  InformationsFacultativesUser({this.prenom, this.nom, this.zoneGeographique});
+  InformationsFacultativesUser({this.checkboxNewsLetter, this.prenom, this.nom, this.zoneGeographique});
 
   @override
   List<Object> get props => [this.prenom, this.nom, this.zoneGeographique];
 }
+
+class CompetencesUser extends Equatable {
+  final List competences;
+
+  CompetencesUser({this.competences});
+
+  @override
+  List<Object> get props => [this.competences];
+}
+
+class MaterialsUser extends Equatable {
+  final List materials;
+
+  MaterialsUser({this.materials});
+
+  @override
+  List<Object> get props => [this.materials];
+}
+
+

@@ -36,7 +36,7 @@ class _InscriptionViewState extends State<InscriptionView> {
   DateTime _dateTime;
 
   List selectedCompetences = [];
-  List selectedMateriels = [];
+  List selectedMaterials = [];
 
   bool _valueCheckboxCGU = false;
   bool _valueCheckboxNewsLetter = false;
@@ -111,7 +111,7 @@ class _InscriptionViewState extends State<InscriptionView> {
   Text _buildTileTitle(String title) => Text(
         title,
         textAlign: TextAlign.center,
-        style: TextStyle( color: Colors.black, fontSize: 20),
+        style: TextStyle(color: Colors.black, fontSize: 20),
       );
 
   Widget showImage() {
@@ -273,55 +273,58 @@ class _InscriptionViewState extends State<InscriptionView> {
     ]);
 
     _buildExpansionTileInfoFacultative() {
-    return ExpansionTile(
-      initiallyExpanded: false,
-      title: _buildTileTitle('Infos Facultatives'),
-      children: <Widget>[
-        SizedBox(height: 22),
-        Row(
-          children: [
-            Expanded(
-                flex: 3,
-                child: TextField(
-                  controller: nomController,
-                  keyboardType: TextInputType.text,
-                  autofocus: false,
-                  decoration: InputDecoration(
-                    labelText: 'Nom',
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0)),
-                  ),
-                )),
-            Expanded(
-                flex: 3,
-                child: TextField(
-                  controller: prenomController,
-                  keyboardType: TextInputType.text,
-                  autofocus: false,
-                  decoration: InputDecoration(
-                    labelText: 'Prénom',
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0)),
-                  ),
-                )),
-          ],
-        ),
-        SizedBox(height: 22),
-        TextField(
-          controller: zoneGeographiqueController,
-          keyboardType: TextInputType.text,
-          autofocus: false,
-          decoration: InputDecoration(
-            labelText: 'Zone Géographique',
-            contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      return ExpansionTile(
+        initiallyExpanded: false,
+        title: _buildTileTitle('Infos Facultatives'),
+        children: <Widget>[
+          SizedBox(height: 22),
+          Row(
+            children: [
+              Expanded(
+                  flex: 3,
+                  child: TextField(
+                    controller: nomController,
+                    keyboardType: TextInputType.text,
+                    autofocus: false,
+                    decoration: InputDecoration(
+                      labelText: 'Nom',
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                    ),
+                  )),
+              Expanded(
+                  flex: 3,
+                  child: TextField(
+                    controller: prenomController,
+                    keyboardType: TextInputType.text,
+                    autofocus: false,
+                    decoration: InputDecoration(
+                      labelText: 'Prénom',
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                    ),
+                  )),
+            ],
           ),
-        ),
-      ],
-    );}
+          SizedBox(height: 22),
+          TextField(
+            controller: zoneGeographiqueController,
+            keyboardType: TextInputType.text,
+            autofocus: false,
+            decoration: InputDecoration(
+              labelText: 'Zone Géographique',
+              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
+          ),
+        ],
+      );
+    }
 
     List competenceListFunction() {
       List competenceList = List();
@@ -332,23 +335,31 @@ class _InscriptionViewState extends State<InscriptionView> {
       competenceList.add(myCompetence_5);
       return competenceList;
     }
+
+    refresh_competence(dynamic competenceList) {
+      setState(() {
+        selectedCompetences = competenceList;
+      });
+    }
+
     _buildExpansionTileCompetence() {
-    return ExpansionTile(
-      initiallyExpanded: false,
-      title: _buildTileTitle('Compétences'),
-      children: <Widget>[
-        Container(
-          color: Colors.amber,
-          child: new MultiSelectWidget(
-          titleMultiSelect: 'Ajouter vos compétences',
-          textFieldName: 'name',
-          textFieldValue: 'value',
-          objectList: competenceListFunction(),
-          selectedvalues: selectedCompetences,
-        )
-        ),
-      ],
-    );}
+      return ExpansionTile(
+        initiallyExpanded: false,
+        title: _buildTileTitle('Compétences'),
+        children: <Widget>[
+          Container(
+              color: Colors.amber,
+              child: new MultiSelectWidget(
+                notifyParent: refresh_competence,
+                titleMultiSelect: 'Ajouter vos compétences',
+                textFieldName: 'name',
+                textFieldValue: 'value',
+                objectList: competenceListFunction(),
+                selectedvalues: selectedCompetences,
+              )),
+        ],
+      );
+    }
 
     List materielListFunction() {
       List materielList = List();
@@ -360,23 +371,30 @@ class _InscriptionViewState extends State<InscriptionView> {
       return materielList;
     }
 
+    refresh_material(dynamic materialList) {
+      setState(() {
+        selectedMaterials = materialList;
+      });
+    }
+
     _buildExpansionTileMateriel() {
-    return ExpansionTile(
-      initiallyExpanded: false,
-      title: _buildTileTitle('Matériels'),
-      children: <Widget>[
-        Container(
-          color: Colors.amber,
-          child: new MultiSelectWidget(
-          titleMultiSelect: 'Ajouter un matériel',
-          textFieldName: 'name',
-          textFieldValue: 'value',
-          objectList: materielListFunction(),
-          selectedvalues: selectedMateriels,
-        )
-        ),
-      ],
-    );}
+      return ExpansionTile(
+        initiallyExpanded: false,
+        title: _buildTileTitle('Matériels'),
+        children: <Widget>[
+          Container(
+              color: Colors.amber,
+              child: new MultiSelectWidget(
+                notifyParent: refresh_material,
+                titleMultiSelect: 'Ajouter un matériel',
+                textFieldName: 'name',
+                textFieldValue: 'value',
+                objectList: materielListFunction(),
+                selectedvalues: selectedMaterials,
+              )),
+        ],
+      );
+    }
 
     final checkbox = new Container(
       padding: new EdgeInsets.all(32.0),
@@ -446,57 +464,48 @@ class _InscriptionViewState extends State<InscriptionView> {
       onTapUp: () {
         //FIXME : Pour l'instant envoie jsuter vers une page profil avec les infos entrées
 
-          //Création d'un utilisateur avec les data que l'on a dans la page
-          User nouvelUser = User(
-            isAnonymous: false,
-            infosOblig: InformationsObligatoiresUser(
-              pseudo: pseudoController.text == null
-                  ? ''
-                  : pseudoController.text.toString(),
-              email: mailController.text == null
-                  ? ''
-                  : mailController.text.toString(),
-              password: mdpController.text == null
-                  ? ''
-                  : mdpController.text.toString(),
-              dateNaissance: ((dateNaissanceController.text == null) | (dateNaissanceController.text.isEmpty))
+        //Création d'un utilisateur avec les data que l'on a dans la page
+        User nouvelUser = User(
+          isAnonymous: false,
+          infosOblig: InformationsObligatoiresUser(
+            pseudo: pseudoController.text == null
+                ? ''
+                : pseudoController.text.toString(),
+            email: mailController.text == null
+                ? ''
+                : mailController.text.toString(),
+            password:
+                mdpController.text == null ? '' : mdpController.text.toString(),
+            /* dateNaissance: ((dateNaissanceController.text == null) | (dateNaissanceController.text.isEmpty))
                   ? DateTime.now()
                   : DateParser.parseStringToDateTime(
                       dateNaissanceController.text.toString(),
-                    ),
-            ),
-            infosFacultatives: InformationsFacultativesUser(
-              nom: nomController.text == null
-                  ? ''
-                  : nomController.text.toString(),
-              prenom: prenomController.text == null
-                  ? ''
-                  : prenomController.text.toString(),
-              zoneGeographique: zoneGeographiqueController.text == null
-                  ? ''
-                  : zoneGeographiqueController.text.toString(),
-            ),
-            //FIXME : ON envoie les infos comme ça, il faudrait envoyer l'image
-            profileInfos: ProfileInformation(
-              title: DefaultTitle('Idéateur novice'),
-              level: Level(43),
-            ),
-          );
+                    ),*/
+          ),
+          infosFacultatives: InformationsFacultativesUser(
+            nom:
+                nomController.text == null ? '' : nomController.text.toString(),
+            prenom: prenomController.text == null
+                ? ''
+                : prenomController.text.toString(),
+            zoneGeographique: zoneGeographiqueController.text == null
+                ? ''
+                : zoneGeographiqueController.text.toString(),
+            checkboxNewsLetter: _valueCheckboxNewsLetter,
+          ),
+          //FIXME : ON envoie les infos comme ça, il faudrait envoyer l'image
+          profileInfos: ProfileInformation(
+            title: DefaultTitle('Idéateur novice'),
+            level: Level(43),
+          ),
+        );
 
-          print(selectedCompetences);
-          print(selectedMateriels);
-          // print("CGU : ");
-          // print(_valueCheckboxCGU);
-          // print("NewsLetter : ");
-          // print(_valueCheckboxNewsLetter);
-          print('Nouvel user $nouvelUser');
+        print('Nouvel user :\r\n' + nouvelUser.toString());
 
-          Navigator.of(context)
-              .pushNamed('/userProfile', arguments: nouvelUser);
+        Navigator.of(context).pushNamed('/userProfile', arguments: nouvelUser);
       },
     );
-    
-    
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -521,8 +530,8 @@ class _InscriptionViewState extends State<InscriptionView> {
             SizedBox(height: 22),
             password,
             SizedBox(height: 22),
-            date,
-            SizedBox(height: 5),
+            //date,
+            //SizedBox(height: 5),
             _buildExpansionTileInfoFacultative(),
             SizedBox(height: 5),
             _buildExpansionTileCompetence(),
@@ -530,7 +539,7 @@ class _InscriptionViewState extends State<InscriptionView> {
             _buildExpansionTileMateriel(),
             SizedBox(height: 22),
             checkbox,
-            SizedBox(height: 22),            
+            SizedBox(height: 22),
             Center(child: inscriptionButton),
           ],
         ),
