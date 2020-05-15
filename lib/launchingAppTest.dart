@@ -6,6 +6,7 @@ import 'package:idea/model/user.dart';
 
 class TestMain {
   static final User user = new User(
+    isAnonymous: false,
     infosOblig: new InformationsObligatoiresUser(
       pseudo: 'The Rock',
       dateNaissance: DateTime.now(),

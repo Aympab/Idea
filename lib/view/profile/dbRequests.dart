@@ -6,6 +6,7 @@ import 'package:idea/model/user.dart';
 //Il faut déterminer comment on décide d'appeler l'user (un ID ? une instance ? etc )
 Future<User> getUserFromDB() async {
   User user = new User(
+    isAnonymous: false,
     infosOblig: InformationsObligatoiresUser(
       dateNaissance: DateTime.now(),
       email: "email",
