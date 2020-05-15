@@ -237,7 +237,7 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
           Navigator.of(context).pushNamed('/error');
         } else{
           //Route to next page
-          Navigator.of(context).pushNamed('/flux', arguments: authResult);
+          Navigator.of(context).pushNamed('/flux');
         }
       },
     );

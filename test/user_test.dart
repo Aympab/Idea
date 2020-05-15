@@ -7,6 +7,7 @@ void main() {
   test("test du ovveride de == sur deux utilisateurs", () {
     //Given : Deux utilisateurs identiques
     User user1 = User(
+      isAnonymous: false,
       infosOblig: InformationsObligatoiresUser(
           pseudo: 'pseudo',
           dateNaissance: DateTime(1998),
@@ -20,6 +21,7 @@ void main() {
     );
 
     User user2 = User(
+      isAnonymous: false,
       infosOblig: InformationsObligatoiresUser(
           pseudo: 'pseudo',
           dateNaissance: DateTime(1998),
@@ -42,6 +44,7 @@ void main() {
   test("ajout de besoins dans un user", () {
     //Given : un user sans besoin
     User user = User(
+      isAnonymous: false,
       infosOblig: InformationsObligatoiresUser(
           pseudo: 'pseudo',
           dateNaissance: DateTime(1998),
