@@ -37,9 +37,10 @@ class _FluxMainViewState extends State<FluxMainView> {
           body: SafeArea(
             child: Column(
               children: <Widget>[
-                authUser.isAnonymous
-                    ? Text('Flux Anonyme de ${authUser.uid}')
-                    : Text('Flux de ${authUser.pseudo}'),
+                Text('Flux de ${authUser.uid}'),
+                // authUser.isAnonymous
+                //     ? Text('Flux Anonyme de ${authUser.uid}')
+                //     : Text('Flux de ${authUser.pseudo}'),
                 FlatButton(
                   child: Container(color: Colors.amber, child: Text('Logout')),
                   onPressed: () async {
