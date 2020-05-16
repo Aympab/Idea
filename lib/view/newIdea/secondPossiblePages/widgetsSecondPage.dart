@@ -213,7 +213,7 @@ class TextFieldShortDescriptionState extends State<TextFieldShortDescription> {
           description = value;
         });
       },
-      validator: (_) => description.isEmpty ? 'Entrez une description' : null,
+      validator: (value) => value.isEmpty ? 'Entrez une description' : null,
       keyboardType: TextInputType.multiline,
       minLines: 3,
       maxLines: 10,

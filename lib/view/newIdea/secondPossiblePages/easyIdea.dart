@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/model/user.dart';
+import 'package:idea/services/database.dart';
 import 'package:idea/tools/themes.dart';
 
 import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
@@ -20,11 +24,26 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
   GlobalKey<TextFieldShortDescriptionState> _descriptionKey =
       GlobalKey<TextFieldShortDescriptionState>();
 
-  FormEasyIdea _form;
+  DatabaseService _dbService = DatabaseService();
+
+  PageController _pvController;
+  @override
+  void initState() {
+    super.initState();
+    _pvController = PageController(
+      initialPage: 0,
+    );
+  }
+
+  @override
+  void dispose() {
+    _pvController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    _form = FormEasyIdea(formKey: _formKey,keyTfIdeaName: _ideaNameKey,keyTfShortDescr: _descriptionKey,);
+    User authUser = Provider.of<User>(context);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -37,60 +56,92 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
           ],
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: ConstrainedBox(
-              constraints: BoxConstraints.expand(),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 50),
-                  TitleSecondPage(),
-                  subtitleSecondPage(),
-                  SizedBox(height: 30),
-                  Expanded(
-                    child: _form,
+      child: PageView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: _pvController,
+        children: <Widget>[
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Stack(
+              children: <Widget>[
+                Positioned(
+                  bottom: -60,
+                  right: -60,
+                  child: Transform.rotate(
+                    angle: -pi / 4,
+                    child: Container(
+                        height: 200,
+                        child:
+                            Image.asset('assets/images/mainLightBulbLogo.png')),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: 100,
-                        child: FlatButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Image.asset(
-                              'assets/images/buttonsImages/backWhite.png'),
+                ),
+                SafeArea(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints.expand(),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 50),
+                        TitleSecondPage(),
+                        subtitleSecondPage(),
+                        SizedBox(height: 30),
+                        Expanded(
+                          child: FormEasyIdea(
+                            formKey: _formKey,
+                            keyTfIdeaName: _ideaNameKey,
+                            keyTfShortDescr: _descriptionKey,
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: 100,
-                        child: FlatButton(
-                          onPressed: () {
-                            //TODO : Enregistrer l'idée dans la BD
-                            if (_formKey.currentState.validate()) {
-                              print('validated');
-                              print(_ideaNameKey.currentState.ideaName);
-                              print(_descriptionKey.currentState.description);
-                            } else {
-                              print('not val');
-                            }
-                          },
-                          child: Image.asset(
-                              'assets/images/buttonsImages/nextWhite.png'),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                    ],
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              width: 100,
+                              child: FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Image.asset(
+                                    'assets/images/buttonsImages/backWhite.png'),
+                              ),
+                            ),
+                            Container(
+                              width: 100,
+                              child: FlatButton(
+                                onPressed: () {
+                                  //TODO : Enregistrer l'idée dans la BD
+                                  if (_formKey.currentState.validate()) {
+                                    print('validated');
+
+                                    print(_ideaNameKey.currentState.ideaName);
+                                    print(_descriptionKey
+                                        .currentState.description);
+                                    print(authUser.uid);
+                                    _pvController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInExpo);
+                                  }
+                                },
+                                child: Image.asset(
+                                    'assets/images/buttonsImages/nextWhite.png'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10)
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 10)
-                ],
-              )),
-        ),
+                ),
+              ],
+            ),
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Text('yo'),
+          )
+        ],
       ),
     );
   }
@@ -151,7 +202,8 @@ class _FormEasyIdeaState extends State<FormEasyIdea> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextFieldShortDescription(key: widget.keyTfShortDescr),
+                    child:
+                        TextFieldShortDescription(key: widget.keyTfShortDescr),
                   ),
                   SizedBox(height: 40),
                   PictureField(),

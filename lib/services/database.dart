@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/idea.dart';
 import 'package:idea/model/user.dart';
@@ -36,9 +37,29 @@ class DatabaseService {
     });
   }
 
-  //Get Users
-  Stream<QuerySnapshot> get users {
-    return userCollection.snapshots();
+  //Returns a user from a uid
+  Future<User> getUserFromUid(String uid) async {
+    User user;
+    await userCollection.document(uid).get(source: Source.server).then(
+          (value) => user =  User(
+              uid: uid,
+              infosOblig: InformationsObligatoiresUser(
+                pseudo: value.data['pseudo'],
+              ),
+              infosFacultatives: InformationsFacultativesUser(
+                nom: value.data['nom'],
+                prenom: value.data['prenom'],
+                zoneGeographique: value.data['zoneGeo'],
+              ),
+              profileInfos: ProfileInformation(
+                level: Level(
+                  int.parse(value.data['niveau']),
+                ),
+                title: DefaultTitle(value.data['titre']),
+              )),
+        );
+
+        return user;
   }
 
   //

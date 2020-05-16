@@ -75,8 +75,8 @@ class _SignInPageState extends State<SignInPage> {
                                       'Impossible de se connecter avec ces identifiants.';
                                 });
                               } else {
-                                Navigator.of(context)
-                                    .pushNamed('/flux');
+                                // Navigator.of(context).pushNamed('/flux');
+                                Navigator.of(context).pushNamed('/newIdeaPage');
                               }
                             }
                           },
