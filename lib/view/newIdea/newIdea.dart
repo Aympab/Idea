@@ -160,7 +160,7 @@ class _NewIdeaViewState extends State<NewIdeaView> {
       style: Theme.of(context).textTheme.title)
       );
 
-    final categorySelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les Catégories de votre idée', textFieldName: 'name', textFieldValue: 'value', objectList: categorieListFunction(), selectedvalues: selectedCategories);
+    final categorySelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les Catégories de votre idée', textFieldName: 'name', textFieldValue: 'value', objectList: categorieListFunction(), selectedvalues: selectedCategories, notifyParent: (List<dynamic> selectedvalues) {  },);
 
     final ideaName = new TextFormField(
       keyboardType: TextInputType.text,
@@ -201,9 +201,9 @@ class _NewIdeaViewState extends State<NewIdeaView> {
           ]
         
       );
-      final competenceSelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les compétences nécessaires', textFieldName: 'name', textFieldValue: 'value', objectList: competenceListFunction(), selectedvalues: selectedCompetences);
-      final materielSelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter le matériel nécessaire', textFieldName: 'name', textFieldValue: 'value', objectList: materielListFunction(), selectedvalues: selectedMateriels);
-      final contactselector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les contacts nécessaires', textFieldName: 'name', textFieldValue: 'value', objectList: contactListFunction(), selectedvalues: selectedContacts);
+      final competenceSelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les compétences nécessaires', textFieldName: 'name', textFieldValue: 'value', objectList: competenceListFunction(), selectedvalues: selectedCompetences, notifyParent: (List<dynamic> selectedvalues) {  },);
+      final materielSelector = new MultiSelectWidget(titleMultiSelect: 'Ajouter le matériel nécessaire', textFieldName: 'name', textFieldValue: 'value', objectList: materielListFunction(), selectedvalues: selectedMateriels, notifyParent: (List<dynamic> selectedvalues) {  },);
+      final contactselector = new MultiSelectWidget(titleMultiSelect: 'Ajouter les contacts nécessaires', textFieldName: 'name', textFieldValue: 'value', objectList: contactListFunction(), selectedvalues: selectedContacts, notifyParent: (List<dynamic> selectedvalues) {  },);
       final besoinsComponents = Column(
             children: [
               SizedBox(height: 15),

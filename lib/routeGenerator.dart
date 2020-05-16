@@ -4,7 +4,7 @@ import 'package:idea/view/welcomePages/signIn.dart';
 import 'package:idea/view/welcomePages/connexion.dart';
 import 'package:idea/view/flux/fluxMain.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
-import 'package:idea/view/inscription.dart';
+import 'package:idea/view/welcomePages/inscription.dart';
 import 'package:idea/view/newIdea/newIdea.dart';
 import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
 import 'package:idea/view/profile/profileMain.dart';

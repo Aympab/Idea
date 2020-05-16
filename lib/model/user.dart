@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:idea/model/besoins.dart';
@@ -23,7 +21,12 @@ class User {
 
   final ProfileInformation profileInfos;
 
-  User({this.uid, @required this.isAnonymous, this.infosOblig, this.infosFacultatives, this.profileInfos});
+  User(
+      {this.uid,
+      this.isAnonymous,
+      this.infosOblig,
+      this.infosFacultatives,
+      this.profileInfos});
 
   //Override de l'opérateur ==, on va vérifier s'ils ont soit la même référence, soit tous les attributs sont identiques SANS REGARDER LA LIST BESOIN !!
   @override
@@ -46,6 +49,8 @@ class User {
   String get pseudo => infosOblig.pseudo;
   String get title => profileInfos.title.title;
   String get level => profileInfos.level.toString();
+  String get email => infosOblig.email;
+  String get password => infosOblig.password;
 }
 
 class InformationsObligatoiresUser extends Equatable {
@@ -68,28 +73,9 @@ class InformationsFacultativesUser extends Equatable {
   final String zoneGeographique;
   final bool checkboxNewsLetter;
 
-  InformationsFacultativesUser({this.checkboxNewsLetter, this.prenom, this.nom, this.zoneGeographique});
+  InformationsFacultativesUser(
+      {this.checkboxNewsLetter, this.prenom, this.nom, this.zoneGeographique});
 
   @override
   List<Object> get props => [this.prenom, this.nom, this.zoneGeographique];
 }
-
-class CompetencesUser extends Equatable {
-  final List competences;
-
-  CompetencesUser({this.competences});
-
-  @override
-  List<Object> get props => [this.competences];
-}
-
-class MaterialsUser extends Equatable {
-  final List materials;
-
-  MaterialsUser({this.materials});
-
-  @override
-  List<Object> get props => [this.materials];
-}
-
-

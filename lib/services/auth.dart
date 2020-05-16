@@ -1,29 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
+import 'package:idea/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //create user object based on FirebaseUser
-  User _anonymUserFromFirebaseUser(FirebaseUser fbUser) {
-    return fbUser != null ? User(isAnonymous: true,uid:fbUser.uid) : null;
+  User _userFromFirebaseUser(FirebaseUser fbUser) {
+    return fbUser != null ? User(uid: fbUser.uid) : null;
   }
 
   //stream changes whenever user logs in or out
   Stream<User> get user {
     return _auth.onAuthStateChanged
-      //.map((FirebaseUser user) => _anonymUserFromFirebaseUser(user));
-    .map(_anonymUserFromFirebaseUser); //Identique à la ligne au dessus
+        //.map((FirebaseUser user) => _anonymUserFromFirebaseUser(user));
+        .map(_userFromFirebaseUser); //Identique à la ligne au dessus
   }
-
 
   //sign-in anonymously
   Future signInAnonym() async {
     try {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
-      return _anonymUserFromFirebaseUser(user);
+      return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
       return null;
@@ -31,8 +30,35 @@ class AuthService {
   }
 
   //sign-in with mail/passwd
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
 
-  //register with mail/passwd
+      //TODO : Get the user corresponding to this uid from the Db
+      return _userFromFirebaseUser(user);
+    } catch (e) {}
+  }
+
+  //When registering a new user, calls the DBService
+  Future registerUser(User user) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: user.email, password: user.password);
+
+      FirebaseUser fbUser = result.user;
+      
+      User newUser = fbUser != null ?  User(uid: fbUser.uid,infosOblig: user.infosOblig, infosFacultatives: user.infosFacultatives,isAnonymous: false,) : null;
+
+      //Creation de l'user dans la DB
+      await DatabaseService().createUserData(user);
+      return newUser;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   //sign-out
   Future signOut() async {
