@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/auth.dart';
+import 'package:idea/services/database.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:idea/view/loadingScreen.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/postItButton.dart';
 import 'package:provider/provider.dart';
+
+import '../../launchingAppTest.dart';
 
 class ConnexionView extends StatefulWidget {
   ConnexionView({Key key}) : super(key: key);
@@ -273,8 +276,8 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
                 height: 280,
                 child: GestureDetector(
                   child: Transform.rotate(angle: -2.4, child: widget.ideaLogo),
-                  onDoubleTap: () =>
-                      Navigator.of(context).pushNamed('/newIdeaPage'),
+                  onDoubleTap: () => Navigator.of(context).pushNamed('/newIdeaPage'),
+
                 ),
               ),
               Positioned(

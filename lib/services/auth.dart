@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/database.dart';
 
@@ -8,9 +6,6 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //create user object based on FirebaseUser
-  // User _anonymUserFromFirebaseUser(FirebaseUser fbUser) {
-  //   return fbUser != null ? User(isAnonymous: true, uid: fbUser.uid) : null;
-  // }
   User _userFromFirebaseUser(FirebaseUser fbUser) {
     return fbUser != null ? User(uid: fbUser.uid) : null;
   }
@@ -40,27 +35,11 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+
+      //TODO : Get the user corresponding to this uid from the Db
       return _userFromFirebaseUser(user);
     } catch (e) {}
   }
-
-  // //register with mail/passwd
-  // Future registerWithEmailAndPassword(String email, String password) async {
-  //   try {
-  //     AuthResult result = await _auth.createUserWithEmailAndPassword(
-  //         email: email, password: password);
-
-  //     FirebaseUser fbUser = result.user;
-  //     User user = _userFromFirebaseUser(fbUser);
-
-  //     // //Creation de l'user dans la DB
-  //     // await DatabaseService(uid: fbUser.uid).createUserData(user);
-  //     return user;
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
 
   //When registering a new user, calls the DBService
   Future registerUser(User user) async {
