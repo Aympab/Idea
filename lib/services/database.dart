@@ -2,14 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/model/ideaCategory.dart';
 import 'package:idea/model/user.dart';
 
 class DatabaseService {
   DatabaseService();
 
-  //
+  ///
+  ///
+  ///
   //USER SERVICES
-  //
+  ///
+  ///
   //Reference to the DB collection
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
@@ -41,7 +45,7 @@ class DatabaseService {
   Future<User> getUserFromUid(String uid) async {
     User user;
     await userCollection.document(uid).get(source: Source.server).then(
-          (value) => user =  User(
+          (value) => user = User(
               uid: uid,
               infosOblig: InformationsObligatoiresUser(
                 pseudo: value.data['pseudo'],
@@ -59,12 +63,16 @@ class DatabaseService {
               )),
         );
 
-        return user;
+    return user;
   }
 
-  //
+  ///
+  ///
+  ///
   //IDEA SERVICES
-  //
+  ///
+  ///
+  ///
   final CollectionReference ideaCollection =
       Firestore.instance.collection('ideas');
 
@@ -87,5 +95,38 @@ class DatabaseService {
   //Get Ideas
   Stream<QuerySnapshot> get ideas {
     return ideaCollection.snapshots();
+  }
+
+  ///
+  ///
+  ///
+  ///CATEGORY SERVICES
+  ///
+  ///
+  ///
+  final CollectionReference categoryCollection =
+      Firestore.instance.collection('categories');
+
+  Future<List<IdeaCategory>> getAllCategories() async {
+    List<IdeaCategory> categories = List<IdeaCategory>();
+
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection('categories').getDocuments();
+    var list = querySnapshot.documents;
+
+    for (DocumentSnapshot doc in list) {
+      categories.add(
+        IdeaCategory(
+          name: doc.documentID,
+          popularity: doc.data['popularity'],
+        ),
+      );
+    }
+
+    return categories;
+  }
+
+  Stream<QuerySnapshot> get categories {
+    return categoryCollection.snapshots();
   }
 }
