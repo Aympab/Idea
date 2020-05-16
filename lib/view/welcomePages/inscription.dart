@@ -6,6 +6,8 @@ import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/auth.dart';
+
+import 'package:idea/services/database.dart';
 import 'package:idea/tools/dateParser.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:idea/view/loadingScreen.dart';
@@ -512,10 +514,10 @@ class _InscriptionViewState extends State<InscriptionView> {
         setState(() {
           loading = true;
         });
-        await _auth.registerWithEmailAndPassword(
-            nouvelUser.email, nouvelUser.password);
+        await _auth.registerUser(nouvelUser);
         dynamic result = await _auth.signInWithEmailAndPassword(
             nouvelUser.email, nouvelUser.password);
+
         if (result == null) {
           setState(() {
             loading = false;

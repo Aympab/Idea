@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
+import 'package:idea/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -9,10 +11,9 @@ class AuthService {
   // User _anonymUserFromFirebaseUser(FirebaseUser fbUser) {
   //   return fbUser != null ? User(isAnonymous: true, uid: fbUser.uid) : null;
   // }
-    User _userFromFirebaseUser(FirebaseUser fbUser) {
+  User _userFromFirebaseUser(FirebaseUser fbUser) {
     return fbUser != null ? User(uid: fbUser.uid) : null;
   }
-
 
   //stream changes whenever user logs in or out
   Stream<User> get user {
@@ -34,29 +35,50 @@ class AuthService {
   }
 
   //sign-in with mail/passwd
-  Future signInWithEmailAndPassword(String email, String password) async{
+  Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
-    
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
+  // //register with mail/passwd
+  // Future registerWithEmailAndPassword(String email, String password) async {
+  //   try {
+  //     AuthResult result = await _auth.createUserWithEmailAndPassword(
+  //         email: email, password: password);
 
-  //register with mail/passwd
-  Future registerWithEmailAndPassword(String email, String password) async {
+  //     FirebaseUser fbUser = result.user;
+  //     User user = _userFromFirebaseUser(fbUser);
+
+  //     // //Creation de l'user dans la DB
+  //     // await DatabaseService(uid: fbUser.uid).createUserData(user);
+  //     return user;
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
+
+  //When registering a new user, calls the DBService
+  Future registerUser(User user) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+          email: user.email, password: user.password);
 
-      FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
-  }catch(e){
-    print(e.toString());
-    return null;
-  }
+      FirebaseUser fbUser = result.user;
+      
+      User newUser = fbUser != null ?  User(uid: fbUser.uid,infosOblig: user.infosOblig, infosFacultatives: user.infosFacultatives,isAnonymous: false,) : null;
+
+      //Creation de l'user dans la DB
+      await DatabaseService().createUserData(user);
+      return newUser;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   //sign-out

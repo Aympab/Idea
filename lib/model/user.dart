@@ -79,21 +79,3 @@ class InformationsFacultativesUser extends Equatable {
   @override
   List<Object> get props => [this.prenom, this.nom, this.zoneGeographique];
 }
-
-class CompetencesUser extends Equatable {
-  final List competences;
-
-  CompetencesUser({this.competences});
-
-  @override
-  List<Object> get props => [this.competences];
-}
-
-class MaterialsUser extends Equatable {
-  final List materials;
-
-  MaterialsUser({this.materials});
-
-  @override
-  List<Object> get props => [this.materials];
-}
