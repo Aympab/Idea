@@ -1,6 +1,15 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 
+///
+///
+///
+///
+///TITLE ("2.Définissez votre idée")
+///
+///
+///
+///
 class TitleSecondPage extends StatefulWidget {
   const TitleSecondPage({
     Key key,
@@ -112,4 +121,178 @@ BorderedText subtitleSecondPage() {
       ),
     ),
   );
+}
+
+///
+///
+///
+///IDEA NAME
+///
+///
+///
+///
+class TextFieldIdeaName extends StatefulWidget {
+  TextFieldIdeaName({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  TextFieldIdeaNameState createState() => TextFieldIdeaNameState();
+}
+
+class TextFieldIdeaNameState extends State<TextFieldIdeaName> {
+  String ideaName = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      style: TextStyle(
+        fontFamily: "ComingSoon",
+        fontSize: 26,
+        color: Color(0xFF000000),
+      ),
+      onChanged: (value) {
+        setState(() => ideaName = value);
+      },
+      validator: (value) => value.isNotEmpty && value.length <= 30
+          ? null
+          : 'Entrez un nom de max. 30 caractères',
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFFC114).withOpacity(1.0),
+            width: 5,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 2,
+          ),
+        ),
+        fillColor: Color(0x1B9200).withOpacity(0.2),
+        filled: true,
+        hintText: 'Trouvez un nom à votre idée !',
+        hintStyle: TextStyle(fontSize: 15, color: Colors.white),
+        errorStyle: TextStyle(color: Colors.red),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2),
+        ),
+      ),
+    );
+  }
+}
+
+///
+///
+///
+///SHORT DESCRPTION
+///
+///
+class TextFieldShortDescription extends StatefulWidget {
+  const TextFieldShortDescription({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  TextFieldShortDescriptionState createState() =>
+      TextFieldShortDescriptionState();
+}
+
+class TextFieldShortDescriptionState extends State<TextFieldShortDescription> {
+  String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      onChanged: (value) {
+        setState(() {
+          description = value;
+        });
+      },
+      validator: (_) => description.isEmpty ? 'Entrez une description' : null,
+      keyboardType: TextInputType.multiline,
+      minLines: 3,
+      maxLines: 10,
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFFC114).withOpacity(1.0),
+            width: 5,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 2,
+          ),
+        ),
+        fillColor: Color(0x1B9200).withOpacity(0.2),
+        filled: true,
+        hintText: "Décrivez brièvement comment est venu l'idée",
+        hintStyle: TextStyle(
+            color: Colors.white,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w300),
+        errorStyle: TextStyle(color: Colors.red),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2),
+        ),
+      ),
+    );
+  }
+}
+
+///
+///
+///
+///
+///
+///PICTURE FIELD
+///
+///
+///
+class PictureField extends StatefulWidget {
+  const PictureField({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  PictureFieldState createState() => PictureFieldState();
+}
+
+class PictureFieldState extends State<PictureField> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          child: Text(
+            "Avec une image, un dessin ou une photo, c'est toujours plus clair ! (facultatif)",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontFamily: "Coming Soon",
+                fontSize: 16,
+                color: Color(0xff000000),
+                fontStyle: FontStyle.italic),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          height: 250,
+          width: 250,
+          color: Colors.white,
+        )
+      ],
+    );
+  }
 }

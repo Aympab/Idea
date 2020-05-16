@@ -15,11 +15,17 @@ class CreateEasyIdea extends StatefulWidget {
 
 class _CreateEasyIdeaState extends State<CreateEasyIdea> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<TextFieldIdeaNameState> _ideaNameKey =
+      GlobalKey<TextFieldIdeaNameState>();
+  GlobalKey<TextFieldShortDescriptionState> _descriptionKey =
+      GlobalKey<TextFieldShortDescriptionState>();
 
-  String _ideaName = '';
+  FormEasyIdea _form;
 
   @override
   Widget build(BuildContext context) {
+    _form = FormEasyIdea(formKey: _formKey,keyTfIdeaName: _ideaNameKey,keyTfShortDescr: _descriptionKey,);
+
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -41,64 +47,16 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                   SizedBox(height: 50),
                   TitleSecondPage(),
                   subtitleSecondPage(),
-                  SizedBox(height: 50),
+                  SizedBox(height: 30),
                   Expanded(
-                    child: Form(
-                        key: _formKey,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 50),
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontFamily: "ComingSoon",
-                                    fontSize: 26,
-                                    color: Color(0xFF000000),
-                                  ),
-                                  onChanged: (value) {
-                                    setState(() => _ideaName = value);
-                                  },
-                                  validator: (value) => value.isNotEmpty &&
-                                          value.length <= 30
-                                      ? null
-                                      : 'Entrez un nom de max. 30 caractères',
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 2),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFC114).withOpacity(1.0),
-                                        width: 5,
-                                      ),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                        width: 2,
-                                      ),
-                                    ),
-                                    fillColor: Color(0x1B9200).withOpacity(0.2),
-                                    filled: true,
-                                    hintText: 'Trouvez un nom à votre idée !',
-                                    hintStyle: TextStyle(fontSize: 15),
-                                    errorStyle: TextStyle(color: Colors.red),
-                                    border: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 2),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
+                    child: _form,
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
                         width: 100,
@@ -117,6 +75,8 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                             //TODO : Enregistrer l'idée dans la BD
                             if (_formKey.currentState.validate()) {
                               print('validated');
+                              print(_ideaNameKey.currentState.ideaName);
+                              print(_descriptionKey.currentState.description);
                             } else {
                               print('not val');
                             }
@@ -126,11 +86,80 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 10)
                 ],
               )),
         ),
       ),
     );
+  }
+}
+
+class FormEasyIdea extends StatefulWidget {
+  final GlobalKey keyTfShortDescr;
+  final GlobalKey keyTfIdeaName;
+
+  FormEasyIdea({
+    Key key,
+    @required GlobalKey<FormState> formKey,
+    this.keyTfShortDescr,
+    this.keyTfIdeaName,
+  })  : _formKey = formKey,
+        super(key: key);
+
+  final GlobalKey<FormState> _formKey;
+
+  @override
+  _FormEasyIdeaState createState() => _FormEasyIdeaState();
+}
+
+class _FormEasyIdeaState extends State<FormEasyIdea> {
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController(initialScrollOffset: 0);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: widget._formKey,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Scrollbar(
+            isAlwaysShown: true,
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: TextFieldIdeaName(key: widget.keyTfIdeaName),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: TextFieldShortDescription(key: widget.keyTfShortDescr),
+                  ),
+                  SizedBox(height: 40),
+                  PictureField(),
+                  SizedBox(height: 40)
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
