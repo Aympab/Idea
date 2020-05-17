@@ -82,8 +82,8 @@ class DatabaseService {
       'title': idea.title,
       'shortDescription': idea.shortDescription,
       'creatorPseudo': idea.creator.pseudo,
-      'supports': 0,
-      'advancement': 0,
+      'supports': idea.supports,
+      'advancement': idea.advancement,
     });
   }
 

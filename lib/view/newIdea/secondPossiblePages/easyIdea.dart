@@ -250,6 +250,47 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                       child: Center(
                         child: ValidationButton(
                           categoryKey: _categoryGridKey,
+                          onPressed: () async {
+                            setState(() {
+                              _loading = true;
+                            });
+
+                            //Modification de l'iéde du inherited widget
+                            InheritedCreateEasyIdea.of(context)
+                                    .newIdea
+                                    .categories =
+                                _categoryGridKey
+                                    .currentState.selectedCategories;
+                            InheritedCreateEasyIdea.of(context)
+                                .newIdea
+                                .advancement = 10;
+                            InheritedCreateEasyIdea.of(context)
+                                .newIdea
+                                .supports = 1;
+
+                            InheritedCreateEasyIdea.of(context)
+                                    .newIdea
+                                    .creator =
+                                Provider.of<User>(context, listen: false);
+
+                            InheritedCreateEasyIdea.of(context)
+                                    .newIdea
+                                    .creator =
+                                await DatabaseService().getUserFromUid(
+                                    InheritedCreateEasyIdea.of(context)
+                                        .newIdea
+                                        .creator
+                                        .uid);
+
+                            Idea newIdea =
+                                InheritedCreateEasyIdea.of(context).newIdea;
+                            
+                            //A partir d'ici on a une idée tout prête à partir en BD
+                          await DatabaseService().createIdeaData(newIdea);
+                          //TODO : Go to idea page
+                          Navigator.of(context).pushReplacementNamed('/flux');
+                            print('soiree');
+                          },
                         ),
                       ),
                     ),
@@ -275,9 +316,12 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
 
 class ValidationButton extends StatelessWidget {
   final GlobalKey<SelectedCategoriesGridState> categoryKey;
+  final Function onPressed;
+
   const ValidationButton({
     Key key,
     @required this.categoryKey,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -300,20 +344,7 @@ class ValidationButton extends StatelessWidget {
           ]),
       child: IconButton(
         icon: Icon(Icons.public),
-        onPressed: () async{
-          InheritedCreateEasyIdea.of(context).newIdea.categories =
-              categoryKey.currentState.selectedCategories;
-          InheritedCreateEasyIdea.of(context).newIdea.advancement = 10;
-          InheritedCreateEasyIdea.of(context).newIdea.supports = 1;
-
-          InheritedCreateEasyIdea.of(context).newIdea.creator =
-              Provider.of<User>(context, listen: false);
-
-          InheritedCreateEasyIdea.of(context).newIdea.creator = await
-              DatabaseService().getUserFromUid(
-                  InheritedCreateEasyIdea.of(context).newIdea.creator.uid);
-          print('soiree');
-        },
+        onPressed: onPressed,
       ),
     );
   }
