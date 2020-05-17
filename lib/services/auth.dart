@@ -7,7 +7,7 @@ class AuthService {
 
   //create user object based on FirebaseUser
   User _userFromFirebaseUser(FirebaseUser fbUser) {
-    return fbUser != null ? User(uid : fbUser.uid) : null;
+    return fbUser != null ? User(uid: fbUser.uid) : null;
   }
 
   //stream changes whenever user logs in or out
@@ -49,17 +49,15 @@ class AuthService {
 
       FirebaseUser fbUser = result.user;
 
-      User newUser = fbUser != null
-          ? User(
+      User newUser = User(
               uid: fbUser.uid,
               infosOblig: user.infosOblig,
               infosFacultatives: user.infosFacultatives,
               isAnonymous: false,
-            )
-          : null;
-
+            );
+            
       //Creation de l'user dans la DB
-      await DatabaseService().createUserData(user);
+      await DatabaseService().createUserData(newUser);
       return newUser;
     } catch (e) {
       print(e.toString());

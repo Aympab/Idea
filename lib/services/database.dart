@@ -20,6 +20,7 @@ class DatabaseService {
 
   //Called on pageInscription, used to create a user record in the DB
   Future createUserData(User user) async {
+    // print('DBSERVICE : USer id $uid');
     return await userCollection.document(user.uid).setData({
       'pseudo': user.pseudo,
       'niveau': Level(1).toString(),
