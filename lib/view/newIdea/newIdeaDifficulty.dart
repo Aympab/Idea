@@ -280,7 +280,7 @@ class ArrowButtonState extends State<ArrowButton> {
                   transitionPushToPage(context, CreateNoDifficultyIdea());
                   break;
                 case (1):
-                  transitionPushToPage(context, CreateEasyIdea());
+                  transitionPushToPage(context, InheritedCreateEasyIdea());
                   break;
                 case (2):
                   transitionPushToPage(context, CreateMediumIdea());

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:idea/model/idea.dart';
 import 'package:idea/model/ideaCategory.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/database.dart';
@@ -8,6 +9,23 @@ import 'package:idea/view/newIdea/secondPossiblePages/easyIdeaForm.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetThirdPage.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetsSecondPage.dart';
 import 'package:provider/provider.dart';
+
+class InheritedCreateEasyIdea extends InheritedWidget {
+  InheritedCreateEasyIdea({Key key}) : super(key: key, child: CreateEasyIdea());
+
+  final Idea newIdea = Idea();
+
+  static InheritedCreateEasyIdea of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<InheritedCreateEasyIdea>();
+  //  {
+  //   return (context.inheritFromWidgetOfExactType(InheritedCreateEasyIdea)as InheritedCreateEasyIdea);
+  // }
+
+  @override
+  bool updateShouldNotify(InheritedCreateEasyIdea oldWidget) {
+    return true;
+  }
+}
 
 class CreateEasyIdea extends StatefulWidget {
   CreateEasyIdea({Key key}) : super(key: key);
@@ -111,13 +129,19 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                               width: 100,
                               child: FlatButton(
                                 onPressed: () {
+                                  //Check if the user filled at least name and description
                                   if (_formKey.currentState.validate()) {
-                                    print('validated');
+                                    InheritedCreateEasyIdea.of(context)
+                                            .newIdea
+                                            .title =
+                                        _ideaNameKey.currentState.ideaName;
 
-                                    print(_ideaNameKey.currentState.ideaName);
-                                    print(_descriptionKey
-                                        .currentState.description);
-                                    print(authUser.uid);
+                                    InheritedCreateEasyIdea.of(context)
+                                            .newIdea
+                                            .shortDescription =
+                                        _descriptionKey
+                                            .currentState.description;
+
                                     _pvController.nextPage(
                                         duration: Duration(milliseconds: 500),
                                         curve: Curves.easeInExpo);
@@ -198,20 +222,39 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                     SizedBox(height: 10),
                     subtitleThirdPage(),
                     SizedBox(height: 30),
-                    CategoriesTextField(
-                      categories: allCategories,
-                      colorRow1: Colors.lightGreen[100],
-                      colorRow2: Colors.lightGreen[300],
-                      categoryGridKey: _categoryGridKey,
+                    SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          CategoriesTextField(
+                            categories: allCategories,
+                            colorRow1: Colors.lightGreen[100],
+                            colorRow2: Colors.lightGreen[300],
+                            categoryGridKey: _categoryGridKey,
+                          ),
+                          SizedBox(height: 30),
+                          Text(
+                            'Catégories sélectionnées :',
+                            textAlign: TextAlign.left,
+                          ),
+                          SizedBox(height: 10),
+                          SelectedCategoriesGrid(
+                            key: _categoryGridKey,
+                          )
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 30),
-                    Text(
-                      'Catégories sélectionnées :',
-                      textAlign: TextAlign.left,
+                    SizedBox(
+                      height: 40,
                     ),
-                    SizedBox(height: 10),
-                    SelectedCategoriesGrid(
-                      key: _categoryGridKey,
+                    Expanded(
+                      child: Center(
+                        child: ValidationButton(
+                          categoryKey: _categoryGridKey,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
                     )
                   ],
                 ),
@@ -227,6 +270,52 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
         _loading = false;
       });
     }
+  }
+}
+
+class ValidationButton extends StatelessWidget {
+  final GlobalKey<SelectedCategoriesGridState> categoryKey;
+  const ValidationButton({
+    Key key,
+    @required this.categoryKey,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.all(Radius.circular(40)),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey[500],
+                offset: Offset(4.0, 4.0),
+                blurRadius: 7.0,
+                spreadRadius: 1.0),
+            BoxShadow(
+                color: Colors.white,
+                offset: Offset(-4.0, -4.0),
+                blurRadius: 7.0,
+                spreadRadius: 1.0),
+          ]),
+      child: IconButton(
+        icon: Icon(Icons.public),
+        onPressed: () async{
+          InheritedCreateEasyIdea.of(context).newIdea.categories =
+              categoryKey.currentState.selectedCategories;
+          InheritedCreateEasyIdea.of(context).newIdea.advancement = 10;
+          InheritedCreateEasyIdea.of(context).newIdea.supports = 1;
+
+          InheritedCreateEasyIdea.of(context).newIdea.creator =
+              Provider.of<User>(context, listen: false);
+
+          InheritedCreateEasyIdea.of(context).newIdea.creator = await
+              DatabaseService().getUserFromUid(
+                  InheritedCreateEasyIdea.of(context).newIdea.creator.uid);
+          print('soiree');
+        },
+      ),
+    );
   }
 }
 
@@ -259,15 +348,23 @@ class SelectedCategoriesGridState extends State<SelectedCategoriesGrid> {
     });
   }
 
+  removeCategory(IdeaCategory category) {
+    for (IdeaCategory currCategory in selectedCategories) {
+      if (currCategory.name == category.name) {
+        setState(() {
+          selectedCategories.remove(category);
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     selectedCategoriesAsWidgets = IdeaCategory.listToCard(
-      selectedCategories,
-      Colors.lightGreen[100],
-      Colors.lightGreen[300],
-    );
+        selectedCategories, Colors.lightGreen[100], Colors.lightGreen[300],
+        gridKey: widget.key);
     return selectedCategoriesAsWidgets.length == 0
-        ? Text('rien')
+        ? Text('Aucune')
         : Wrap(
             children: selectedCategoriesAsWidgets,
           );
