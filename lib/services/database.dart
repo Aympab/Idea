@@ -1,20 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/model/ideaCategory.dart';
 import 'package:idea/model/user.dart';
 
 class DatabaseService {
   DatabaseService();
 
-  //
+  ///
+  ///
+  ///
   //USER SERVICES
-  //
+  ///
+  ///
   //Reference to the DB collection
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
   //Called on pageInscription, used to create a user record in the DB
   Future createUserData(User user) async {
+    // print('DBSERVICE : USer id $uid');
     return await userCollection.document(user.uid).setData({
       'pseudo': user.pseudo,
       'niveau': Level(1).toString(),
@@ -36,14 +42,38 @@ class DatabaseService {
     });
   }
 
-  //Get Users
-  Stream<QuerySnapshot> get users {
-    return userCollection.snapshots();
+  //Returns a user from a uid
+  Future<User> getUserFromUid(String uid) async {
+    User user;
+    await userCollection.document(uid).get(source: Source.server).then(
+          (value) => user = User(
+              uid: uid,
+              infosOblig: InformationsObligatoiresUser(
+                pseudo: value.data['pseudo'],
+              ),
+              infosFacultatives: InformationsFacultativesUser(
+                nom: value.data['nom'],
+                prenom: value.data['prenom'],
+                zoneGeographique: value.data['zoneGeo'],
+              ),
+              profileInfos: ProfileInformation(
+                level: Level(
+                  int.parse(value.data['niveau']),
+                ),
+                title: DefaultTitle(value.data['titre']),
+              )),
+        );
+
+    return user;
   }
 
-  //
+  ///
+  ///
+  ///
   //IDEA SERVICES
-  //
+  ///
+  ///
+  ///
   final CollectionReference ideaCollection =
       Firestore.instance.collection('ideas');
 
@@ -52,8 +82,8 @@ class DatabaseService {
       'title': idea.title,
       'shortDescription': idea.shortDescription,
       'creatorPseudo': idea.creator.pseudo,
-      'supports': 0,
-      'advancement': 0,
+      'supports': idea.supports,
+      'advancement': idea.advancement,
     });
   }
 
@@ -66,5 +96,38 @@ class DatabaseService {
   //Get Ideas
   Stream<QuerySnapshot> get ideas {
     return ideaCollection.snapshots();
+  }
+
+  ///
+  ///
+  ///
+  ///CATEGORY SERVICES
+  ///
+  ///
+  ///
+  final CollectionReference categoryCollection =
+      Firestore.instance.collection('categories');
+
+  Future<List<IdeaCategory>> getAllCategories() async {
+    List<IdeaCategory> categories = List<IdeaCategory>();
+
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection('categories').getDocuments();
+    var list = querySnapshot.documents;
+
+    for (DocumentSnapshot doc in list) {
+      categories.add(
+        IdeaCategory(
+          name: doc.documentID,
+          popularity: doc.data['popularity'],
+        ),
+      );
+    }
+
+    return categories;
+  }
+
+  Stream<QuerySnapshot> get categories {
+    return categoryCollection.snapshots();
   }
 }

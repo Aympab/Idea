@@ -13,8 +13,8 @@ class AuthService {
   //stream changes whenever user logs in or out
   Stream<User> get user {
     return _auth.onAuthStateChanged
-        //.map((FirebaseUser user) => _anonymUserFromFirebaseUser(user));
-        .map(_userFromFirebaseUser); //Identique à la ligne au dessus
+        .map((FirebaseUser user) => _userFromFirebaseUser(user));
+    // .map(_userFromFirebaseUser); //Identique à la ligne au dessus
   }
 
   //sign-in anonymously
@@ -48,11 +48,16 @@ class AuthService {
           email: user.email, password: user.password);
 
       FirebaseUser fbUser = result.user;
-      
-      User newUser = fbUser != null ?  User(uid: fbUser.uid,infosOblig: user.infosOblig, infosFacultatives: user.infosFacultatives,isAnonymous: false,) : null;
 
+      User newUser = User(
+              uid: fbUser.uid,
+              infosOblig: user.infosOblig,
+              infosFacultatives: user.infosFacultatives,
+              isAnonymous: false,
+            );
+            
       //Creation de l'user dans la DB
-      await DatabaseService().createUserData(user);
+      await DatabaseService().createUserData(newUser);
       return newUser;
     } catch (e) {
       print(e.toString());

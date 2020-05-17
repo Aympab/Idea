@@ -2,7 +2,7 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/view/newIdea/difficultyCard.dart';
-import 'package:idea/view/newIdea/secondPossiblePages/easyIdea.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/easyIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/hardIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/mediumIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/noDifficultyIdea.dart';
@@ -280,7 +280,7 @@ class ArrowButtonState extends State<ArrowButton> {
                   transitionPushToPage(context, CreateNoDifficultyIdea());
                   break;
                 case (1):
-                  transitionPushToPage(context, CreateEasyIdea());
+                  transitionPushToPage(context, InheritedCreateEasyIdea());
                   break;
                 case (2):
                   transitionPushToPage(context, CreateMediumIdea());
