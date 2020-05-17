@@ -143,6 +143,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
     );
   }
 }
+
 ///
 ///
 ///
@@ -165,6 +166,10 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
   List<IdeaCategory> allCategories;
   bool _loading = true;
   // final suggestionsController = BehaviorSubject<List<String>>();
+
+  GlobalKey<SelectedCategoriesGridState> _categoryGridKey =
+      GlobalKey<SelectedCategoriesGridState>();
+
   @override
   void initState() {
     super.initState();
@@ -197,7 +202,17 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                       categories: allCategories,
                       colorRow1: Colors.lightGreen[100],
                       colorRow2: Colors.lightGreen[300],
+                      categoryGridKey: _categoryGridKey,
                     ),
+                    SizedBox(height: 30),
+                    Text(
+                      'Catégories sélectionnées :',
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(height: 10),
+                    SelectedCategoriesGrid(
+                      key: _categoryGridKey,
+                    )
                   ],
                 ),
               ),
@@ -212,5 +227,49 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
         _loading = false;
       });
     }
+  }
+}
+
+class SelectedCategoriesGrid extends StatefulWidget {
+  const SelectedCategoriesGrid({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  SelectedCategoriesGridState createState() => SelectedCategoriesGridState();
+}
+
+class SelectedCategoriesGridState extends State<SelectedCategoriesGrid> {
+  List<IdeaCategory> selectedCategories = List<IdeaCategory>();
+  List<Widget> selectedCategoriesAsWidgets = List<Widget>();
+
+  addOrRemoveCategory(IdeaCategory category) {
+    bool adding = true;
+
+    if (selectedCategories.contains(category)) {
+      adding = false;
+    }
+
+    setState(() {
+      if (adding) {
+        selectedCategories.add(category);
+      } else {
+        selectedCategories.remove(category);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    selectedCategoriesAsWidgets = IdeaCategory.listToCard(
+      selectedCategories,
+      Colors.lightGreen[100],
+      Colors.lightGreen[300],
+    );
+    return selectedCategoriesAsWidgets.length == 0
+        ? Text('rien')
+        : Wrap(
+            children: selectedCategoriesAsWidgets,
+          );
   }
 }

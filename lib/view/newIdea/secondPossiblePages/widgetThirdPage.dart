@@ -3,6 +3,7 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/ideaCategory.dart';
 import 'package:idea/services/database.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/easyIdea.dart';
 
 ///
 ///
@@ -58,8 +59,9 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
                     color: Color(0xff000000),
                   ),
                 ),
-                //TODO : Write a little tutorial about what are difficulties (export widget)
-                content: Text('Blablabla'),
+                //TODO : EXPLIQUER LE CHIFFRE
+                content: Text(
+                    'ICI METTRE UNE PETITE IMAGE DUNE CARD ET EXPLIQUER CE QUE CEST LE CHIFFRE'),
                 actions: <Widget>[
                   FlatButton(
                       onPressed: () {
@@ -132,13 +134,17 @@ BorderedText subtitleThirdPage() {
 ///
 class CategoriesTextField extends StatefulWidget {
   final List<IdeaCategory> categories;
-
+  final GlobalKey<SelectedCategoriesGridState> categoryGridKey;
   //The colors to altern each row
   final Color colorRow1;
   final Color colorRow2;
 
   CategoriesTextField(
-      {Key key, this.categories, this.colorRow1, this.colorRow2})
+      {Key key,
+      this.categories,
+      this.colorRow1,
+      this.colorRow2,
+      this.categoryGridKey})
       : super(key: key);
 
   @override
@@ -176,7 +182,8 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
         fillColor: Color(0x1B9200).withOpacity(0.2),
         filled: true,
         hintText: 'Ajouter une catégorie',
-        hintStyle: TextStyle(fontSize: 15, color: Colors.white),
+        hintStyle: TextStyle(
+            fontSize: 15, color: Colors.grey[700], fontStyle: FontStyle.italic),
         errorStyle: TextStyle(color: Colors.red),
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
@@ -220,7 +227,8 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
         return a.name.compareTo(b.name);
       },
       itemSubmitted: (IdeaCategory data) {
-        setState(() => searchTextField.textField.controller.text = data.name);
+        // setState(() => searchTextField.textField.controller.text = data.name);
+        widget.categoryGridKey.currentState.addOrRemoveCategory(data);
       },
       key: keyAutoComplete,
       suggestions: widget.categories,
