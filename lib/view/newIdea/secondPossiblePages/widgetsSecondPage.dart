@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/easyIdea.dart';
+import 'package:image_picker/image_picker.dart';
 
 ///
 ///
@@ -268,6 +272,56 @@ class PictureField extends StatefulWidget {
 }
 
 class PictureFieldState extends State<PictureField> {
+  File ideaImage;
+
+  Future getImage() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Ajouter une image',
+              style: TextStyle(
+                fontFamily: "ComingSoon",
+                fontSize: 24,
+                color: Color(0xff000000),
+              ),
+            ),
+            content: Text(
+                'Prendre une nouvelle photo ou choisir dans la gallerie ?'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.camera_alt),
+                onPressed: () async {
+                  var image =
+                      await ImagePicker.pickImage(source: ImageSource.camera);
+                  if (image != null) Navigator.of(context).pop();
+                  setState(
+                    () {
+                      ideaImage = image;
+                    },
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.photo_size_select_actual),
+                onPressed: () async {
+                  var image =
+                      await ImagePicker.pickImage(source: ImageSource.gallery);
+
+                  if (image != null) Navigator.of(context).pop();
+                  setState(
+                    () {
+                      ideaImage = image;
+                    },
+                  );
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -287,10 +341,15 @@ class PictureFieldState extends State<PictureField> {
         SizedBox(
           height: 10,
         ),
-        Container(
-          height: 250,
-          width: 250,
-          color: Colors.white,
+        GestureDetector(
+          onTap: getImage,
+          child: Container(
+            height: 280,
+            width: 280,
+            child: ideaImage == null
+                ? Text('No image selected.')
+                : Image.file(ideaImage),
+          ),
         )
       ],
     );

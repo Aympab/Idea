@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:idea/model/idea.dart';
 import 'package:idea/model/ideaCategory.dart';
 import 'package:idea/model/user.dart';
+import 'package:idea/services/cloudStorageService.dart';
 import 'package:idea/services/database.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/easyIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetThirdPage.dart';
@@ -113,6 +114,19 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                         .creator
                                         .uid);
 
+                            //Uploading the idea picture to storage
+                            CloudStorageResult result =
+                                await CloudStorageService().uploadImage(
+                                    imageToUpload:
+                                        InheritedCreateEasyIdea.of(context)
+                                            .newIdea
+                                            .imageFile,
+                                    title: 'nomIdeaPicture');
+
+                            InheritedCreateEasyIdea.of(context)
+                                .newIdea
+                                .imageURL = result.imageUrl;
+
                             Idea newIdea =
                                 InheritedCreateEasyIdea.of(context).newIdea;
 
@@ -180,5 +194,3 @@ class ValidationButton extends StatelessWidget {
     );
   }
 }
-
-
