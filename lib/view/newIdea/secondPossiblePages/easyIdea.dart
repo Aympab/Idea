@@ -143,7 +143,15 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
     );
   }
 }
-
+///
+///
+///
+///
+///
+///
+///
+///
+///
 class ThirdPageEasyIdea extends StatefulWidget {
   const ThirdPageEasyIdea({
     Key key,
@@ -187,6 +195,8 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                     SizedBox(height: 30),
                     CategoriesTextField(
                       categories: allCategories,
+                      colorRow1: Colors.lightGreen[100],
+                      colorRow2: Colors.lightGreen[300],
                     ),
                   ],
                 ),

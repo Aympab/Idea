@@ -132,8 +132,14 @@ BorderedText subtitleThirdPage() {
 ///
 class CategoriesTextField extends StatefulWidget {
   final List<IdeaCategory> categories;
-  
-  CategoriesTextField({Key key, this.categories}) : super(key: key);
+
+  //The colors to altern each row
+  final Color colorRow1;
+  final Color colorRow2;
+
+  CategoriesTextField(
+      {Key key, this.categories, this.colorRow1, this.colorRow2})
+      : super(key: key);
 
   @override
   _CategoriesTextFieldState createState() => _CategoriesTextFieldState();
@@ -145,35 +151,66 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
   TextEditingController textController = new TextEditingController();
   AutoCompleteTextField searchTextField;
 
+  bool altern = false;
   @override
   Widget build(BuildContext context) {
     searchTextField = AutoCompleteTextField<IdeaCategory>(
       controller: textController,
-      style: new TextStyle(color: Colors.black, fontSize: 16.0),
-      decoration: new InputDecoration(
-          suffixIcon: Container(
-            width: 85.0,
-            height: 60.0,
+      style: TextStyle(color: Colors.black, fontSize: 20.0),
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFFC114).withOpacity(1.0),
+            width: 5,
           ),
-          contentPadding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
-          filled: true,
-          hintText: 'Ajouter une catégorie',
-          hintStyle: TextStyle(color: Colors.black)),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 2,
+          ),
+        ),
+        fillColor: Color(0x1B9200).withOpacity(0.2),
+        filled: true,
+        hintText: 'Ajouter une catégorie',
+        hintStyle: TextStyle(fontSize: 15, color: Colors.white),
+        errorStyle: TextStyle(color: Colors.red),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black, width: 2),
+        ),
+      ),
       itemBuilder: (BuildContext context, IdeaCategory suggestion) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              '${suggestion.name} (${suggestion.popularity})',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-            ),
-            Text(
-              suggestion.name,
-            )
-          ],
+        //To altern colo
+        altern = !altern;
+        return Container(
+          color: altern ? widget.colorRow1 : widget.colorRow2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: 4),
+                child: Text(
+                  '${suggestion.name} ',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
+              SizedBox(
+                height: 35,
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: Text(
+                  '${suggestion.popularity}',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
         );
       },
       itemFilter: (IdeaCategory suggestion, String query) {
@@ -189,6 +226,9 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
       suggestions: widget.categories,
     );
 
-    return Container(child: searchTextField);
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 60),
+      child: Container(child: searchTextField),
+    );
   }
 }
