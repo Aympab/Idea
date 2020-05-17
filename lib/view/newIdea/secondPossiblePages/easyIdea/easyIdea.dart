@@ -124,6 +124,8 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                             Container(
                               width: 100,
                               child: FlatButton(
+                                child: Image.asset(
+                                    'assets/images/buttonsImages/nextWhite.png'),
                                 onPressed: () {
                                   //Check if the user filled at least name and description
                                   if (_formKey.currentState.validate()) {
@@ -143,8 +145,6 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                                         curve: Curves.easeInExpo);
                                   }
                                 },
-                                child: Image.asset(
-                                    'assets/images/buttonsImages/nextWhite.png'),
                               ),
                             ),
                           ],
