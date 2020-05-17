@@ -93,9 +93,30 @@ class DatabaseService {
     });
   }
 
+//All ideas from snapshot
+  List<Idea> _ideaListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc) {
+      return ideaFromFirestoreWithOnlyPseudo(doc.data);
+    }).toList();
+  }
+  //Loads only the pseudo of the creator to display the flux
+  Idea ideaFromFirestoreWithOnlyPseudo(Map data) {
+    return Idea(
+      title: data['title'] ?? 'error',
+      creator: User(
+        infosOblig: InformationsObligatoiresUser(
+          pseudo: data['creatorPseudo'] ?? 'error',
+        ),
+      ),
+      advancement: data['advancement'] ?? 0,
+      shortDescription: data['shortDescription'] ?? 'error',
+      supports: data['supports'] ?? 'error',
+    );
+  }
+
   //Get Ideas
-  Stream<QuerySnapshot> get ideas {
-    return ideaCollection.snapshots();
+  Stream<List<Idea>> get ideas {
+    return ideaCollection.snapshots().map(_ideaListFromSnapshot);
   }
 
   ///

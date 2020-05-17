@@ -1,5 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/model/idea.dart';
+import 'package:idea/services/database.dart';
+import 'package:idea/view/loadingScreen.dart';
 import 'package:provider/provider.dart';
 
 class IdeaList extends StatefulWidget {
@@ -10,8 +12,12 @@ class IdeaList extends StatefulWidget {
 class _IdeaListState extends State<IdeaList> {
   @override
   Widget build(BuildContext context) {
-    final allIdeas = Provider.of<QuerySnapshot>(context);
-    print(allIdeas);
-    return Container();
+    final allIdeas = Provider.of<List<Idea>>(context);
+
+    return allIdeas == null ? LoadingScreen() : ListView.builder(
+        itemCount: allIdeas.length,
+        itemBuilder: (context, index) {
+          return IdeaCard(idea: allIdeas[index]);
+        });
   }
 }
