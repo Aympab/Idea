@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:idea/model/idea.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/auth.dart';
 import 'package:idea/view/flux/ideaList.dart';
@@ -25,7 +25,7 @@ class _FluxMainViewState extends State<FluxMainView> {
 
     return authUser == null
         ? LoadingScreen()
-        : StreamProvider<QuerySnapshot>.value(
+        : StreamProvider<List<Idea>>.value(
             value: DatabaseService().ideas,
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -44,7 +44,16 @@ class _FluxMainViewState extends State<FluxMainView> {
                   child: Column(
                     children: <Widget>[
                       Text('Flux de ${authUser.uid}'),
-                      IdeaList(),
+                      Expanded(
+                        // height: 200,
+                        // width: 200,
+                        child: IdeaList()),
+                      SizedBox(height: 50),
+                      RaisedButton(
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/newIdeaPage'),
+                        child: Text('Nouvelle idée'),
+                      ),
                       FlatButton(
                         // autofocus: false,
                         child: Container(
