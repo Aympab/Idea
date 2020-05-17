@@ -1,4 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/routeGenerator.dart';
