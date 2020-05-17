@@ -45,6 +45,7 @@ class DatabaseService {
   //Returns a user from a uid
   Future<User> getUserFromUid(String uid) async {
     User user;
+    //TODO : Si on trouve pas d'user dans la BD, ça veut dire qu'il est anonmye, donc l'idée n'a pas de créateur
     await userCollection.document(uid).get(source: Source.server).then(
           (value) => user = User(
               uid: uid,

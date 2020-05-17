@@ -219,6 +219,8 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
         );
       },
       itemFilter: (IdeaCategory suggestion, String query) {
+        //TODO : Add better filters (like é and e)
+        //TODO : If nothing, display top catégories
         return suggestion.name.toLowerCase().startsWith(query.toLowerCase());
       },
       itemSorter: (IdeaCategory a, IdeaCategory b) {
