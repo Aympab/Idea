@@ -61,6 +61,7 @@ class _FormEasyIdeaState extends State<FormEasyIdea> {
                         TextFieldShortDescription(key: widget.keyTfShortDescr),
                   ),
                   SizedBox(height: 40),
+                  //TODO : Send picture to DB
                   PictureField(),
                   SizedBox(height: 40)
                 ],

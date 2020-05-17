@@ -2,8 +2,6 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/ideaCategory.dart';
-import 'package:idea/services/database.dart';
-import 'package:idea/view/newIdea/secondPossiblePages/easyIdea.dart';
 
 ///
 ///
@@ -238,5 +236,64 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
       padding: EdgeInsets.symmetric(horizontal: 60),
       child: Container(child: searchTextField),
     );
+  }
+}
+
+///
+///
+///
+///GRID OF THE SELECTED CAREGORIES
+///
+///
+///
+class SelectedCategoriesGrid extends StatefulWidget {
+  const SelectedCategoriesGrid({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  SelectedCategoriesGridState createState() => SelectedCategoriesGridState();
+}
+
+class SelectedCategoriesGridState extends State<SelectedCategoriesGrid> {
+  List<IdeaCategory> selectedCategories = List<IdeaCategory>();
+  List<Widget> selectedCategoriesAsWidgets = List<Widget>();
+
+  addOrRemoveCategory(IdeaCategory category) {
+    bool adding = true;
+
+    if (selectedCategories.contains(category)) {
+      adding = false;
+    }
+
+    setState(() {
+      if (adding) {
+        selectedCategories.add(category);
+      } else {
+        selectedCategories.remove(category);
+      }
+    });
+  }
+
+  removeCategory(IdeaCategory category) {
+    for (IdeaCategory currCategory in selectedCategories) {
+      if (currCategory.name == category.name) {
+        setState(() {
+          selectedCategories.remove(category);
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    selectedCategoriesAsWidgets = IdeaCategory.listToCard(
+        selectedCategories, Colors.lightGreen[100], Colors.lightGreen[300],
+        gridKey: widget.key);
+    return selectedCategoriesAsWidgets.length == 0
+        ? Text('Aucune')
+        : Wrap(
+            children: selectedCategoriesAsWidgets,
+          );
   }
 }

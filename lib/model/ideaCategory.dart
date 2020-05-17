@@ -1,6 +1,6 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
-import 'package:idea/view/newIdea/secondPossiblePages/easyIdea.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/widgetThirdPage.dart';
 
 class IdeaCategory {
   static List<Widget> listToCard(
