@@ -7,8 +7,6 @@ import 'package:idea/view/newIdea/secondPossiblePages/hardIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/mediumIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/noDifficultyIdea.dart';
 
-
-
 class NewIdea extends StatefulWidget {
   @override
   _NewIdeaState createState() => _NewIdeaState();
@@ -99,7 +97,8 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
       top: posInstructions,
       left: sidePadding,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
             height: 43.00,
@@ -130,49 +129,49 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
               color: Color(0xff000000),
             ),
           ),
-          InkWell(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: Text(
-                    "Les difficultés ? ",
+          Card(
+            elevation: 10,
+            child: Material(
+              color: Color(0xff91ccff),
+              borderRadius: BorderRadius.circular(5),
+              child: InkWell(
+                splashColor: Colors.blue,
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                      title: Text(
+                        "Les difficultés ? ",
+                        style: TextStyle(
+                          fontFamily: "ComingSoon",
+                          fontSize: 24,
+                          color: Color(0xff000000),
+                        ),
+                      ),
+                      //TODO : Write a little tutorial about what are difficulties (export widget)
+                      content: Text('Blablabla'),
+                      actions: <Widget>[
+                        FlatButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('OK'))
+                      ],
+                      elevation: 24.0,
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Text(
+                    "difficulté",
                     style: TextStyle(
                       fontFamily: "ComingSoon",
                       fontSize: 24,
                       color: Color(0xff000000),
+                      decoration: TextDecoration.underline,
                     ),
                   ),
-                  //TODO : Write a little tutorial about what are difficulties (export widget)
-                  content: Text('Blablabla'),
-                  actions: <Widget>[
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('OK'))
-                  ],
-                  elevation: 24.0,
-                ),
-              );
-            },
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    // offset: Offset(5, 5),
-                    blurRadius: 2,
-                    color: Color(0xff91ccff),
-                  ),
-                ],
-              ),
-              child: Text(
-                "difficulté",
-                style: TextStyle(
-                  fontFamily: "ComingSoon",
-                  fontSize: 24,
-                  color: Color(0xff000000),
-                  decoration: TextDecoration.underline,
                 ),
               ),
             ),
@@ -197,7 +196,7 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
           shadows: [
             Shadow(
               offset: Offset(0.00, 3.00),
-              color: Color(0xff000000).withOpacity(0.86),
+              color: Color(0xff000000).withOpacity(0.56),
               blurRadius: 6,
             ),
           ],
