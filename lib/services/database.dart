@@ -117,6 +117,7 @@ class DatabaseService {
       advancement: data['advancement'] ?? 0,
       shortDescription: data['shortDescription'] ?? 'error',
       supports: data['supports'] ?? 'error',
+      imageURL: data['imageURL']
     );
   }
 
@@ -134,6 +135,12 @@ class DatabaseService {
   ///
   final CollectionReference categoryCollection =
       Firestore.instance.collection('categories');
+
+  Future createCategory(IdeaCategory category) async {
+    return await categoryCollection.document(category.name).setData({
+      'popularity' : 1
+    });
+  }
 
   Future<List<IdeaCategory>> getAllCategories() async {
     List<IdeaCategory> categories = List<IdeaCategory>();

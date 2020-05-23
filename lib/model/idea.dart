@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
@@ -50,14 +51,20 @@ class IdeaCard extends StatelessWidget {
         child: ListTile(
           title: Text(idea.title),
           subtitle: Text(idea.shortDescription + ' DE ' + idea.creator.pseudo),
-          leading: idea.imageURL == null ? null : Image.network(idea.imageURL),
-          // leading: ,//TODO : Image of the Idea
-          // children: <Widget>[
-
-          //   Text(idea.supports.toString()),
-          //   Text(idea.creator.pseudo),
-          // ],
+          leading: idea.imageURL == null
+              ? null
+              : CachedNetworkImage(
+                  imageUrl: idea.imageURL,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
         ),
+        // leading: ,//TODO : Image of the Idea
+        // children: <Widget>[
+
+        //   Text(idea.supports.toString()),
+        //   Text(idea.creator.pseudo),
+        // ],
       ),
     );
   }

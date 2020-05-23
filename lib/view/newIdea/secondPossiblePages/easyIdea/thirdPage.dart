@@ -132,7 +132,9 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
 
                             //A partir d'ici on a une idée tout prête à partir en BD
                             await DatabaseService().createIdeaData(newIdea);
-                            //TODO : Go to idea page
+                            //TODO : Go to the new idea page
+                            // Navigator.of(context).pushReplacementNamed('/ideaPage', arguments : newIdea);
+
                             Navigator.of(context).pushReplacementNamed('/flux');
                             print('soiree');
                           },
