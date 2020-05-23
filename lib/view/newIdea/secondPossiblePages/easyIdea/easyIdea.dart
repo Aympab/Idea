@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
 import 'package:idea/model/user.dart';
+import 'package:idea/services/cloudStorageService.dart';
 import 'package:idea/services/database.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/easyIdeaForm.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/thirdPage.dart';
@@ -38,6 +39,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
       GlobalKey<TextFieldIdeaNameState>();
   GlobalKey<TextFieldShortDescriptionState> _descriptionKey =
       GlobalKey<TextFieldShortDescriptionState>();
+  GlobalKey<PictureFieldState> _pictureKey = GlobalKey<PictureFieldState>();
 
   DatabaseService _dbService = DatabaseService();
 
@@ -102,6 +104,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                             formKey: _formKey,
                             keyTfIdeaName: _ideaNameKey,
                             keyTfShortDescr: _descriptionKey,
+                            keyPicture: _pictureKey,
                           ),
                         ),
                         SizedBox(
@@ -126,7 +129,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                               child: FlatButton(
                                 child: Image.asset(
                                     'assets/images/buttonsImages/nextWhite.png'),
-                                onPressed: () {
+                                onPressed: ()async {
                                   //Check if the user filled at least name and description
                                   if (_formKey.currentState.validate()) {
                                     InheritedCreateEasyIdea.of(context)
@@ -139,6 +142,11 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                                             .shortDescription =
                                         _descriptionKey
                                             .currentState.description;
+
+                                    InheritedCreateEasyIdea.of(context)
+                                            .newIdea
+                                            .imageFile =
+                                        _pictureKey.currentState.ideaImage;
 
                                     _pvController.nextPage(
                                         duration: Duration(milliseconds: 500),

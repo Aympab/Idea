@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
@@ -7,7 +10,8 @@ import 'ideaCategory.dart';
 class Idea {
   final String uid;
   String title;
-  Image mainPicture;
+  File imageFile;
+  String imageURL;
   String shortDescription;
   List<IdeaCategory> categories;
   User creator;
@@ -18,7 +22,8 @@ class Idea {
     this.uid,
     this.title,
     this.creator,
-    this.mainPicture,
+    this.imageFile,
+    this.imageURL,
     this.shortDescription,
     this.advancement,
     this.categories,
@@ -29,7 +34,6 @@ class Idea {
     this.supports++;
     return this.supports;
   }
-
 }
 
 //TODO : Rendre propre et mettre dans le répertor Widget
@@ -40,21 +44,27 @@ class IdeaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top:8.0),
+      padding: EdgeInsets.only(top: 8.0),
       child: Card(
         margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
         elevation: 10,
         child: ListTile(
           title: Text(idea.title),
           subtitle: Text(idea.shortDescription + ' DE ' + idea.creator.pseudo),
-          // leading: ,//TODO : Image of the Idea
-          // children: <Widget>[
-            
-            
-          //   Text(idea.supports.toString()),
-          //   Text(idea.creator.pseudo),
-          // ],
+          leading: idea.imageURL == null
+              ? null
+              : CachedNetworkImage(
+                  imageUrl: idea.imageURL,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
         ),
+        // leading: ,//TODO : Image of the Idea
+        // children: <Widget>[
+
+        //   Text(idea.supports.toString()),
+        //   Text(idea.creator.pseudo),
+        // ],
       ),
     );
   }

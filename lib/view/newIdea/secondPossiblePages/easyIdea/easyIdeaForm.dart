@@ -1,16 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetsSecondPage.dart';
 
 class FormEasyIdea extends StatefulWidget {
   final GlobalKey keyTfShortDescr;
   final GlobalKey keyTfIdeaName;
+  final GlobalKey keyPicture;
 
   FormEasyIdea({
     Key key,
     @required GlobalKey<FormState> formKey,
     this.keyTfShortDescr,
-    this.keyTfIdeaName,
+    this.keyTfIdeaName, @required this.keyPicture,
   })  : _formKey = formKey,
         super(key: key);
 
@@ -62,7 +62,9 @@ class _FormEasyIdeaState extends State<FormEasyIdea> {
                   ),
                   SizedBox(height: 40),
                   //TODO : Send picture to DB
-                  PictureField(),
+                  PictureField(
+                    key: widget.keyPicture,
+                  ),
                   SizedBox(height: 40)
                 ],
               ),

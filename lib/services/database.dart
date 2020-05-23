@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/idea.dart';
@@ -67,6 +68,7 @@ class DatabaseService {
 
     return user;
   }
+
   ///
 
   ///
@@ -82,6 +84,7 @@ class DatabaseService {
   Future createIdeaData(Idea idea) async {
     return await ideaCollection.add({
       'title': idea.title,
+      'imageURL': idea.imageURL,
       'shortDescription': idea.shortDescription,
       'creatorPseudo': idea.creator.pseudo,
       'supports': idea.supports,
@@ -96,11 +99,12 @@ class DatabaseService {
   }
 
 //All ideas from snapshot
-  List<Idea> _ideaListFromSnapshot(QuerySnapshot snapshot){
+  List<Idea> _ideaListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return ideaFromFirestoreWithOnlyPseudo(doc.data);
     }).toList();
   }
+
   //Loads only the pseudo of the creator to display the flux
   Idea ideaFromFirestoreWithOnlyPseudo(Map data) {
     return Idea(
@@ -113,6 +117,7 @@ class DatabaseService {
       advancement: data['advancement'] ?? 0,
       shortDescription: data['shortDescription'] ?? 'error',
       supports: data['supports'] ?? 'error',
+      imageURL: data['imageURL']
     );
   }
 
@@ -130,6 +135,12 @@ class DatabaseService {
   ///
   final CollectionReference categoryCollection =
       Firestore.instance.collection('categories');
+
+  Future createCategory(IdeaCategory category) async {
+    return await categoryCollection.document(category.name).setData({
+      'popularity' : 1
+    });
+  }
 
   Future<List<IdeaCategory>> getAllCategories() async {
     List<IdeaCategory> categories = List<IdeaCategory>();
