@@ -57,6 +57,8 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
             color: Color(0xff91ccff),
             borderRadius: BorderRadius.circular(5),
             child: InkWell(
+            borderRadius: BorderRadius.circular(5),
+
               onTap: () {
                 showDialog(
                   context: context,

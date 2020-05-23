@@ -135,6 +135,8 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
               color: Color(0xff91ccff),
               borderRadius: BorderRadius.circular(5),
               child: InkWell(
+            borderRadius: BorderRadius.circular(5),
+
                 splashColor: Colors.blue,
                 onTap: () {
                   showDialog(

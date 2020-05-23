@@ -21,7 +21,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Container(
           height: 43.00,
@@ -44,50 +44,52 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
         SizedBox(
           width: 10,
         ),
-        InkWell(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                title: Text(
-                  "Catégories et tags",
+        Card(
+          elevation: 10,
+          child: Material(
+            borderRadius: BorderRadius.circular(5),
+            color: Color(0xff91ccff),
+            child: InkWell(
+            borderRadius: BorderRadius.circular(5),
+
+              splashColor: Colors.blue,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: Text(
+                      "Catégories et tags",
+                      style: TextStyle(
+                        fontFamily: "ComingSoon",
+                        fontSize: 24,
+                        color: Color(0xff000000),
+                      ),
+                    ),
+                    //TODO : EXPLIQUER LE CHIFFRE
+                    content: Text(
+                        'ICI METTRE UNE PETITE IMAGE DUNE CARD ET EXPLIQUER CE QUE CEST LE CHIFFRE'),
+                    actions: <Widget>[
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('OK'))
+                    ],
+                    elevation: 24.0,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text(
+                  "Marquez",
                   style: TextStyle(
                     fontFamily: "ComingSoon",
                     fontSize: 24,
                     color: Color(0xff000000),
+                    decoration: TextDecoration.underline,
                   ),
                 ),
-                //TODO : EXPLIQUER LE CHIFFRE
-                content: Text(
-                    'ICI METTRE UNE PETITE IMAGE DUNE CARD ET EXPLIQUER CE QUE CEST LE CHIFFRE'),
-                actions: <Widget>[
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('OK'))
-                ],
-                elevation: 24.0,
-              ),
-            );
-          },
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  // offset: Offset(5, 5),
-                  blurRadius: 2,
-                  color: Color(0xff91ccff),
-                ),
-              ],
-            ),
-            child: Text(
-              "Marquez",
-              style: TextStyle(
-                fontFamily: "ComingSoon",
-                fontSize: 24,
-                color: Color(0xff000000),
-                decoration: TextDecoration.underline,
               ),
             ),
           ),
