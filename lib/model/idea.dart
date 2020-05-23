@@ -34,6 +34,16 @@ class Idea {
     this.supports++;
     return this.supports;
   }
+
+  List<String> getCategoriesAsStrings(){
+    List<String> categoriesAsString = List<String>();
+
+    for(IdeaCategory category in categories){
+      categoriesAsString.add(category.name);
+    }
+
+    return categoriesAsString;
+  }
 }
 
 //TODO : Rendre propre et mettre dans le répertor Widget

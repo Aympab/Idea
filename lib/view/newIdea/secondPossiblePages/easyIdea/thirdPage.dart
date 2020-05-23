@@ -81,7 +81,6 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                     Expanded(
                       child: Center(
                         child: ValidationButton(
-                          categoryKey: _categoryGridKey,
                           onPressed: () async {
                             setState(() {
                               _loading = true;
@@ -93,6 +92,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                     .categories =
                                 _categoryGridKey
                                     .currentState.selectedCategories;
+                                    
                             InheritedCreateEasyIdea.of(context)
                                 .newIdea
                                 .advancement = 10;
@@ -114,6 +114,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                         .creator
                                         .uid);
 
+
                             //Uploading the idea picture to storage
                             CloudStorageResult result =
                                 await CloudStorageService().uploadImage(
@@ -122,7 +123,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                             .newIdea
                                             .imageFile,
                                     title: 'nomIdeaPicture');
-
+                            //Setting the image URL of the idea
                             InheritedCreateEasyIdea.of(context)
                                 .newIdea
                                 .imageURL = result.imageUrl;
@@ -162,12 +163,10 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
 }
 
 class ValidationButton extends StatelessWidget {
-  final GlobalKey<SelectedCategoriesGridState> categoryKey;
   final Function onPressed;
 
   const ValidationButton({
     Key key,
-    @required this.categoryKey,
     this.onPressed,
   }) : super(key: key);
 
