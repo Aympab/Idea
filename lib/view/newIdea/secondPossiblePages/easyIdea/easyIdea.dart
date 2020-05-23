@@ -76,6 +76,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
         controller: _pvController,
         children: <Widget>[
           Scaffold(
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: Stack(
               children: <Widget>[

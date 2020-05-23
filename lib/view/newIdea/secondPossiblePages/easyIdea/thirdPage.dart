@@ -43,6 +43,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
             ),
           )
         : Scaffold(
+          resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: ConstrainedBox(
@@ -92,7 +93,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                     .categories =
                                 _categoryGridKey
                                     .currentState.selectedCategories;
-                                    
+
                             InheritedCreateEasyIdea.of(context)
                                 .newIdea
                                 .advancement = 10;
@@ -113,7 +114,6 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                         .newIdea
                                         .creator
                                         .uid);
-
 
                             //Uploading the idea picture to storage
                             CloudStorageResult result =
@@ -172,26 +172,20 @@ class ValidationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-          color: Colors.grey[300],
-          borderRadius: BorderRadius.all(Radius.circular(40)),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey[500],
-                offset: Offset(4.0, 4.0),
-                blurRadius: 7.0,
-                spreadRadius: 1.0),
-            BoxShadow(
-                color: Colors.white,
-                offset: Offset(-4.0, -4.0),
-                blurRadius: 7.0,
-                spreadRadius: 1.0),
-          ]),
-      child: IconButton(
-        icon: Icon(Icons.public),
-        onPressed: onPressed,
+    return RaisedButton(
+      color: Color(0xE1F2D4).withOpacity(1.0),
+      splashColor: Colors.green,
+      shape: CircleBorder(),
+      elevation: 5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[Icon(Icons.public), Text('Publier')],
       ),
+      // onPressed: onPressed,
+      onPressed: () {
+        print('pressed');
+      },
     );
   }
 }

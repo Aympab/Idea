@@ -183,7 +183,7 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
         filled: true,
         hintText: 'Ajouter une catégorie',
         hintStyle: TextStyle(
-            fontSize: 15, color: Colors.grey[700], fontStyle: FontStyle.italic),
+            fontSize: 15, color: Colors.white, fontStyle: FontStyle.italic),
         errorStyle: TextStyle(color: Colors.red),
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
