@@ -157,7 +157,7 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
                             },
                             child: Text('OK'))
                       ],
-                      elevation: 24.0,
+                      elevation: 20.0,
                     ),
                   );
                 },

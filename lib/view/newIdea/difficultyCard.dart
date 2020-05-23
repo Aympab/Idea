@@ -117,7 +117,7 @@ class DifficultyCardState extends State<DifficultyCard> {
           width: 3,
         ),
       ),
-      elevation: 20,
+      elevation: 10,
       shadowColor: Colors.black.withOpacity(1),
       color: widget.isSelected
           ? widget.borderAndSplashColor.withOpacity(0.5)
