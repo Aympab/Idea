@@ -158,9 +158,9 @@ class TextFieldIdeaNameState extends State<TextFieldIdeaName> {
       onChanged: (value) {
         setState(() => ideaName = value);
       },
-      validator: (value) => value.isNotEmpty && value.length <= 30
+      validator: (value) => value.isNotEmpty && value.length <= 30 && value.length > 2
           ? null
-          : 'Entrez un nom de max. 30 caractères',
+          : value.isEmpty || value.length < 3  ?  "C'est un peu court !" : "C'est un peu long ! (Max. 30 carac.)",
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
@@ -179,8 +179,12 @@ class TextFieldIdeaNameState extends State<TextFieldIdeaName> {
         ),
         fillColor: Color(0x1B9200).withOpacity(0.2),
         filled: true,
-        hintText: 'Trouvez un nom à votre idée !',
-        hintStyle: TextStyle(fontSize: 15, color: Colors.white),
+        hintText: 'Trouvez un nom à votre idée...',
+        hintStyle: TextStyle(
+          fontSize: 15,
+          color: Colors.white,
+          fontStyle: FontStyle.italic,
+        ),
         errorStyle: TextStyle(color: Colors.red),
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
@@ -239,8 +243,9 @@ class TextFieldShortDescriptionState extends State<TextFieldShortDescription> {
         ),
         fillColor: Color(0x1B9200).withOpacity(0.2),
         filled: true,
-        hintText: "Décrivez brièvement comment est venu l'idée",
+        hintText: "En quoi consiste l'idée ? Expliquez nous...",
         hintStyle: TextStyle(
+            fontFamily: "ComingSoon",
             color: Colors.white,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w300),
@@ -347,7 +352,15 @@ class PictureFieldState extends State<PictureField> {
             height: 280,
             width: 280,
             child: ideaImage == null
-                ? Text('No image selected.')
+                ? Transform.translate(
+                  offset: Offset(0, -20),
+                    child: Transform.scale(
+                        scale: 10,
+                        child: Icon(
+                          Icons.photo_size_select_actual,
+                          color: Colors.white70,
+                        )),
+                  )
                 : Image.file(ideaImage),
           ),
         )
