@@ -120,7 +120,10 @@ class DatabaseService {
       shortDescription: data['shortDescription'] ?? 'error',
       supports: data['supports'] ?? 'error',
       imageURL: data['imageURL'],
-      categories: data['categories'] != null ? dynamicListToCategoryList(data['categories']) : List<IdeaCategory>(),
+      categories: data['categories'] != null
+          ? dynamicListToCategoryList(data['categories'])
+          : List<IdeaCategory>(),
+      difficulty: data['difficulty'],
     );
   }
 

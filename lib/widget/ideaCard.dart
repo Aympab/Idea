@@ -13,15 +13,19 @@ class IdeaCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
       elevation: 10,
-      child: InkWell(
-        onTap: () {},
-        child: ListTile(
-          // contentPadding: EdgeInsets.symmetric(horizontal: 2),
-          title: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: buildMainBody(),
+      child: Material(
+        color: getCardColorBasedOnDifficulty(idea),
+        child: InkWell(
+          splashColor: Color(0xFFC114).withOpacity(1.0),
+          onTap: () {},
+          child: ListTile(
+            // contentPadding: EdgeInsets.symmetric(horizontal: 2),
+            title: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: buildMainBody(),
+            ),
+            subtitle: buildBottom(),
           ),
-          subtitle: buildBottom(),
         ),
       ),
     );
@@ -29,47 +33,47 @@ class IdeaCard extends StatelessWidget {
 
   Column buildBottom() {
     return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                idea.categories.length > 0
-                    ? Expanded(
-                        child: Wrap(
-                          children: List.generate(
-                            idea.categories.length,
-                            (index) => Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Text(
-                                idea.categories[index].name,
-                                style: TextStyle(
-                                  fontStyle: FontStyle.italic,
-                                  fontFamily: 'BalsamiqSans',
-                                ),
-                              ),
+            idea.categories.length > 0
+                ? Expanded(
+                    child: Wrap(
+                      children: List.generate(
+                        idea.categories.length,
+                        (index) => Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            idea.categories[index].name,
+                            style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontFamily: 'BalsamiqSans',
                             ),
                           ),
                         ),
-                      )
-                    : Container(),
-                Padding(
-                  padding: const EdgeInsets.only(left: 26.0),
-                  child:
-                      //TODO : Implement a nice support square
-                      Text(
-                    idea.supports.toString(),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 5,
+                      ),
+                    ),
+                  )
+                : Container(),
+            Padding(
+              padding: const EdgeInsets.only(left: 26.0),
+              child:
+                  //TODO : Implement a nice support square
+                  Text(
+                idea.supports.toString(),
+              ),
             ),
           ],
-        );
+        ),
+        SizedBox(
+          height: 5,
+        ),
+      ],
+    );
   }
 
   Column buildMainBody() {
@@ -131,5 +135,24 @@ class IdeaCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  getCardColorBasedOnDifficulty(Idea idea) {
+    switch (idea.difficulty) {
+      case (0):
+        return Colors.amber[50];
+        break;
+      case (1):
+        return Colors.green[50];
+        break;
+      case (2):
+        return Colors.blue[50];
+        break;
+      case (3):
+        return Colors.red[50];
+        break;
+      default:
+        return Colors.white;
+    }
   }
 }
