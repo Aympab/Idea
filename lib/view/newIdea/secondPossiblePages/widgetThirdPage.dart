@@ -97,7 +97,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
         Text(
           " votre idée",
           style: TextStyle(
-            fontFamily: "BalsamiqSans",
+            fontFamily: "ComingSoon",
             fontSize: 24,
             color: Color(0xff000000),
           ),
@@ -117,7 +117,7 @@ Widget subtitleThirdPage() {
         fontFamily: "BalsamiqSans",
         fontStyle: FontStyle.italic,
         fontSize: 17,
-        color: Color(0xff9e9e9e),
+        color: Colors.grey[700],
       ),
     ),
   );

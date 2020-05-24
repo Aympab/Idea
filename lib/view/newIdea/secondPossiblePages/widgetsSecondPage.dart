@@ -57,8 +57,7 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
             color: Color(0xff91ccff),
             borderRadius: BorderRadius.circular(5),
             child: InkWell(
-            borderRadius: BorderRadius.circular(5),
-
+              borderRadius: BorderRadius.circular(5),
               onTap: () {
                 showDialog(
                   context: context,
@@ -86,11 +85,12 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
               },
               splashColor: Colors.blue,
               child: Padding(
-                padding: const EdgeInsets.all(2.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 3.0, horizontal: 8),
                 child: Text(
                   "Définissez",
                   style: TextStyle(
-                    fontFamily: "ComingSoon",
+                    fontFamily: "BalsamiqSans",
                     fontSize: 24,
                     color: Color(0xff000000),
                     decoration: TextDecoration.underline,
@@ -101,7 +101,7 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
           ),
         ),
         Text(
-          " votre idée",
+          "votre idée",
           style: TextStyle(
             fontFamily: "ComingSoon",
             fontSize: 24,
@@ -113,25 +113,22 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
   }
 }
 
-BorderedText subtitleSecondPage() {
-  return BorderedText(
-    strokeColor: Colors.black.withOpacity(0.8),
-    strokeWidth: 0.8,
-    child: Text(
-      getRandomSubtitle(),
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontFamily: "ComingSoon",
-        fontSize: 15,
-        color: Color(0xff9e9e9e),
-      ),
+Text subtitleSecondPage() {
+  return Text(
+    getRandomSubtitle(),
+    textAlign: TextAlign.center,
+    style: TextStyle(
+      fontFamily: "BalsamiqSans",
+      fontSize: 18,
+      fontStyle: FontStyle.italic,
+      color: Colors.grey[700],
     ),
   );
 }
 
 //Return random text to put in subtitle
 //Pcq j'arrivais pas a me décider
-String getRandomSubtitle(){
+String getRandomSubtitle() {
   Random rd = new Random();
 
   switch (rd.nextInt(5)) {
@@ -139,20 +136,19 @@ String getRandomSubtitle(){
       //Un truc un peu perso un peu sérieux ?
       return "C'est le plus important";
     case 1:
-    //Un truc plutot "perso" comme ca ?
+      //Un truc plutot "perso" comme ca ?
       return "On veut comprendre !";
     case 2:
-    //Un truc plus concret ?
+      //Un truc plus concret ?
       return "Pour nous expliquer";
     case 3:
-    //Un truc "encourageant" ??
+      //Un truc "encourageant" ??
       return "Après c'est la dernière étape !";
     case 4:
       return "Sans trop vous prendre la tête...";
     default:
       return '';
   }
-
 }
 
 ///
@@ -179,7 +175,7 @@ class TextFieldIdeaNameState extends State<TextFieldIdeaName> {
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyle(
-        fontFamily: "ComingSoon",
+        fontFamily: "BalsamiqSans",
         fontSize: 26,
         color: Color(0xFF000000),
       ),
@@ -276,7 +272,7 @@ class TextFieldShortDescriptionState extends State<TextFieldShortDescription> {
         filled: true,
         hintText: "En quoi consiste l'idée ? Expliquez nous...",
         hintStyle: TextStyle(
-            fontFamily: "ComingSoon",
+            fontFamily: "BalsamiqSans",
             color: Colors.white,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w300),
@@ -368,10 +364,11 @@ class PictureFieldState extends State<PictureField> {
             "Avec une image, un dessin ou une photo, c'est toujours plus clair ! (facultatif)",
             textAlign: TextAlign.left,
             style: TextStyle(
-                fontFamily: "Coming Soon",
-                fontSize: 16,
-                color: Color(0xff000000),
-                fontStyle: FontStyle.italic),
+              fontFamily: "BalsamiqSans",
+              fontSize: 16,
+              color: Color(0xff000000),
+              // fontStyle: FontStyle.italic,
+            ),
           ),
         ),
         SizedBox(

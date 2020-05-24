@@ -44,11 +44,13 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
   GlobalKey buttonKey = GlobalKey<ArrowButtonState>();
   GlobalKey rowCardKey = GlobalKey<DifficultyCardsRowState>();
 
+  ScrollController _sbController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     double sidePadding = 20;
-    double posTitle = 30;
-    double posSubTitle = posTitle + 120;
+    double posTitle = 50;
+    double posSubTitle = posTitle + 130;
     double posInstructions = posSubTitle + 80;
     double posButton = MediaQuery.of(context).size.width / 2 - 50;
     return Scaffold(
@@ -63,15 +65,20 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
               buildSubtitle(posSubTitle, sidePadding),
               buildInstruction(posInstructions, sidePadding),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 300, 0, 100),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 400),
-                    child: DifficultyCardsRow(
-                      key: rowCardKey,
-                      buttonKey: buttonKey,
+                padding: const EdgeInsets.fromLTRB(4, 300, 4, 100),
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  controller: _sbController,
+                  child: SingleChildScrollView(
+                    controller: _sbController,
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 400),
+                      child: DifficultyCardsRow(
+                        key: rowCardKey,
+                        buttonKey: buttonKey,
+                      ),
                     ),
                   ),
                 ),
@@ -122,9 +129,9 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
             width: 5,
           ),
           Text(
-            "Choisissez une ",
+            "Choisissez une",
             style: TextStyle(
-fontFamily: 'BalsamiqSans',
+              fontFamily: 'BalsamiqSans',
               fontSize: 24,
               color: Color(0xff000000),
             ),
@@ -135,8 +142,7 @@ fontFamily: 'BalsamiqSans',
               color: Color(0xff91ccff),
               borderRadius: BorderRadius.circular(5),
               child: InkWell(
-            borderRadius: BorderRadius.circular(5),
-
+                borderRadius: BorderRadius.circular(5),
                 splashColor: Colors.blue,
                 onTap: () {
                   showDialog(
@@ -164,11 +170,12 @@ fontFamily: 'BalsamiqSans',
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3.0, horizontal: 8),
                   child: Text(
                     "difficulté",
                     style: TextStyle(
-  fontFamily: 'BalsamiqSans',
+                      fontFamily: 'BalsamiqSans',
                       fontSize: 24,
                       color: Color(0xff000000),
                       decoration: TextDecoration.underline,
@@ -187,13 +194,13 @@ fontFamily: 'BalsamiqSans',
       double posTitle, double sidePadding, BuildContext context) {
     return Positioned(
       top: posTitle,
-      left: sidePadding,
-      width: MediaQuery.of(context).size.width / 2 + 50,
+      left: sidePadding + 20,
+      width: 200,
       child: Text(
-        "J'ai une bonne idée !",
+        "J'ai une idée !",
         style: TextStyle(
-fontFamily: 'BalsamiqSans',
-          fontSize: 39,
+          fontFamily: 'BalsamiqSans',
+          fontSize: 45,
           color: Color(0xff000000),
           shadows: [
             Shadow(
@@ -214,7 +221,7 @@ fontFamily: 'BalsamiqSans',
       child: Text(
         "Notez la maintenant,\navant qu'elle ne s'échappe… ",
         style: TextStyle(
-fontFamily: 'BalsamiqSans',
+          fontFamily: 'BalsamiqSans',
           fontSize: 19,
           fontStyle: FontStyle.italic,
           color: Color(0xff9e9e9e),
