@@ -90,7 +90,8 @@ class DatabaseService {
       'supports': idea.supports,
       'advancement': idea.advancement,
       'categories': idea.getCategoriesAsStrings(),
-      'created': FieldValue.serverTimestamp()
+      'difficulty': idea.difficulty,
+      'created': FieldValue.serverTimestamp(),
     });
   }
 

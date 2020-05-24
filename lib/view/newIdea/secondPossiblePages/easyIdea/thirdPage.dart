@@ -72,7 +72,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                           ),
                           SizedBox(height: 10),
                           Expanded(
-                                                      child: SingleChildScrollView(
+                            child: SingleChildScrollView(
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 5),
@@ -128,6 +128,11 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                           //Setting the image URL of the idea
                           InheritedCreateEasyIdea.of(context).newIdea.imageURL =
                               result.imageUrl;
+
+                          //Setting the diddiculty to 1 because it's easy idea
+                          InheritedCreateEasyIdea.of(context)
+                              .newIdea
+                              .difficulty = 1;
 
                           Idea newIdea =
                               InheritedCreateEasyIdea.of(context).newIdea;
