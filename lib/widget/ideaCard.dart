@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
-import 'package:idea/model/ideaCategory.dart';
-import 'package:idea/widget/categoryCard.dart';
 
 class IdeaCard extends StatelessWidget {
   IdeaCard({Key key, this.idea}) : super(key: key);
@@ -13,7 +11,7 @@ class IdeaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.fromLTRB(20, 13, 20, 0),
+      margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
       elevation: 10,
       child: InkWell(
         onTap: () {},
@@ -21,71 +19,117 @@ class IdeaCard extends StatelessWidget {
           // contentPadding: EdgeInsets.symmetric(horizontal: 2),
           title: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Column(
+            child: buildMainBody(),
+          ),
+          subtitle: buildBottom(),
+        ),
+      ),
+    );
+  }
+
+  Column buildBottom() {
+    return Column(
+          children: <Widget>[
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      idea.title,
-                      style: TextStyle(
-                        fontFamily: 'BalsamiqSans',
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(' DE ' + idea.creator.pseudo,),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    idea.imageURL == null
-                        ? Container(height: 100, child: _logoPic)
-                        : Container(
-                            height: 100,
-                            child: CachedNetworkImage(
-                              imageUrl: idea.imageURL,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                idea.categories.length > 0
+                    ? Expanded(
+                        child: Wrap(
+                          children: List.generate(
+                            idea.categories.length,
+                            (index) => Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                idea.categories[index].name,
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontFamily: 'BalsamiqSans',
+                                ),
+                              ),
                             ),
                           ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(child: Text(idea.shortDescription)),
-                  ],
+                        ),
+                      )
+                    : Container(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 26.0),
+                  child:
+                      //TODO : Implement a nice support square
+                      Text(
+                    idea.supports.toString(),
+                  ),
                 ),
               ],
             ),
-          ),
-          dense: false,
-          subtitle: Column(
-            children: <Widget>[],
-          ),
-          isThreeLine: true,
-          // leading:
-        ),
-      ),
-      // leading: ,//TODO : Image of the Idea
-      // children: <Widget>[
+            SizedBox(
+              height: 5,
+            ),
+          ],
+        );
+  }
 
-      //   Text(idea.supports.toString()),
-      //   Text(idea.creator.pseudo),
-      // ],
+  Column buildMainBody() {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                idea.title.toUpperCase(),
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: 'ChelseaMarket',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                idea.creator.pseudo,
+                style: TextStyle(
+                  fontFamily: 'BalsamiqSans',
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            idea.imageURL == null
+                ? Container(height: 100, child: _logoPic)
+                : Container(
+                    height: 100,
+                    child: CachedNetworkImage(
+                      imageUrl: idea.imageURL,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  idea.shortDescription,
+                  style: TextStyle(fontFamily: 'BalsamiqSans'),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
-// idea.categories.length > 1
-//                   ? Row(
-//                       children: <Widget>[
-//                         Text(idea.categories[0].name),
-//                         Text(idea.categories[1].name),
-
-//                       ],
-//                     )
-//                   : Container(),
