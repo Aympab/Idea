@@ -90,7 +90,7 @@ class DatabaseService {
       'supports': idea.supports,
       'advancement': idea.advancement,
       'categories': idea.getCategoriesAsStrings(),
-      'created':  FieldValue.serverTimestamp()
+      'created': FieldValue.serverTimestamp()
     });
   }
 
@@ -110,17 +110,16 @@ class DatabaseService {
   //Loads only the pseudo of the creator to display the flux
   Idea ideaFromFirestoreWithOnlyPseudo(Map data) {
     return Idea(
-      title: data['title'] ?? 'error',
-      creator: User(
-        infosOblig: InformationsObligatoiresUser(
-          pseudo: data['creatorPseudo'] ?? 'error',
+        title: data['title'] ?? 'error',
+        creator: User(
+          infosOblig: InformationsObligatoiresUser(
+            pseudo: data['creatorPseudo'] ?? 'error',
+          ),
         ),
-      ),
-      advancement: data['advancement'] ?? 0,
-      shortDescription: data['shortDescription'] ?? 'error',
-      supports: data['supports'] ?? 'error',
-      imageURL: data['imageURL']
-    );
+        advancement: data['advancement'] ?? 0,
+        shortDescription: data['shortDescription'] ?? 'error',
+        supports: data['supports'] ?? 'error',
+        imageURL: data['imageURL']);
   }
 
   //Get Ideas
@@ -138,9 +137,13 @@ class DatabaseService {
   final CollectionReference categoryCollection =
       Firestore.instance.collection('categories');
 
-  Future createCategory(IdeaCategory category) async {
+  //Creates a new category with accepted to false, because a user submitted it
+  Future createSubmitedCategory(IdeaCategory category) async {
+    //TODO : Check existence !!! sinon on met la popularity a 1 d'un truc deja existant !!
     return await categoryCollection.document(category.name).setData({
-      'popularity' : 1
+      'popularity': 1,
+      'accepted': false,
+      'submitedDate': FieldValue.serverTimestamp()
     });
   }
 
