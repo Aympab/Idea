@@ -39,6 +39,7 @@ class _FluxMainViewState extends State<FluxMainView> {
                 ),
               ),
               child: Scaffold(
+                resizeToAvoidBottomPadding: false,
                 backgroundColor: Colors.transparent,
                 body: SafeArea(
                   child: Column(

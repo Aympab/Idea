@@ -110,16 +110,28 @@ class DatabaseService {
   //Loads only the pseudo of the creator to display the flux
   Idea ideaFromFirestoreWithOnlyPseudo(Map data) {
     return Idea(
-        title: data['title'] ?? 'error',
-        creator: User(
-          infosOblig: InformationsObligatoiresUser(
-            pseudo: data['creatorPseudo'] ?? 'error',
-          ),
+      title: data['title'] ?? 'error',
+      creator: User(
+        infosOblig: InformationsObligatoiresUser(
+          pseudo: data['creatorPseudo'] ?? 'error',
         ),
-        advancement: data['advancement'] ?? 0,
-        shortDescription: data['shortDescription'] ?? 'error',
-        supports: data['supports'] ?? 'error',
-        imageURL: data['imageURL']);
+      ),
+      advancement: data['advancement'] ?? 0,
+      shortDescription: data['shortDescription'] ?? 'error',
+      supports: data['supports'] ?? 'error',
+      imageURL: data['imageURL'],
+      categories: data['categories'] != null ? dynamicListToCategoryList(data['categories']) : List<IdeaCategory>(),
+    );
+  }
+
+  List<IdeaCategory> dynamicListToCategoryList(List<dynamic> list) {
+    List<IdeaCategory> categories = List<IdeaCategory>();
+
+    for (dynamic item in list) {
+      categories.add(IdeaCategory(name: item));
+    }
+
+    return categories;
   }
 
   //Get Ideas

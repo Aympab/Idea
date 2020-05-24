@@ -46,36 +46,3 @@ class Idea {
   }
 }
 
-//TODO : Rendre propre et mettre dans le répertor Widget
-class IdeaCard extends StatelessWidget {
-  const IdeaCard({Key key, this.idea}) : super(key: key);
-  final Idea idea;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 8.0),
-      child: Card(
-        margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
-        elevation: 10,
-        child: ListTile(
-          title: Text(idea.title),
-          subtitle: Text(idea.shortDescription + ' DE ' + idea.creator.pseudo),
-          leading: idea.imageURL == null
-              ? null
-              : CachedNetworkImage(
-                  imageUrl: idea.imageURL,
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-        ),
-        // leading: ,//TODO : Image of the Idea
-        // children: <Widget>[
-
-        //   Text(idea.supports.toString()),
-        //   Text(idea.creator.pseudo),
-        // ],
-      ),
-    );
-  }
-}
