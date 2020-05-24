@@ -43,7 +43,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
             ),
           )
         : Scaffold(
-          resizeToAvoidBottomPadding: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: ConstrainedBox(
@@ -55,7 +55,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                     SizedBox(height: 10),
                     subtitleThirdPage(),
                     SizedBox(height: 30),
-                    SingleChildScrollView(
+                    Expanded(
                       child: Column(
                         children: <Widget>[
                           CategoriesTextField(
@@ -71,10 +71,15 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                             style: TextStyle(fontFamily: 'BalsamiqSans'),
                           ),
                           SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: SelectedCategoriesGrid(
-                              key: _categoryGridKey,
+                          Expanded(
+                                                      child: SingleChildScrollView(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: SelectedCategoriesGrid(
+                                  key: _categoryGridKey,
+                                ),
+                              ),
                             ),
                           )
                         ],
@@ -83,67 +88,58 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                     SizedBox(
                       height: 40,
                     ),
-                    Expanded(
-                      child: Center(
-                        child: ValidationButton(
-                          onPressed: () async {
-                            setState(() {
-                              _loading = true;
-                            });
+                    Center(
+                      child: ValidationButton(
+                        onPressed: () async {
+                          setState(() {
+                            _loading = true;
+                          });
 
-                            //Modification de l'iéde du inherited widget
-                            InheritedCreateEasyIdea.of(context)
-                                    .newIdea
-                                    .categories =
-                                _categoryGridKey
-                                    .currentState.selectedCategories;
+                          //Modification de l'iéde du inherited widget
+                          InheritedCreateEasyIdea.of(context)
+                                  .newIdea
+                                  .categories =
+                              _categoryGridKey.currentState.selectedCategories;
 
-                            InheritedCreateEasyIdea.of(context)
-                                .newIdea
-                                .advancement = 10;
-                            InheritedCreateEasyIdea.of(context)
-                                .newIdea
-                                .supports = 1;
+                          InheritedCreateEasyIdea.of(context)
+                              .newIdea
+                              .advancement = 10;
+                          InheritedCreateEasyIdea.of(context).newIdea.supports =
+                              1;
 
-                            InheritedCreateEasyIdea.of(context)
-                                    .newIdea
-                                    .creator =
-                                Provider.of<User>(context, listen: false);
+                          InheritedCreateEasyIdea.of(context).newIdea.creator =
+                              Provider.of<User>(context, listen: false);
 
-                            InheritedCreateEasyIdea.of(context)
-                                    .newIdea
-                                    .creator =
-                                await DatabaseService().getUserFromUid(
-                                    InheritedCreateEasyIdea.of(context)
-                                        .newIdea
-                                        .creator
-                                        .uid);
+                          InheritedCreateEasyIdea.of(context).newIdea.creator =
+                              await DatabaseService().getUserFromUid(
+                                  InheritedCreateEasyIdea.of(context)
+                                      .newIdea
+                                      .creator
+                                      .uid);
 
-                            //Uploading the idea picture to storage
-                            CloudStorageResult result =
-                                await CloudStorageService().uploadImage(
-                                    imageToUpload:
-                                        InheritedCreateEasyIdea.of(context)
-                                            .newIdea
-                                            .imageFile,
-                                    title: 'nomIdeaPicture');
-                            //Setting the image URL of the idea
-                            InheritedCreateEasyIdea.of(context)
-                                .newIdea
-                                .imageURL = result.imageUrl;
+                          //Uploading the idea picture to storage
+                          CloudStorageResult result =
+                              await CloudStorageService().uploadImage(
+                                  imageToUpload:
+                                      InheritedCreateEasyIdea.of(context)
+                                          .newIdea
+                                          .imageFile,
+                                  title: 'nomIdeaPicture');
+                          //Setting the image URL of the idea
+                          InheritedCreateEasyIdea.of(context).newIdea.imageURL =
+                              result.imageUrl;
 
-                            Idea newIdea =
-                                InheritedCreateEasyIdea.of(context).newIdea;
+                          Idea newIdea =
+                              InheritedCreateEasyIdea.of(context).newIdea;
 
-                            //A partir d'ici on a une idée tout prête à partir en BD
-                            await DatabaseService().createIdeaData(newIdea);
-                            //TODO : Go to the new idea page
-                            // Navigator.of(context).pushReplacementNamed('/ideaPage', arguments : newIdea);
+                          //A partir d'ici on a une idée tout prête à partir en BD
+                          await DatabaseService().createIdeaData(newIdea);
+                          //TODO : Go to the new idea page
+                          // Navigator.of(context).pushReplacementNamed('/ideaPage', arguments : newIdea);
 
-                            Navigator.of(context).pushReplacementNamed('/flux');
-                            print('soiree');
-                          },
-                        ),
+                          Navigator.of(context).pushReplacementNamed('/flux');
+                          print('soiree');
+                        },
                       ),
                     ),
                     SizedBox(
@@ -176,17 +172,31 @@ class ValidationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      color: Color(0xE1F2D4).withOpacity(1.0),
-      splashColor: Colors.green,
-      shape: CircleBorder(),
-      elevation: 5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Icon(Icons.public), Text('Publier')],
+    return Container(
+      height: 100,
+      child: RaisedButton(
+        color: Colors.green,
+        splashColor: Color(0xE1F2D4).withOpacity(1.0),
+        shape: CircleBorder(
+          side: BorderSide(color: Colors.black),
+        ),
+        elevation: 5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.public),
+            SizedBox(height: 5),
+            Text(
+              'Publier',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+        onPressed: onPressed,
       ),
-      onPressed: onPressed,
     );
   }
 }

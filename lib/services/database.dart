@@ -138,7 +138,7 @@ class DatabaseService {
       Firestore.instance.collection('categories');
 
   //Creates a new category with accepted to false, because a user submitted it
-  Future createSubmitedCategory(IdeaCategory category) async {
+  Future suggestCategory(IdeaCategory category) async {
     //TODO : Check existence !!! sinon on met la popularity a 1 d'un truc deja existant !!
     return await categoryCollection.document(category.name).setData({
       'popularity': 1,

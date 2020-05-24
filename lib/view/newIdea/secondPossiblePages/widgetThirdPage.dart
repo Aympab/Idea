@@ -253,6 +253,7 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0),
           child: SubmitCategoryButton(
+            categoryGridKey: widget.categoryGridKey,
             keyTextField: keyAutoComplete,
           ),
         )
@@ -266,10 +267,12 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
 ///BUTTON SUBMIT CATEGORY (LINK IN A ROW WITH THE TEXT FIELD)
 class SubmitCategoryButton extends StatefulWidget {
   final GlobalKey<AutoCompleteTextFieldState<IdeaCategory>> keyTextField;
+  final GlobalKey<SelectedCategoriesGridState> categoryGridKey;
 
   const SubmitCategoryButton({
     Key key,
     @required this.keyTextField,
+    @required this.categoryGridKey,
   }) : super(key: key);
 
   @override
@@ -280,12 +283,55 @@ class _SubmitCategoryButtonState extends State<SubmitCategoryButton> {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
+      color: Color(0xff91ccff),
       onPressed: () {
-        DatabaseService().createSubmitedCategory(
-          IdeaCategory(name: widget.keyTextField.currentState.currentText),
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: Text(
+              "Proposer une catégorie",
+              style: TextStyle(
+                fontFamily: "BalsamiqSans",
+                fontSize: 24,
+                color: Color(0xff000000),
+              ),
+            ),
+            content: Text(
+              'Voulez vous proposer la catégorie "${widget.keyTextField.currentState.currentText}" à la communauté ? Une fois validée, celle-ci sera accessible à tout le monde dans le flux et les nouvelles idées.',
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () async {
+                  IdeaCategory suggestedCategory = IdeaCategory(
+                      name: widget.keyTextField.currentState.currentText,
+                      popularity: 1);
+                  //User suggests the category to the community
+                  await DatabaseService().suggestCategory(
+                    suggestedCategory,
+                  );
+
+                  //Then we add this category to the grid
+                  if (widget.categoryGridKey != null)
+                    widget.categoryGridKey.currentState
+                        .addOrRemoveCategory(suggestedCategory);
+                  // print(widget.keyTextField.currentState.currentText);
+                  Navigator.of(context).pop();
+                  widget.keyTextField.currentState.setState(() {
+                    widget.keyTextField.currentState.controller.clear();
+                    //  widget.keyTextField.currentState.currentText = '';
+                  });
+                },
+                child: Text('Proposer ma catégorie !'),
+              ),
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Je vais réflechir'))
+            ],
+            elevation: 24.0,
+          ),
         );
-        
-        print(widget.keyTextField.currentState.currentText);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
