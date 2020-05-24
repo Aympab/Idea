@@ -53,30 +53,46 @@ class DatabaseService {
   //Returns a user from a uid
   Future<User> getUserFromUid(String uid) async {
     User user;
-    //TODO : Si on trouve pas d'user dans la BD, ça veut dire qu'il est anonmye, donc l'idée n'a pas de créateur
-    await userCollection.document(uid).get(source: Source.server).then(
-          (value) => user = User(
-            isAnonymous: false,
+    bool anonym;
+//On vérifier d'abord l'existence du document dans la BD
+    await userCollection.document(uid).get().then((doc) {
+      if (doc.exists) {
+        anonym = false;
+      } else {
+        //Si l'user n'existe pas c'est un user anonyme
+        anonym = true;
+      }
+    });
+
+    anonym
+        ? user = User(
             uid: uid,
-            infosOblig: InformationsObligatoiresUser(
-              pseudo: value.data['pseudo'],
-            ),
-            infosFacultatives: InformationsFacultativesUser(
-              nom: value.data['nom'],
-              prenom: value.data['prenom'],
-              zoneGeographique: value.data['zoneGeo'],
-            ),
-            profileInfos: ProfileInformation(
-              level: Level(
-                int.parse(value.data['niveau']),
+            isAnonymous: true,
+            //TODO : Generate anonymous pseudo
+            infosOblig: InformationsObligatoiresUser(pseudo: 'Anonyme'))
+        : await userCollection.document(uid).get(source: Source.server).then(
+              (value) => user = User(
+                isAnonymous: false,
+                uid: uid,
+                infosOblig: InformationsObligatoiresUser(
+                  pseudo: value.data['pseudo'],
+                ),
+                infosFacultatives: InformationsFacultativesUser(
+                  nom: value.data['nom'],
+                  prenom: value.data['prenom'],
+                  zoneGeographique: value.data['zoneGeo'],
+                ),
+                profileInfos: ProfileInformation(
+                  level: Level(
+                    int.parse(value.data['niveau']),
+                  ),
+                  title: DefaultTitle(value.data['titre']),
+                ),
+                supportedIdeasUID:
+                    _dynamicListToStringList(value.data['supportedIdeas']) ??
+                        List<String>(),
               ),
-              title: DefaultTitle(value.data['titre']),
-            ),
-            supportedIdeasUID:
-                _dynamicListToStringList(value.data['supportedIdeas']) ??
-                    List<String>(),
-          ),
-        );
+            );
 
     return user;
   }
@@ -113,10 +129,9 @@ class DatabaseService {
       //get the current table of supported ideas
       List<String> currentSupportedIdeas = List<String>();
 
-      await userCollection
-          .document(user.uid)
-          .get(source: Source.server)
-          .then((value) => currentSupportedIdeas = _dynamicListToStringList(value.data['supportedIdeas']));
+      await userCollection.document(user.uid).get(source: Source.server).then(
+          (value) => currentSupportedIdeas =
+              _dynamicListToStringList(value.data['supportedIdeas']));
 
       //When we have the curretnSupportedIdeas
       if (currentSupportedIdeas.length > 0) {
