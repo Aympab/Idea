@@ -84,7 +84,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
                 child: Text(
                   "Marquez",
                   style: TextStyle(
-                    fontFamily: "ComingSoon",
+                    fontFamily: "BalsamiqSans",
                     fontSize: 24,
                     color: Color(0xff000000),
                     decoration: TextDecoration.underline,
@@ -97,7 +97,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
         Text(
           " votre idée",
           style: TextStyle(
-            fontFamily: "ComingSoon",
+            fontFamily: "BalsamiqSans",
             fontSize: 24,
             color: Color(0xff000000),
           ),
@@ -107,19 +107,20 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
   }
 }
 
-BorderedText subtitleThirdPage() {
-  return BorderedText(
-      strokeColor: Colors.black.withOpacity(0.8),
-      strokeWidth: 0.8,
-      child: new Text(
-        "Grâce aux tags des catégories, votre idée pourra être facilement retrouvée par les autres idéateurs !",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: "ComingSoon",
-          fontSize: 15,
-          color: Color(0xff9e9e9e),
-        ),
-      ));
+Widget subtitleThirdPage() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal:20.0),
+    child: Text(
+      "Grâce aux tags des catégories, votre idée pourra être facilement retrouvée par les autres idéateurs !",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontFamily: "BalsamiqSans",
+        fontStyle: FontStyle.italic,
+        fontSize: 17,
+        color: Color(0xff9e9e9e),
+      ),
+    ),
+  );
 }
 
 ///
@@ -183,7 +184,7 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
         filled: true,
         hintText: 'Ajouter une catégorie',
         hintStyle: TextStyle(
-            fontSize: 15, color: Colors.white, fontStyle: FontStyle.italic),
+            fontSize: 15, color: Colors.white, fontStyle: FontStyle.italic,fontFamily: 'BalsamiqSans'),
         errorStyle: TextStyle(color: Colors.red),
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
@@ -295,7 +296,7 @@ class SelectedCategoriesGridState extends State<SelectedCategoriesGrid> {
         selectedCategories, Colors.lightGreen[100], Colors.lightGreen[300],
         gridKey: widget.key);
     return selectedCategoriesAsWidgets.length == 0
-        ? Text('Aucune')
+        ? Icon(Icons.more_horiz)
         : Wrap(
             children: selectedCategoriesAsWidgets,
           );

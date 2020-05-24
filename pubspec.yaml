@@ -104,6 +104,16 @@ flutter:
     - family: ComingSoon
       fonts:
         - asset: assets/fonts/ComingSoon-Regular.ttf
+    - family: BalsamiqSans
+      fonts:
+        - asset: assets/fonts/Balsamiq_Sans/BalsamiqSans-Regular.ttf
+        - asset: assets/fonts/Balsamiq_Sans/BalsamiqSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Balsamiq_Sans/BalsamiqSans-Italic.ttf
+          style: italic
+    - family : ChelseaMarket
+      fonts:
+        - asset : assets/fonts/ChelseaMarket-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

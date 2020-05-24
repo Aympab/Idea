@@ -124,7 +124,7 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
           Text(
             "Choisissez une ",
             style: TextStyle(
-              fontFamily: "ComingSoon",
+fontFamily: 'BalsamiqSans',
               fontSize: 24,
               color: Color(0xff000000),
             ),
@@ -168,7 +168,7 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
                   child: Text(
                     "difficulté",
                     style: TextStyle(
-                      fontFamily: "ComingSoon",
+  fontFamily: 'BalsamiqSans',
                       fontSize: 24,
                       color: Color(0xff000000),
                       decoration: TextDecoration.underline,
@@ -192,13 +192,13 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
       child: Text(
         "J'ai une bonne idée !",
         style: TextStyle(
-          fontFamily: "ComingSoon",
+fontFamily: 'BalsamiqSans',
           fontSize: 39,
           color: Color(0xff000000),
           shadows: [
             Shadow(
               offset: Offset(0.00, 3.00),
-              color: Color(0xff000000).withOpacity(0.56),
+              color: Color(0xff000000).withOpacity(0.40),
               blurRadius: 6,
             ),
           ],
@@ -211,16 +211,13 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
     return Positioned(
       top: posSubtitle,
       left: sidePadding + 20,
-      child: BorderedText(
-        strokeColor: Colors.black,
-        strokeWidth: 0.5,
-        child: Text(
-          "Notez la maintenant,\navant qu'elle ne s'échappe… ",
-          style: TextStyle(
-            fontFamily: "ComingSoon",
-            fontSize: 19,
-            color: Color(0xff9e9e9e),
-          ),
+      child: Text(
+        "Notez la maintenant,\navant qu'elle ne s'échappe… ",
+        style: TextStyle(
+fontFamily: 'BalsamiqSans',
+          fontSize: 19,
+          fontStyle: FontStyle.italic,
+          color: Color(0xff9e9e9e),
         ),
       ),
     );

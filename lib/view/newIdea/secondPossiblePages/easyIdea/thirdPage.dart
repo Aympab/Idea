@@ -68,10 +68,14 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                           Text(
                             'Catégories sélectionnées :',
                             textAlign: TextAlign.left,
+                            style: TextStyle(fontFamily: 'BalsamiqSans'),
                           ),
                           SizedBox(height: 10),
-                          SelectedCategoriesGrid(
-                            key: _categoryGridKey,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: SelectedCategoriesGrid(
+                              key: _categoryGridKey,
+                            ),
                           )
                         ],
                       ),
@@ -182,10 +186,7 @@ class ValidationButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[Icon(Icons.public), Text('Publier')],
       ),
-      // onPressed: onPressed,
-      onPressed: () {
-        print('pressed');
-      },
+      onPressed: onPressed,
     );
   }
 }
