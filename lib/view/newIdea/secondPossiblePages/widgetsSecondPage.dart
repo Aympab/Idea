@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Container(
           height: 43.00,
@@ -51,49 +52,50 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
         SizedBox(
           width: 10,
         ),
-        InkWell(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                title: Text(
-                  "Définition d'une idée",
+        Card(
+          child: Material(
+            color: Color(0xff91ccff),
+            borderRadius: BorderRadius.circular(5),
+            child: InkWell(
+            borderRadius: BorderRadius.circular(5),
+
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: Text(
+                      "Définition d'une idée",
+                      style: TextStyle(
+                        fontFamily: "ComingSoon",
+                        fontSize: 24,
+                        color: Color(0xff000000),
+                      ),
+                    ),
+                    //TODO : Write a little tutorial about what are difficulties (export widget)
+                    content: Text('Blablabla'),
+                    actions: <Widget>[
+                      FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('OK'))
+                    ],
+                    elevation: 24.0,
+                  ),
+                );
+              },
+              splashColor: Colors.blue,
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text(
+                  "Définissez",
                   style: TextStyle(
                     fontFamily: "ComingSoon",
                     fontSize: 24,
                     color: Color(0xff000000),
+                    decoration: TextDecoration.underline,
                   ),
                 ),
-                //TODO : Write a little tutorial about what are difficulties (export widget)
-                content: Text('Blablabla'),
-                actions: <Widget>[
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('OK'))
-                ],
-                elevation: 24.0,
-              ),
-            );
-          },
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  // offset: Offset(5, 5),
-                  blurRadius: 2,
-                  color: Color(0xff91ccff),
-                ),
-              ],
-            ),
-            child: Text(
-              "Définissez",
-              style: TextStyle(
-                fontFamily: "ComingSoon",
-                fontSize: 24,
-                color: Color(0xff000000),
-                decoration: TextDecoration.underline,
               ),
             ),
           ),
@@ -116,7 +118,7 @@ BorderedText subtitleSecondPage() {
     strokeColor: Colors.black.withOpacity(0.8),
     strokeWidth: 0.8,
     child: Text(
-      "Pour nous expliquer",
+      getRandomSubtitle(),
       textAlign: TextAlign.center,
       style: TextStyle(
         fontFamily: "ComingSoon",
@@ -125,6 +127,32 @@ BorderedText subtitleSecondPage() {
       ),
     ),
   );
+}
+
+//Return random text to put in subtitle
+//Pcq j'arrivais pas a me décider
+String getRandomSubtitle(){
+  Random rd = new Random();
+
+  switch (rd.nextInt(5)) {
+    case 0:
+      //Un truc un peu perso un peu sérieux ?
+      return "C'est le plus important";
+    case 1:
+    //Un truc plutot "perso" comme ca ?
+      return "On veut comprendre !";
+    case 2:
+    //Un truc plus concret ?
+      return "Pour nous expliquer";
+    case 3:
+    //Un truc "encourageant" ??
+      return "Après c'est la dernière étape !";
+    case 4:
+      return "Sans trop vous prendre la tête...";
+    default:
+      return '';
+  }
+
 }
 
 ///
@@ -158,9 +186,12 @@ class TextFieldIdeaNameState extends State<TextFieldIdeaName> {
       onChanged: (value) {
         setState(() => ideaName = value);
       },
-      validator: (value) => value.isNotEmpty && value.length <= 30
-          ? null
-          : 'Entrez un nom de max. 30 caractères',
+      validator: (value) =>
+          value.isNotEmpty && value.length <= 30 && value.length > 2
+              ? null
+              : value.isEmpty || value.length < 3
+                  ? "C'est un peu court !"
+                  : "C'est un peu long ! (Max. 30 carac.)",
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
@@ -179,8 +210,12 @@ class TextFieldIdeaNameState extends State<TextFieldIdeaName> {
         ),
         fillColor: Color(0x1B9200).withOpacity(0.2),
         filled: true,
-        hintText: 'Trouvez un nom à votre idée !',
-        hintStyle: TextStyle(fontSize: 15, color: Colors.white),
+        hintText: 'Trouvez un nom à votre idée...',
+        hintStyle: TextStyle(
+          fontSize: 15,
+          color: Colors.white,
+          fontStyle: FontStyle.italic,
+        ),
         errorStyle: TextStyle(color: Colors.red),
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
@@ -239,8 +274,9 @@ class TextFieldShortDescriptionState extends State<TextFieldShortDescription> {
         ),
         fillColor: Color(0x1B9200).withOpacity(0.2),
         filled: true,
-        hintText: "Décrivez brièvement comment est venu l'idée",
+        hintText: "En quoi consiste l'idée ? Expliquez nous...",
         hintStyle: TextStyle(
+            fontFamily: "ComingSoon",
             color: Colors.white,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w300),
@@ -343,14 +379,24 @@ class PictureFieldState extends State<PictureField> {
         ),
         GestureDetector(
           onTap: getImage,
-          child: Container(
-            height: 280,
-            width: 280,
-            child: ideaImage == null
-                ? Text('No image selected.')
-                : Image.file(ideaImage),
-          ),
-        )
+          child: ideaImage == null
+              ? Container(
+                  height: 200,
+                  width: 200,
+                  child: Transform.scale(
+                    scale: 10,
+                    child: Icon(
+                      Icons.photo_size_select_actual,
+                      color: Colors.white70,
+                    ),
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Container(
+                      height: 280, width: 280, child: Image.file(ideaImage)),
+                ),
+        ),
       ],
     );
   }

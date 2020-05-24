@@ -89,6 +89,8 @@ class DatabaseService {
       'creatorPseudo': idea.creator.pseudo,
       'supports': idea.supports,
       'advancement': idea.advancement,
+      'categories': idea.getCategoriesAsStrings(),
+      'created':  FieldValue.serverTimestamp()
     });
   }
 

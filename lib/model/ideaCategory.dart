@@ -1,6 +1,7 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetThirdPage.dart';
+import 'package:idea/widget/categoryCard.dart';
 
 class IdeaCategory {
   static List<Widget> listToCard(
@@ -35,57 +36,3 @@ class IdeaCategory {
       );
 }
 
-class CategoryCard extends StatelessWidget {
-  const CategoryCard(
-      {Key key, this.color, this.name, this.popularity, this.gridKey})
-      : super(key: key);
-  final Color color;
-  final String name;
-  final int popularity;
-
-  final GlobalKey<SelectedCategoriesGridState> gridKey;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onDoubleTap: () {
-        //TODO : Double tap to remove category
-          gridKey.currentState.removeCategory(cardAsCategory());
-      },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.elliptical(2, 3),
-          ),
-        ),
-        elevation: 5,
-        color: color,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Wrap(alignment: WrapAlignment.spaceEvenly, children: <Widget>[
-            BorderedText(
-              strokeWidth: 0.5,
-              strokeColor: Colors.black,
-              child: Text(
-                '#',
-                style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black87,
-                    fontSize: 16),
-              ),
-            ),
-            Text(
-              name + '\n' + popularity.toString(),
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
-            ),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  IdeaCategory cardAsCategory() {
-    return IdeaCategory(name: this.name, popularity: this.popularity);
-  }
-}

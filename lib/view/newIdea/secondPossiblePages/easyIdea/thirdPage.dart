@@ -43,6 +43,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
             ),
           )
         : Scaffold(
+          resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: ConstrainedBox(
@@ -67,10 +68,14 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                           Text(
                             'Catégories sélectionnées :',
                             textAlign: TextAlign.left,
+                            style: TextStyle(fontFamily: 'BalsamiqSans'),
                           ),
                           SizedBox(height: 10),
-                          SelectedCategoriesGrid(
-                            key: _categoryGridKey,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: SelectedCategoriesGrid(
+                              key: _categoryGridKey,
+                            ),
                           )
                         ],
                       ),
@@ -81,7 +86,6 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                     Expanded(
                       child: Center(
                         child: ValidationButton(
-                          categoryKey: _categoryGridKey,
                           onPressed: () async {
                             setState(() {
                               _loading = true;
@@ -93,6 +97,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                     .categories =
                                 _categoryGridKey
                                     .currentState.selectedCategories;
+
                             InheritedCreateEasyIdea.of(context)
                                 .newIdea
                                 .advancement = 10;
@@ -122,7 +127,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                             .newIdea
                                             .imageFile,
                                     title: 'nomIdeaPicture');
-
+                            //Setting the image URL of the idea
                             InheritedCreateEasyIdea.of(context)
                                 .newIdea
                                 .imageURL = result.imageUrl;
@@ -162,37 +167,26 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
 }
 
 class ValidationButton extends StatelessWidget {
-  final GlobalKey<SelectedCategoriesGridState> categoryKey;
   final Function onPressed;
 
   const ValidationButton({
     Key key,
-    @required this.categoryKey,
     this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-          color: Colors.grey[300],
-          borderRadius: BorderRadius.all(Radius.circular(40)),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey[500],
-                offset: Offset(4.0, 4.0),
-                blurRadius: 7.0,
-                spreadRadius: 1.0),
-            BoxShadow(
-                color: Colors.white,
-                offset: Offset(-4.0, -4.0),
-                blurRadius: 7.0,
-                spreadRadius: 1.0),
-          ]),
-      child: IconButton(
-        icon: Icon(Icons.public),
-        onPressed: onPressed,
+    return RaisedButton(
+      color: Color(0xE1F2D4).withOpacity(1.0),
+      splashColor: Colors.green,
+      shape: CircleBorder(),
+      elevation: 5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[Icon(Icons.public), Text('Publier')],
       ),
+      onPressed: onPressed,
     );
   }
 }
