@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/services/database.dart';
 
 class IdeaCard extends StatelessWidget {
   IdeaCard({Key key, this.idea}) : super(key: key);
@@ -11,13 +12,23 @@ class IdeaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: BeveledRectangleBorder(
+        borderRadius: BorderRadius.circular(2),
+      ),
       margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
       elevation: 10,
       child: Material(
+        shape: BeveledRectangleBorder(
+          borderRadius: BorderRadius.circular(2),
+          side: BorderSide(
+            color: getBorderColorBasedOnDifficulty(idea),
+            width: 0.5,
+          ),
+        ),
         color: getCardColorBasedOnDifficulty(idea),
         child: InkWell(
+          borderRadius: BorderRadius.circular(2),
           splashColor: Color(0xFFC114).withOpacity(1.0),
-          onTap: () {},
           child: ListTile(
             // contentPadding: EdgeInsets.symmetric(horizontal: 2),
             title: Padding(
@@ -26,6 +37,8 @@ class IdeaCard extends StatelessWidget {
             ),
             subtitle: buildBottom(),
           ),
+          onTap: () => print(idea.uid),
+          onDoubleTap: () => DatabaseService().addSupportToIdea(idea),
         ),
       ),
     );
@@ -153,6 +166,25 @@ class IdeaCard extends StatelessWidget {
         break;
       default:
         return Colors.white;
+    }
+  }
+
+  getBorderColorBasedOnDifficulty(Idea idea) {
+    switch (idea.difficulty) {
+      case (0):
+        return Colors.brown[300];
+        break;
+      case (1):
+        return Colors.green[300];
+        break;
+      case (2):
+        return Colors.blue[300];
+        break;
+      case (3):
+        return Colors.red[300];
+        break;
+      default:
+        return Colors.black45;
     }
   }
 }

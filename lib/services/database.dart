@@ -95,8 +95,10 @@ class DatabaseService {
     });
   }
 
-  Future addSupportToIdea(Idea idea) async {
-    return await ideaCollection.document(idea.uid).setData({
+  Future addSupportToIdea(Idea idea/*, User user*/) async {
+    //Adding the reference of the idea into the user's supported ideas
+
+    return await ideaCollection.document(idea.uid).updateData({
       'supports': idea.addSupport(),
     });
   }
@@ -104,13 +106,14 @@ class DatabaseService {
 //All ideas from snapshot
   List<Idea> _ideaListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return ideaFromFirestoreWithOnlyPseudo(doc.data);
+      return ideaFromFirestoreWithOnlyPseudo(doc.documentID, doc.data);
     }).toList();
   }
 
   //Loads only the pseudo of the creator to display the flux
-  Idea ideaFromFirestoreWithOnlyPseudo(Map data) {
+  Idea ideaFromFirestoreWithOnlyPseudo(String uid, Map data) {
     return Idea(
+      uid: uid,
       title: data['title'] ?? 'error',
       creator: User(
         infosOblig: InformationsObligatoiresUser(
