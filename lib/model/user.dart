@@ -7,20 +7,19 @@ import 'designs/userProfile.dart';
 import 'idea.dart';
 
 class User {
+  String uid;
+  bool isAnonymous;
 
-  final String uid;
-  final bool isAnonymous;
+  InformationsObligatoiresUser infosOblig;
+  InformationsFacultativesUser infosFacultatives;
 
-  final InformationsObligatoiresUser infosOblig;
-  final InformationsFacultativesUser infosFacultatives;
-
-  final List<String> supportedIdeasUID;
+  List<String> supportedIdeasUID;
 
   //Il s'agit de la liste des Besoin que l'utilsateur est capable de combler
   //Sera surement à découper dans plusieurs Listes quand nécessaire
   List<Besoin> besoinsPossibles = List<Besoin>();
 
-  final ProfileInformation profileInfos;
+  ProfileInformation profileInfos;
 
   User(
       {this.supportedIdeasUID,
@@ -53,6 +52,15 @@ class User {
   String get level => profileInfos.level.toString();
   String get email => infosOblig.email;
   String get password => infosOblig.password;
+
+  Future setInfosWithUid(String uid) async {
+    User user = await DatabaseService().getUserFromUid(uid);
+    this.infosFacultatives = user.infosFacultatives;
+    this.infosOblig = user.infosOblig;
+    this.isAnonymous = user.isAnonymous;
+    this.besoinsPossibles = user.besoinsPossibles;
+    this.profileInfos = user.profileInfos;
+  }
 }
 
 class InformationsObligatoiresUser extends Equatable {

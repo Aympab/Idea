@@ -119,15 +119,20 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
 
                           //Uploading the idea picture to storage
                           CloudStorageResult result =
-                              await CloudStorageService().uploadImage(
-                                  imageToUpload:
-                                      InheritedCreateEasyIdea.of(context)
+                              InheritedCreateEasyIdea.of(context)
                                           .newIdea
-                                          .imageFile,
-                                  title: 'nomIdeaPicture');
+                                          .imageFile ==
+                                      null
+                                  ? null
+                                  : await CloudStorageService().uploadImage(
+                                      imageToUpload:
+                                          InheritedCreateEasyIdea.of(context)
+                                              .newIdea
+                                              .imageFile,
+                                      title: 'nomIdeaPicture');
                           //Setting the image URL of the idea
                           InheritedCreateEasyIdea.of(context).newIdea.imageURL =
-                              result.imageUrl;
+                              result == null ? null : result.imageUrl;
 
                           //Setting the diddiculty to 1 because it's easy idea
                           InheritedCreateEasyIdea.of(context)
@@ -142,8 +147,7 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                           //TODO : Go to the new idea page
                           // Navigator.of(context).pushReplacementNamed('/ideaPage', arguments : newIdea);
 
-                          Navigator.of(context).pushReplacementNamed('/flux');
-                          print('soiree');
+                          Navigator.of(context).popAndPushNamed('/flux');
                         },
                       ),
                     ),

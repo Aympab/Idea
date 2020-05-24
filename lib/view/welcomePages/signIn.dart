@@ -12,13 +12,19 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final AuthService _auth = AuthService();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String email = '';
   String password = '';
   String error = '';
 
   bool loading = false;
+
+  @override
+  void dispose() {
+    _formKey = null;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
