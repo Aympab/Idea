@@ -97,7 +97,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
         Text(
           " votre idée",
           style: TextStyle(
-            fontFamily: "ComingSoon",
+            fontFamily: "BalsamiqSans",
             fontSize: 24,
             color: Color(0xff000000),
           ),

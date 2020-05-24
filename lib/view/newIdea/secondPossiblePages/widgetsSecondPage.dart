@@ -103,7 +103,7 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
         Text(
           "votre idée",
           style: TextStyle(
-            fontFamily: "ComingSoon",
+            fontFamily: "BalsamiqSans",
             fontSize: 24,
             color: Color(0xff000000),
           ),
