@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
+import 'package:idea/model/user.dart';
 import 'package:idea/services/database.dart';
+import 'package:provider/provider.dart';
 
 class IdeaCard extends StatelessWidget {
   IdeaCard({Key key, this.idea}) : super(key: key);
@@ -38,7 +40,10 @@ class IdeaCard extends StatelessWidget {
             subtitle: buildBottom(),
           ),
           onTap: () => print(idea.uid),
-          onDoubleTap: () => DatabaseService().addSupportToIdea(idea),
+          onDoubleTap: () {
+            DatabaseService().addSupportToIdea(
+                idea, Provider.of<User>(context, listen: false));
+          },
         ),
       ),
     );

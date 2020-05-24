@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/routeGenerator.dart';
@@ -12,7 +13,7 @@ void main() {
         providers: [
           ChangeNotifierProvider(
               create: (BuildContext context) => ThemeModel()),
-          StreamProvider<User>.value(value: AuthService().user)
+          StreamProvider<FirebaseUser>.value(value: AuthService().user)
         ],
         child: MyApp(),
       ),

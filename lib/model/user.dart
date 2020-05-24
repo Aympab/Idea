@@ -1,19 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:idea/model/besoins.dart';
+import 'package:idea/services/database.dart';
 
 import 'designs/userProfile.dart';
+import 'idea.dart';
 
 class User {
+
   final String uid;
   final bool isAnonymous;
 
   final InformationsObligatoiresUser infosOblig;
   final InformationsFacultativesUser infosFacultatives;
 
-  // final CompetencesUser competences;
-  // final MaterialsUser materials;
-  // final CheckboxSelectionUser checkboxValues;
+  final List<String> supportedIdeasUID;
 
   //Il s'agit de la liste des Besoin que l'utilsateur est capable de combler
   //Sera surement à découper dans plusieurs Listes quand nécessaire
@@ -22,7 +23,8 @@ class User {
   final ProfileInformation profileInfos;
 
   User(
-      {this.uid,
+      {this.supportedIdeasUID,
+      this.uid,
       this.isAnonymous,
       this.infosOblig,
       this.infosFacultatives,
@@ -79,4 +81,3 @@ class InformationsFacultativesUser extends Equatable {
   @override
   List<Object> get props => [this.prenom, this.nom, this.zoneGeographique];
 }
-
