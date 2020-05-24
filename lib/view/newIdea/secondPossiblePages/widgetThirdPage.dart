@@ -2,6 +2,7 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/ideaCategory.dart';
+import 'package:idea/services/database.dart';
 
 ///
 ///
@@ -50,8 +51,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
             borderRadius: BorderRadius.circular(5),
             color: Color(0xff91ccff),
             child: InkWell(
-            borderRadius: BorderRadius.circular(5),
-
+              borderRadius: BorderRadius.circular(5),
               splashColor: Colors.blue,
               onTap: () {
                 showDialog(
@@ -97,7 +97,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
         Text(
           " votre idée",
           style: TextStyle(
-            fontFamily: "BalsamiqSans",
+            fontFamily: "ComingSoon",
             fontSize: 24,
             color: Color(0xff000000),
           ),
@@ -109,7 +109,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
 
 Widget subtitleThirdPage() {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal:20.0),
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
     child: Text(
       "Grâce aux tags des catégories, votre idée pourra être facilement retrouvée par les autres idéateurs !",
       textAlign: TextAlign.center,
@@ -117,7 +117,7 @@ Widget subtitleThirdPage() {
         fontFamily: "BalsamiqSans",
         fontStyle: FontStyle.italic,
         fontSize: 17,
-        color: Color(0xff9e9e9e),
+        color: Colors.grey[700],
       ),
     ),
   );
@@ -158,10 +158,12 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
   TextEditingController textController = new TextEditingController();
   AutoCompleteTextField searchTextField;
 
-  bool altern = false;
+  bool alternColor = false;
   @override
   Widget build(BuildContext context) {
     searchTextField = AutoCompleteTextField<IdeaCategory>(
+//Stryle and shi
+      suggestionsAmount: 10,
       controller: textController,
       style: TextStyle(color: Colors.black, fontSize: 20.0),
       decoration: InputDecoration(
@@ -184,17 +186,23 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
         filled: true,
         hintText: 'Ajouter une catégorie',
         hintStyle: TextStyle(
-            fontSize: 15, color: Colors.white, fontStyle: FontStyle.italic,fontFamily: 'BalsamiqSans'),
+            fontSize: 15,
+            color: Colors.white,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'BalsamiqSans'),
         errorStyle: TextStyle(color: Colors.red),
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2),
         ),
       ),
+
+      //Actual methods
+      //
       itemBuilder: (BuildContext context, IdeaCategory suggestion) {
         //To altern colo
-        altern = !altern;
+        alternColor = !alternColor;
         return Container(
-          color: altern ? widget.colorRow1 : widget.colorRow2,
+          color: alternColor ? widget.colorRow1 : widget.colorRow2,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -237,9 +245,107 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
       suggestions: widget.categories,
     );
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 60),
-      child: Container(child: searchTextField),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 250), child: searchTextField),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.0),
+          child: SubmitCategoryButton(
+            categoryGridKey: widget.categoryGridKey,
+            keyTextField: keyAutoComplete,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+///
+///
+///BUTTON SUBMIT CATEGORY (LINK IN A ROW WITH THE TEXT FIELD)
+class SubmitCategoryButton extends StatefulWidget {
+  final GlobalKey<AutoCompleteTextFieldState<IdeaCategory>> keyTextField;
+  final GlobalKey<SelectedCategoriesGridState> categoryGridKey;
+
+  const SubmitCategoryButton({
+    Key key,
+    @required this.keyTextField,
+    @required this.categoryGridKey,
+  }) : super(key: key);
+
+  @override
+  _SubmitCategoryButtonState createState() => _SubmitCategoryButtonState();
+}
+
+class _SubmitCategoryButtonState extends State<SubmitCategoryButton> {
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      color: Color(0xff91ccff),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: Text(
+              "Proposer une catégorie",
+              style: TextStyle(
+                fontFamily: "BalsamiqSans",
+                fontSize: 24,
+                color: Color(0xff000000),
+              ),
+            ),
+            content: Text(
+              'Voulez vous proposer la catégorie "${widget.keyTextField.currentState.currentText}" à la communauté ? Une fois validée, celle-ci sera accessible à tout le monde dans le flux et les nouvelles idées.',
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () async {
+                  IdeaCategory suggestedCategory = IdeaCategory(
+                      name: widget.keyTextField.currentState.currentText,
+                      popularity: 1);
+                  //User suggests the category to the community
+                  await DatabaseService().suggestCategory(
+                    suggestedCategory,
+                  );
+
+                  //Then we add this category to the grid
+                  if (widget.categoryGridKey != null)
+                    widget.categoryGridKey.currentState
+                        .addOrRemoveCategory(suggestedCategory);
+                  // print(widget.keyTextField.currentState.currentText);
+                  Navigator.of(context).pop();
+                  widget.keyTextField.currentState.setState(() {
+                    widget.keyTextField.currentState.controller.clear();
+                    //  widget.keyTextField.currentState.currentText = '';
+                  });
+                },
+                child: Text('Proposer ma catégorie !'),
+              ),
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Je vais réflechir'))
+            ],
+            elevation: 24.0,
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          children: <Widget>[
+            Icon(Icons.add_circle),
+            Text(
+              'Proposer',
+              style: TextStyle(fontFamily: 'BalsamiqSans', fontSize: 12),
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

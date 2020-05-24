@@ -63,6 +63,7 @@ class _ConnexionViewState extends State<ConnexionView> {
         gradient: Provider.of<ThemeModel>(context).globalGradient,
       ),
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         floatingActionButton: floatingButton,
         backgroundColor: Colors.transparent,
         body: SafeArea(
@@ -84,13 +85,20 @@ class _ConnexionViewState extends State<ConnexionView> {
               });
             },
             children: <Widget>[
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width,
-                  maxHeight: MediaQuery.of(context).size.height,
-                ),
-                child: FirstPageConnexion(
-                  ideaBulbLogo: ideaLogo,
+              GestureDetector(
+                onTap: () {
+                  controller.nextPage(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeInSine);
+                },
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width,
+                    maxHeight: MediaQuery.of(context).size.height,
+                  ),
+                  child: FirstPageConnexion(
+                    ideaBulbLogo: ideaLogo,
+                  ),
                 ),
               ),
               ConstrainedBox(
@@ -274,11 +282,7 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
                 top: topPosLogo,
                 right: -50,
                 height: 280,
-                child: GestureDetector(
-                  child: Transform.rotate(angle: -2.4, child: widget.ideaLogo),
-                  onDoubleTap: () => Navigator.of(context).pushNamed('/newIdeaPage'),
-
-                ),
+                child: Transform.rotate(angle: -2.4, child: widget.ideaLogo),
               ),
               Positioned(
                 top: topPosPostit,

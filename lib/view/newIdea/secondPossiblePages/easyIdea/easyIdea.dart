@@ -98,6 +98,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                       children: <Widget>[
                         SizedBox(height: 50),
                         TitleSecondPage(),
+                        SizedBox(height:5),
                         subtitleSecondPage(),
                         SizedBox(height: 30),
                         Expanded(
