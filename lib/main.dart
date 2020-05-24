@@ -3,21 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/services/auth.dart';
+import 'package:idea/services/database.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:provider/provider.dart';
 
-void main() { 
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (BuildContext context) => ThemeModel()),
-          StreamProvider<FirebaseUser>.value(value: AuthService().user)
-        ],
-        child: MyApp(),
-      ),
-    );
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (BuildContext context) => ThemeModel()),
+        StreamProvider<FirebaseUser>.value(value: AuthService().user),
+        Provider<User>(create: (_) => User()),
+      
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

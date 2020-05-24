@@ -12,8 +12,6 @@ import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/postItButton.dart';
 import 'package:provider/provider.dart';
 
-import '../../launchingAppTest.dart';
-
 class ConnexionView extends StatefulWidget {
   ConnexionView({Key key}) : super(key: key);
   static String tag = 'connexion-page';
@@ -256,6 +254,9 @@ class _SecondPageConnexionState extends State<SecondPageConnexion> {
           });
           Navigator.of(context).pushNamed('/error');
         } else {
+          //Set the current user to an anonymous user
+          Provider.of<User>(context, listen: false).setInfosWithUid((authResult as User).uid);
+
           //Route to next page
           Navigator.of(context).pushNamed('/flux');
         }

@@ -206,12 +206,14 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 4),
-                child: Text(
-                  '${suggestion.name} ',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16.0),
+              Expanded(
+                              child: Padding(
+                  padding: EdgeInsets.only(left: 4),
+                  child: Text(
+                    '${suggestion.name} ',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 16.0),
+                  ),
                 ),
               ),
               SizedBox(

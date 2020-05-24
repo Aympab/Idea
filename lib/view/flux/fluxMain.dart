@@ -29,10 +29,9 @@ class _FluxMainViewState extends State<FluxMainView> {
         : MultiProvider(
             providers: [
               StreamProvider<List<Idea>>.value(value: DatabaseService().ideas),
-              //Selon si l'user est anonyme ou pas on set le provider différemment
-              /*!authUser.isAnonymous ?*/ FutureProvider<User>.value(
-                  value: DatabaseService().getUserFromUid(authUser
-                      .uid)) // : FutureProvider<User>.value(value: DatabaseService().getUserFromUid(authUser.uid)),
+              // FutureProvider<User>.value(
+              //   value: DatabaseService().getUserFromUid(authUser.uid),
+              // ),
             ],
             child: DecoratedBox(
               decoration: BoxDecoration(
