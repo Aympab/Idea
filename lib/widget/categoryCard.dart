@@ -4,6 +4,14 @@ import 'package:idea/model/ideaCategory.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetThirdPage.dart';
 
 class CategoryCard extends StatelessWidget {
+  factory CategoryCard.category(IdeaCategory category, Color color) {
+    return CategoryCard(
+      name: category.name,
+      popularity: category.popularity,
+      color: color,
+    );
+  }
+
   const CategoryCard(
       {Key key, this.color, this.name, this.popularity, this.gridKey})
       : super(key: key);

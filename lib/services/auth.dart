@@ -10,10 +10,14 @@ class AuthService {
     return fbUser != null ? User(uid: fbUser.uid) : null;
   }
 
+  // Future<User> _fullUserFromFb(FirebaseUser fbUser) async {
+  //   User user = await DatabaseService().getUserFromUid(fbUser.uid);
+  //   return fbUser != null ? User(uid: fbUser.uid) : null;
+  // }
+
   //stream changes whenever user logs in or out
-  Stream<User> get user {
-    return _auth.onAuthStateChanged
-        .map((FirebaseUser user) => _userFromFirebaseUser(user));
+  Stream<FirebaseUser> get user {
+    return _auth.onAuthStateChanged.map((FirebaseUser user) => user);
     // .map(_userFromFirebaseUser); //Identique à la ligne au dessus
   }
 
@@ -50,12 +54,12 @@ class AuthService {
       FirebaseUser fbUser = result.user;
 
       User newUser = User(
-              uid: fbUser.uid,
-              infosOblig: user.infosOblig,
-              infosFacultatives: user.infosFacultatives,
-              isAnonymous: false,
-            );
-            
+        uid: fbUser.uid,
+        infosOblig: user.infosOblig,
+        infosFacultatives: user.infosFacultatives,
+        isAnonymous: false,
+      );
+
       //Creation de l'user dans la DB
       await DatabaseService().createUserData(newUser);
       return newUser;

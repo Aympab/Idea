@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
 import 'package:idea/model/user.dart';
@@ -21,12 +22,18 @@ class _FluxMainViewState extends State<FluxMainView> {
 
   @override
   Widget build(BuildContext context) {
-    User authUser = Provider.of<User>(context);
+    FirebaseUser authUser = Provider.of<FirebaseUser>(context);
 
     return authUser == null
         ? LoadingScreen()
-        : StreamProvider<List<Idea>>.value(
-            value: DatabaseService().ideas,
+        : MultiProvider(
+            providers: [
+              StreamProvider<List<Idea>>.value(value: DatabaseService().ideas),
+              //Selon si l'user est anonyme ou pas on set le provider différemment
+              /*!authUser.isAnonymous ?*/ FutureProvider<User>.value(
+                  value: DatabaseService().getUserFromUid(authUser
+                      .uid)) // : FutureProvider<User>.value(value: DatabaseService().getUserFromUid(authUser.uid)),
+            ],
             child: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -39,15 +46,16 @@ class _FluxMainViewState extends State<FluxMainView> {
                 ),
               ),
               child: Scaffold(
+                resizeToAvoidBottomPadding: false,
                 backgroundColor: Colors.transparent,
                 body: SafeArea(
                   child: Column(
                     children: <Widget>[
                       Text('Flux de ${authUser.uid}'),
                       Expanded(
-                        // height: 200,
-                        // width: 200,
-                        child: IdeaList()),
+                          // height: 200,
+                          // width: 200,
+                          child: IdeaList()),
                       SizedBox(height: 50),
                       RaisedButton(
                         onPressed: () =>
