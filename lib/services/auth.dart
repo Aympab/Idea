@@ -10,10 +10,10 @@ class AuthService {
     return fbUser != null ? User(uid: fbUser.uid) : null;
   }
 
-  Future<User> _fullUserFromFb(FirebaseUser fbUser) async {
-    User user = await DatabaseService().getUserFromUid(fbUser.uid);
-    return fbUser != null ? User(uid: fbUser.uid) : null;
-  }
+  // Future<User> _fullUserFromFb(FirebaseUser fbUser) async {
+  //   User user = await DatabaseService().getUserFromUid(fbUser.uid);
+  //   return fbUser != null ? User(uid: fbUser.uid) : null;
+  // }
 
   //stream changes whenever user logs in or out
   Stream<FirebaseUser> get user {

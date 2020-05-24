@@ -44,6 +44,7 @@ class _FluxMainViewState extends State<FluxMainView> {
         : MultiProvider(
             providers: [
               StreamProvider<List<Idea>>.value(value: DatabaseService().ideas),
+              FutureProvider<User>.value(value: DatabaseService().getUserFromUid(authUser.uid))
             ],
             child: DecoratedBox(
               decoration: BoxDecoration(

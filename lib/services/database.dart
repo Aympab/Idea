@@ -72,7 +72,9 @@ class DatabaseService {
               ),
               title: DefaultTitle(value.data['titre']),
             ),
-            supportedIdeasUID:  value.data['supportedIdeas'] ?? List<String>(),
+            supportedIdeasUID:
+                _dynamicListToStringList(value.data['supportedIdeas']) ??
+                    List<String>(),
           ),
         );
 
@@ -113,31 +115,41 @@ class DatabaseService {
 
       await userCollection
           .document(user.uid)
-          .get(source: Source.serverAndCache)
-          .then((value) => () {
-                currentSupportedIdeas = value.data['supportedIdeas'];
-              });
+          .get(source: Source.server)
+          .then((value) => currentSupportedIdeas = _dynamicListToStringList(value.data['supportedIdeas']));
 
       //When we have the curretnSupportedIdeas
       if (currentSupportedIdeas.length > 0) {
         //If the user already has ideas, we have to check if this one is not already here
-        if (!currentSupportedIdeas.contains(idea.uid)) {
+        if (!_ideaExistsInList(idea, currentSupportedIdeas)) {
           //Si l'user a pas encore liké l'idée
           //On l'ajoute dans la BD chez l'user
           await addSupportedIdeaToUser(user, idea.uid);
         }
       } else {
-        //Si il n'a pas encore liké d'idée, on l'ajoute aussi
+        //Si il a liké 0 idée, on l'ajoute aussi
         await addSupportedIdeaToUser(user, idea.uid);
       }
     }
 
+    //On fait +1 au support de l'idée dans tous les cas
     return await ideaCollection.document(idea.uid).updateData({
       'supports': idea.addSupport(),
     });
   }
 
-//All ideas from snapshot
+  bool _ideaExistsInList(Idea idea, List<String> ideasUid) {
+    bool flag = false;
+    for (String currUid in ideasUid) {
+      if (currUid == idea.uid) {
+        flag = true;
+        return flag;
+      }
+    }
+    return flag;
+  }
+
+  //All ideas from snapshot
   List<Idea> _ideaListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return ideaFromFirestoreWithOnlyPseudo(doc.documentID, doc.data);
@@ -163,6 +175,16 @@ class DatabaseService {
           : List<IdeaCategory>(),
       difficulty: data['difficulty'],
     );
+  }
+
+  List<String> _dynamicListToStringList(List<dynamic> list) {
+    List<String> strings = List<String>();
+
+    for (dynamic item in list) {
+      strings.add(item.toString());
+    }
+
+    return strings;
   }
 
   List<IdeaCategory> dynamicListToCategoryList(List<dynamic> list) {
