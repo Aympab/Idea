@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/services/auth.dart';
-import 'package:idea/services/database.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:provider/provider.dart';
 

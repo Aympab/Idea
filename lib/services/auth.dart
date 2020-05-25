@@ -40,7 +40,6 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
 
-      //TODO : Get the user corresponding to this uid from the Db
       return _userFromFirebaseUser(user);
     } catch (e) {}
   }

@@ -6,15 +6,11 @@ import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/auth.dart';
-
-import 'package:idea/services/database.dart';
-import 'package:idea/tools/dateParser.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:idea/view/loadingScreen.dart';
 import 'package:idea/widget/longPostItButton.dart';
 import 'package:idea/widget/multiSelect.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 import 'dart:io';
 import 'dart:async';
 
@@ -37,7 +33,6 @@ class _InscriptionViewState extends State<InscriptionView> {
     });
   }
 
-  DateTime _dateTime;
 
   List selectedCompetences = [];
   List selectedMaterials = [];
@@ -55,8 +50,8 @@ class _InscriptionViewState extends State<InscriptionView> {
   TextEditingController zoneGeographiqueController =
       new TextEditingController();
 
-  bool _PseudoValidator = false;
-  bool _EmailValidator = false;
+  bool _pseudoValidator = false;
+  bool _emailValidator = false;
   FocusNode focusNodePseudo;
   FocusNode focusNodeEmail;
   void initState() {
@@ -66,14 +61,14 @@ class _InscriptionViewState extends State<InscriptionView> {
     focusNodePseudo.addListener(() {
       if (!focusNodePseudo.hasFocus) {
         setState(() {
-          _PseudoValidator = true;
+          _pseudoValidator = true;
         });
       }
     });
     focusNodeEmail.addListener(() {
       if (!focusNodeEmail.hasFocus) {
         setState(() {
-          _EmailValidator = true;
+          _emailValidator = true;
         });
       }
     });
@@ -139,10 +134,10 @@ class _InscriptionViewState extends State<InscriptionView> {
       )
     ]);
 
-    var image_to_display = showImage();
+    var imageToDisplay = showImage();
     final circularProfileAvatar = CircularProfileAvatar(
       '',
-      child: image_to_display,
+      child: imageToDisplay,
       animateFromOldImageOnUrlChange: true,
       borderColor: Colors.blueGrey,
       borderWidth: 2,
@@ -150,12 +145,12 @@ class _InscriptionViewState extends State<InscriptionView> {
       radius: 60,
       onTap: () {
         getImageGallery();
-        image_to_display = showImage();
+        imageToDisplay = showImage();
       },
     );
 
     String validatePseudo(String value) {
-      // TODO Check si le pseudo existe déjà dans la BD (fonction à mettre dans un autre fichier)
+      // todo: Check si le pseudo existe déjà dans la BD (fonction à mettre dans un autre fichier)
       return null;
     }
 
@@ -163,7 +158,7 @@ class _InscriptionViewState extends State<InscriptionView> {
       controller: pseudoController,
       keyboardType: TextInputType.text,
       autofocus: false,
-      autovalidate: _PseudoValidator,
+      autovalidate: _pseudoValidator,
       validator: validatePseudo,
       focusNode: focusNodePseudo,
       decoration: InputDecoration(
@@ -173,7 +168,7 @@ class _InscriptionViewState extends State<InscriptionView> {
       ),
     );
 
-    final identity_widget = new Row(
+    final identityWidget = new Row(
       children: [
         Expanded(
           flex: 2,
@@ -203,7 +198,7 @@ class _InscriptionViewState extends State<InscriptionView> {
       controller: mailController,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      autovalidate: _EmailValidator,
+      autovalidate: _emailValidator,
       validator: validateEmail,
       focusNode: focusNodeEmail,
       decoration: InputDecoration(
@@ -245,41 +240,7 @@ class _InscriptionViewState extends State<InscriptionView> {
             )),
       ],
     );
-    final date = new Row(children: [
-      Expanded(
-          flex: 4,
-          child: TextField(
-            controller: dateNaissanceController,
-            keyboardType: TextInputType.datetime,
-            autofocus: false,
-            inputFormatters: [DateTextFormatter()],
-            onChanged: (String value) {},
-            decoration: InputDecoration(
-              labelText: "Date de Naissance",
-              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-            ),
-          )),
-      Expanded(
-        child: IconButton(
-          icon: Icon(Icons.date_range),
-          onPressed: () {
-            showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1920),
-                    lastDate: DateTime(2050))
-                .then((date) {
-              setState(() {
-                _dateTime = date;
-              });
-            });
-          },
-        ),
-      )
-    ]);
-
+    
     _buildExpansionTileInfoFacultative() {
       return ExpansionTile(
         initiallyExpanded: false,
@@ -344,7 +305,7 @@ class _InscriptionViewState extends State<InscriptionView> {
       return competenceList;
     }
 
-    refresh_competence(dynamic competenceList) {
+    refreshCompetence(dynamic competenceList) {
       setState(() {
         selectedCompetences = competenceList;
       });
@@ -358,7 +319,7 @@ class _InscriptionViewState extends State<InscriptionView> {
           Container(
               color: Colors.amber,
               child: new MultiSelectWidget(
-                notifyParent: refresh_competence,
+                notifyParent: refreshCompetence,
                 titleMultiSelect: 'Ajouter vos compétences',
                 textFieldName: 'name',
                 textFieldValue: 'value',
@@ -379,7 +340,7 @@ class _InscriptionViewState extends State<InscriptionView> {
       return materielList;
     }
 
-    refresh_material(dynamic materialList) {
+    refreshMaterial(dynamic materialList) {
       setState(() {
         selectedMaterials = materialList;
       });
@@ -393,7 +354,7 @@ class _InscriptionViewState extends State<InscriptionView> {
           Container(
               color: Colors.amber,
               child: new MultiSelectWidget(
-                notifyParent: refresh_material,
+                notifyParent: refreshMaterial,
                 titleMultiSelect: 'Ajouter un matériel',
                 textFieldName: 'name',
                 textFieldValue: 'value',
@@ -545,7 +506,7 @@ class _InscriptionViewState extends State<InscriptionView> {
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
             SizedBox(height: 10),
-            identity_widget,
+            identityWidget,
             SizedBox(height: 22),
             separator,
             SizedBox(height: 5),

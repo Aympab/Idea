@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:idea/widget/custom_expansion_tile.dart' as custom;
 
 class ExpansionTileWidget extends StatelessWidget {
-  Widget components;
-  String name;
-  Color myColor;
+  final Widget components;
+  final String name;
+  final Color myColor;
   
 
   ExpansionTileWidget({this.components, this.name, this.myColor});

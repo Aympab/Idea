@@ -1,9 +1,6 @@
 import 'dart:io';
 import 'dart:math';
-
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
-import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/easyIdea.dart';
 import 'package:image_picker/image_picker.dart';
 
 ///
@@ -70,7 +67,7 @@ class _TitleSecondPageState extends State<TitleSecondPage> {
                         color: Color(0xff000000),
                       ),
                     ),
-                    //TODO : Write a little tutorial about what are difficulties (export widget)
+                    //TODO : Ecrire un petit texte sur les définitions comme pour la page précédente, ou faire un petit dessin ?
                     content: Text('Blablabla'),
                     actions: <Widget>[
                       FlatButton(

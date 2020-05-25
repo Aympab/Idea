@@ -1,4 +1,3 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/view/newIdea/difficultyCard.dart';
@@ -156,7 +155,6 @@ class _FirstPageNewIdeaState extends State<FirstPageNewIdea> {
                           color: Color(0xff000000),
                         ),
                       ),
-                      //TODO : Write a little tutorial about what are difficulties (export widget)
                       content: SingleChildScrollView(
                           child: Text(
                               "Que cela soit une problématique ou une idée bien définie à réaliser tout est possible! Choisissez la difficulté qui correspond aux informations que vous souhaitez partager sur votre nouvelle idée. \r\n\n ★\nVous avez un problème et vous cherchez une idée.\r\n\n ★ ★\nVous avez une idée et vous cherchez comment la réaliser.\r\n\n ★ ★ ★\nVous avez une idée, mais il vous manque les moyens (compétences, matériels, ...) pour la réaliser.\r\n\n ★ ★ ★ ★\nPour une idée dont les moyens pour la réaliser n'ont aucun secrets pour vous.")),
@@ -280,7 +278,6 @@ class ArrowButtonState extends State<ArrowButton> {
     return FlatButton(
       onPressed: isButtonEnabled
           ? () {
-              //TODO : Route to next page nicely
               switch (widget.rowCardKey.currentState.whichOnIsSelected()) {
                 case (0):
                   //Nodifficulty

@@ -11,7 +11,8 @@ class Level {
   Level(this.level);
 
   //TODO : Implement different style depending on the level (in the constructor, if level > 12, etc)
-  //Level(this.level, this.style);
+  //Il faut mettre dans le constructeur un if(this.leve > 12), on met une couleur, sinon une autre, etc, genre marron clair vert bleu rouge 
+  //on peut garder lescouleurs des difficultés des idées
   BorderedText toPrettyText() {
     return BorderedText(
       strokeWidth: 2,

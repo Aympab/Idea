@@ -1,7 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:idea/launchingAppTest.dart';
-import 'package:idea/model/idea.dart';
-import 'package:idea/services/database.dart';
 
 void main() {
   test("test d'ajout d'une idée sur firestore'", () async {

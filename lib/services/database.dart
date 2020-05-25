@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/idea.dart';
@@ -229,7 +228,10 @@ class DatabaseService {
 
   //Creates a new category with accepted to false, because a user submitted it
   Future suggestCategory(IdeaCategory category) async {
-    //TODO : Check existence !!! sinon on met la popularity a 1 d'un truc deja existant !!
+    //TODO : Check existence !!! sinon on met la popularity a 1 d'un truc deja existant !! 
+    /*Ici on est au moment ou l'user a suggérer une catégorie, donc on veut la mettre en BD avec accepted à false
+      Et la popularity à 1, sauf que la on vérifie pas l'existence on écrase direct le document en le remplacant
+    */
     return await categoryCollection.document(category.name).setData({
       'popularity': 1,
       'accepted': false,

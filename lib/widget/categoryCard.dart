@@ -1,4 +1,3 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/ideaCategory.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetThirdPage.dart';
@@ -19,25 +18,24 @@ class CategoryCard extends StatelessWidget {
   final String name;
   final int popularity;
 
-  //TODO : Check if currently affected to a grid
   final GlobalKey<SelectedCategoriesGridState> gridKey;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onDoubleTap: () {
-        //TODO : Double tap to remove category
-        gridKey.currentState.removeCategory(cardAsCategory());
-      },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.elliptical(2, 3),
-          ),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.elliptical(2, 3),
         ),
-        elevation: 8,
-        shadowColor: Colors.black.withOpacity(0.8),
-        color: color,
+      ),
+      elevation: 8,
+      shadowColor: Colors.black.withOpacity(0.8),
+      color: color,
+      child: InkWell(
+        onDoubleTap: () {
+          if (gridKey != null)
+            gridKey.currentState.removeCategory(cardAsCategory());
+        },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

@@ -80,7 +80,7 @@ class IdeaCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 26.0),
               child:
-                  //TODO : Implement a nice support square
+                  //TODO : AYM - Implement a nice support square
                   Text(
                 idea.supports.toString(),
               ),

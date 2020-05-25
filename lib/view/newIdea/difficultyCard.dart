@@ -1,11 +1,10 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 
 import 'newIdeaDifficulty.dart';
 
 //The row containing all the cards,
 class DifficultyCardsRow extends StatefulWidget {
-  GlobalKey<ArrowButtonState> buttonKey;
+  final GlobalKey<ArrowButtonState> buttonKey;
 
   DifficultyCardsRow({
     Key key,
@@ -17,22 +16,18 @@ class DifficultyCardsRow extends StatefulWidget {
 }
 
 class DifficultyCardsRowState extends State<DifficultyCardsRow> {
-
-  int whichOnIsSelected(){
-    if(noDiffKey.currentState.widget.isSelected){
+  int whichOnIsSelected() {
+    if (noDiffKey.currentState.isSelected) {
       return 0;
-    }
-    else if(easyKey.currentState.widget.isSelected){
+    } else if (easyKey.currentState.isSelected) {
       return 1;
-    }
-    else if(medKey.currentState.widget.isSelected){
+    } else if (medKey.currentState.isSelected) {
       return 2;
-    }
-    else if(hardKey.currentState.widget.isSelected){
+    } else if (hardKey.currentState.isSelected) {
       return 3;
     }
-    }
-  
+    return -1;
+  }
 
   static GlobalKey<DifficultyCardState> noDiffKey =
       GlobalKey<DifficultyCardState>();
@@ -101,12 +96,13 @@ class DifficultyCard extends StatefulWidget {
   final double cardHeight; // = 100;
   final int starNumber; // = 1;
   final String listeElements;
-  bool isSelected = false;
   @override
   DifficultyCardState createState() => DifficultyCardState();
 }
 
 class DifficultyCardState extends State<DifficultyCard> {
+  
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -119,15 +115,14 @@ class DifficultyCardState extends State<DifficultyCard> {
       ),
       elevation: 10,
       shadowColor: Colors.black.withOpacity(1),
-      color: widget.isSelected
+      color: isSelected
           ? widget.borderAndSplashColor.withOpacity(0.5)
           : widget.cardColor,
       child: InkWell(
-        //TODO :
         onTap: () {
           setState(() {
-            widget.isSelected = !widget.isSelected;
-            if (widget.isSelected) {
+            isSelected = !isSelected;
+            if (isSelected) {
               for (GlobalKey<DifficultyCardState> cardKey in widget.cardKeys) {
                 cardKey.currentState.disable();
               }
@@ -191,7 +186,7 @@ class DifficultyCardState extends State<DifficultyCard> {
 
   void disable() {
     setState(() {
-      widget.isSelected = false;
+      isSelected = false;
     });
   }
 }
@@ -277,4 +272,3 @@ class HardDifficultyIdea extends DifficultyCard {
 //
 //
 //
-

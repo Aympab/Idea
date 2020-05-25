@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:idea/tools/themes.dart';
-
-import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
 import 'package:provider/provider.dart';
 
 class CreateMediumIdea extends StatefulWidget {

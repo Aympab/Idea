@@ -1,5 +1,4 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/ideaCategory.dart';
 import 'package:idea/services/database.dart';
@@ -65,7 +64,7 @@ class _TitleThirdPageState extends State<TitleThirdPage> {
                         color: Color(0xff000000),
                       ),
                     ),
-                    //TODO : EXPLIQUER LE CHIFFRE
+                    //TODO : Expliquer ce qu'est une catégorie et une la carte catégorie avec une image
                     content: Text(
                         'ICI METTRE UNE PETITE IMAGE DUNE CARD ET EXPLIQUER CE QUE CEST LE CHIFFRE'),
                     actions: <Widget>[
@@ -207,7 +206,7 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                              child: Padding(
+                child: Padding(
                   padding: EdgeInsets.only(left: 4),
                   child: Text(
                     '${suggestion.name} ',
@@ -233,7 +232,7 @@ class _CategoriesTextFieldState extends State<CategoriesTextField> {
       },
       itemFilter: (IdeaCategory suggestion, String query) {
         //TODO : Add better filters (like é and e)
-        //TODO : If nothing, display top catégories
+        //TODO : If nothing, display top catégories (most used)
         return suggestion.name.toLowerCase().startsWith(query.toLowerCase());
       },
       itemSorter: (IdeaCategory a, IdeaCategory b) {
@@ -392,8 +391,9 @@ class SelectedCategoriesGridState extends State<SelectedCategoriesGrid> {
     for (IdeaCategory currCategory in selectedCategories) {
       if (currCategory.name == category.name) {
         setState(() {
-          selectedCategories.remove(category);
+          selectedCategories.remove(currCategory);
         });
+        break;
       }
     }
   }

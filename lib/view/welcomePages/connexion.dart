@@ -1,11 +1,8 @@
 import 'package:bordered_text/bordered_text.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:idea/model/idea.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/auth.dart';
-import 'package:idea/services/database.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:idea/view/loadingScreen.dart';
 import 'package:idea/widget/longPostItButton.dart';

@@ -5,7 +5,6 @@ import 'package:idea/view/welcomePages/connexion.dart';
 import 'package:idea/view/flux/fluxMain.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/welcomePages/inscription.dart';
-import 'package:idea/view/newIdea/newIdea.dart';
 import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
 import 'package:idea/view/profile/profileMain.dart';
 import 'model/idea.dart';
@@ -37,7 +36,6 @@ class RouteGenerator {
           return MaterialPageRoute(
               builder: (_) => InheritedProfile(user: args));
         } else {
-          //TODO : Implement a nice error page
           return _errorPageBuilder();
         }
         break;
@@ -73,7 +71,7 @@ class RouteGenerator {
         ),
         body: Center(
           child: Text(
-              "Routing error.\nEither the route name is mispelled or the route isn't defined"),
+              "Erreur.\nEuh, c'est un bug ça ? Redémarrez l'application, ça vaut mieux."),
         ),
       ),
     );

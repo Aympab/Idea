@@ -172,7 +172,7 @@ class _ExpansionTileState extends State<ExpansionTile>
                 title: DefaultTextStyle(
                   style: Theme.of(context)
                       .textTheme
-                      .subhead
+                      .subtitle1
                       .copyWith(color: titleColor),
                   child: widget.title,
                 ),

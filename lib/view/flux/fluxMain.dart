@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
-import 'package:idea/model/user.dart';
 import 'package:idea/services/auth.dart';
 import 'package:idea/view/flux/ideaList.dart';
 import 'package:idea/view/loadingScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:idea/services/database.dart';
-import 'package:provider/provider.dart';
 
 class FluxMainView extends StatefulWidget {
   FluxMainView({Key key}) : super(key: key);

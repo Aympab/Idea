@@ -42,7 +42,7 @@ class UserCard extends StatelessWidget {
                     ),
                     FlatButton(
                       child: Text('SUIVRE'),
-                      //TODO Follow this user with current user
+                      //TODO AYM - Follow this user with current user
                       onPressed: () {/* ... */},
                     ),
                   ],

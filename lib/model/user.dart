@@ -4,7 +4,6 @@ import 'package:idea/model/besoins.dart';
 import 'package:idea/services/database.dart';
 
 import 'designs/userProfile.dart';
-import 'idea.dart';
 
 class User {
   String uid;

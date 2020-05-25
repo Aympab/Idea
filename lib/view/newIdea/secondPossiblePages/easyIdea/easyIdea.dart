@@ -1,13 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:idea/model/idea.dart';
-import 'package:idea/model/user.dart';
-import 'package:idea/services/cloudStorageService.dart';
-import 'package:idea/services/database.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/easyIdeaForm.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/thirdPage.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetsSecondPage.dart';
-import 'package:provider/provider.dart';
 
 class InheritedCreateEasyIdea extends InheritedWidget {
   InheritedCreateEasyIdea({Key key}) : super(key: key, child: CreateEasyIdea());
@@ -40,8 +36,6 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
   GlobalKey<TextFieldShortDescriptionState> _descriptionKey =
       GlobalKey<TextFieldShortDescriptionState>();
   GlobalKey<PictureFieldState> _pictureKey = GlobalKey<PictureFieldState>();
-
-  DatabaseService _dbService = DatabaseService();
 
   PageController _pvController;
   @override

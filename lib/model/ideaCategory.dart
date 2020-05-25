@@ -1,6 +1,4 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
-import 'package:idea/view/newIdea/secondPossiblePages/widgetThirdPage.dart';
 import 'package:idea/widget/categoryCard.dart';
 
 class IdeaCategory {
