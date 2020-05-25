@@ -55,11 +55,13 @@ class User {
 
   Future setInfosWithUid(String uid) async {
     User user = await DatabaseService().getUserFromUid(uid);
+    this.uid = uid;
     this.infosFacultatives = user.infosFacultatives;
     this.infosOblig = user.infosOblig;
     this.isAnonymous = user.isAnonymous;
     this.besoinsPossibles = user.besoinsPossibles;
     this.profileInfos = user.profileInfos;
+    this.supportedIdeasUID = user.supportedIdeasUID;
   }
 }
 

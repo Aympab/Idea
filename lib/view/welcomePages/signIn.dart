@@ -81,6 +81,7 @@ class _SignInPageState extends State<SignInPage> {
                                       'Impossible de se connecter avec ces identifiants.';
                                 });
                               } else {
+                                Provider.of<User>(context, listen: false).setInfosWithUid((user as User).uid);
                                 Navigator.of(context).pushNamed('/flux');
                                 // Navigator.of(context).pushNamed('/newIdeaPage');
                               }
