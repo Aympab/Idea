@@ -42,6 +42,7 @@ class _SignInPageState extends State<SignInPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 70),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         TextFormField(
                           validator: (val) =>
@@ -88,7 +89,7 @@ class _SignInPageState extends State<SignInPage> {
                             }
                           },
                           color: Colors.amber,
-                          child: Text('Sign In'),
+                          child: Text('Se connecter'),
                         ),
                         SizedBox(height: 20),
                         Text(
