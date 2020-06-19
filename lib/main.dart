@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Idea',
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
+      debugShowCheckedModeBanner: false,
       // home: LoadingScreen(),
     );
   }

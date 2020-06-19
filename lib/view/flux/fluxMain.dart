@@ -48,29 +48,44 @@ class _FluxMainViewState extends State<FluxMainView> {
                 body: SafeArea(
                   child: Column(
                     children: <Widget>[
-                      Text('Flux de ${authUser.uid}'),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Flux d'idées",
+                        //'Flux de ${authUser.uid}',
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontFamily: 'BalsamiqSans', fontSize: 35),
+                      ),
                       Expanded(
                           // height: 200,
                           // width: 200,
                           child: IdeaList()),
-                      SizedBox(height: 50),
-                      RaisedButton(
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed('/newIdeaPage'),
-                        child: Text('Nouvelle idée'),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          RaisedButton(
+                            onPressed: () =>
+                                Navigator.of(context).pushNamed('/newIdeaPage'),
+                            child: Text('Nouvelle Idée'),
+                          ),
+                          FlatButton(
+                            // autofocus: false,
+                            child: Container(
+                                color: Colors.amber, child: Text('Logout')),
+                            onPressed: () async {
+                              // setState(() {
+                              //   loading = false;
+                              // });
+                              await _auth.signOut();
+                              Navigator.of(context).pushReplacementNamed('/');
+                            },
+                          )
+                        ],
                       ),
-                      FlatButton(
-                        // autofocus: false,
-                        child: Container(
-                            color: Colors.amber, child: Text('Logout')),
-                        onPressed: () async {
-                          // setState(() {
-                          //   loading = false;
-                          // });
-                          await _auth.signOut();
-                          Navigator.of(context).pushReplacementNamed('/');
-                        },
-                      )
+                      SizedBox(height: 10,)
                     ],
                   ),
                 ),

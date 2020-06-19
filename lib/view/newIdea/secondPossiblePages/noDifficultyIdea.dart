@@ -2,6 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:idea/tools/themes.dart';
 import 'package:provider/provider.dart';
 
+class InheritedCreateNoPbIdea extends InheritedWidget {
+  InheritedCreateNoPbIdea({Key key, this.child}) : super(key: key, child: CreateNoDifficultyIdea());
+
+  final Widget child;
+
+  static InheritedCreateNoPbIdea of(BuildContext context) => (context.dependOnInheritedWidgetOfExactType<InheritedCreateNoPbIdea>());
+
+  @override
+  bool updateShouldNotify( InheritedCreateNoPbIdea oldWidget) {
+    return true;
+  }
+}
+
 class CreateNoDifficultyIdea extends StatefulWidget {
   CreateNoDifficultyIdea({Key key}) : super(key: key);
 
