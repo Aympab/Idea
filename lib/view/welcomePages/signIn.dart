@@ -44,6 +44,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        Image.asset('assets/images/mainLightBulbLogo.png'),
                         TextFormField(
                           validator: (val) =>
                               val.isEmpty ? 'Entez votre e-mail' : null,
