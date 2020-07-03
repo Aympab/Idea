@@ -1,6 +1,6 @@
 # idea
 
-AL3C - Idea
+Idea - M2
 
 ## Getting Started
 
