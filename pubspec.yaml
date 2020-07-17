@@ -26,7 +26,6 @@ dependencies:
   flutter_datetime_picker: 1.2.5
   configurable_expansion_tile: ^0.0.0
   flutter_multiselect: ^0.4.0
-  equatable: ^1.1.1
   bordered_text: ^1.0.0
   custom_radio: ^0.1.2
   custom_radio_button: ^0.0.3
@@ -38,26 +37,23 @@ dependencies:
   flutter_spinkit: "^4.1.2"
   firebase_storage: ^3.1.5
   cached_network_image: ^2.2.0+1
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
   provider: ^4.0.5+1
+  equatable: ^1.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter_icons:
-  image_path: 'assets/appIconDraw.png' 
+  image_path: "assets/appIconDraw.png"
   android: true
-  ios: true  
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -68,7 +64,7 @@ flutter:
     - assets/
     - assets/sounds/tapOnPaper.mp3
     - assets/sounds/tapOnPaperReverse.mp3
-    - assets/images/buttonsImages/ 
+    - assets/images/buttonsImages/
     - assets/images/buttonsImages/longPostIt/
     - assets/images/
     - assets/loadingGIF.gif
@@ -111,9 +107,9 @@ flutter:
           weight: 700
         - asset: assets/fonts/Balsamiq_Sans/BalsamiqSans-Italic.ttf
           style: italic
-    - family : ChelseaMarket
+    - family: ChelseaMarket
       fonts:
-        - asset : assets/fonts/ChelseaMarket-Regular.ttf
+        - asset: assets/fonts/ChelseaMarket-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
