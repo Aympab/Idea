@@ -118,18 +118,19 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                       .uid);
 
                           //Uploading the idea picture to storage
-                          CloudStorageResult result =
-                              InheritedCreateEasyIdea.of(context)
+                          CloudStorageResult result = InheritedCreateEasyIdea
+                                          .of(context)
+                                      .newIdea
+                                      .imageFile ==
+                                  null
+                              ? null
+                              : await CloudStorageService().uploadImage(
+                                  imageToUpload:
+                                      InheritedCreateEasyIdea.of(context)
                                           .newIdea
-                                          .imageFile ==
-                                      null
-                                  ? null
-                                  : await CloudStorageService().uploadImage(
-                                      imageToUpload:
-                                          InheritedCreateEasyIdea.of(context)
-                                              .newIdea
-                                              .imageFile,
-                                      title: 'nomIdeaPicture');
+                                          .imageFile,
+                                  title:
+                                      '${InheritedCreateEasyIdea.of(context).newIdea.title}Picture');
                           //Setting the image URL of the idea
                           InheritedCreateEasyIdea.of(context).newIdea.imageURL =
                               result == null ? null : result.imageUrl;

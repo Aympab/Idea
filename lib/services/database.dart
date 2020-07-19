@@ -187,7 +187,6 @@ class DatabaseService {
       shortDescription: data['shortDescription'] ?? 'error',
       supports: data['supports'] ?? 'error',
       imageURL: data['imageURL'],
-      imageFile: Image.network(data['imageURL']),
       categories: data['categories'] != null
           ? dynamicListToCategoryList(data['categories'])
           : List<IdeaCategory>(),
