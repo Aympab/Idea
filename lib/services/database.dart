@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:idea/model/designs/userProfile.dart';
 import 'package:idea/model/designs/userProfileRelated.dart';
 import 'package:idea/model/idea.dart';

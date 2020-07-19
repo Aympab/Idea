@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:idea/model/user.dart';
-import 'package:idea/services/database.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/widget/userCard.dart';
-
-import '../../../launchingAppTest.dart';
 
 class IdeaInfosPage extends StatefulWidget {
   IdeaInfosPage({

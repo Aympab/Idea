@@ -149,11 +149,11 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                           //A partir d'ici on a une idée tout prête à partir en BD
                           await DatabaseService().createIdeaData(newIdea);
 
-                          //Go to the freshly created idea's page
-                          //TODO : Push to flux vite fait pour l'avoir au début du pop
-                          Navigator.of(context).pushReplacementNamed(
-                              '/ideaPage',
-                              arguments: newIdea);
+                          //On pushReplacement sur le flux pour l'avoir en bas de la pile puis on push sur l'idée
+                          Navigator.of(context).pushReplacementNamed('/flux');
+
+                          Navigator.of(context)
+                              .pushNamed('/ideaPage', arguments: newIdea);
 
                           //Navigator.of(context).popAndPushNamed('/flux');
                         },

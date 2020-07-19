@@ -21,7 +21,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             //Different backgroundColor depending on what kind of theme
-            colors: (Provider.of<ThemeModel>(context).themeType == ThemeType.Dark) ? [Colors.amberAccent, Colors.green[100]] : [Colors.red, Colors.green[100]] ,
+            colors:
+                (Provider.of<ThemeModel>(context).themeType == ThemeType.Dark)
+                    ? [Colors.amberAccent, Colors.green[100]]
+                    : [Colors.red, Colors.green[100]],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
           ),
@@ -76,7 +79,8 @@ class _ProfileHeaderState extends State<ProfileHeader> {
 
   Widget _buildPictureTopLeft() {
     return CircularProfileAvatar(
-      widget.displayedUser.profileInfos.getProfilePicPath(),
+      //TODO
+      'https://mgl.skyrock.net/big.138267340.jpg?77868592',
       errorWidget: (context, url, error) => Container(
         child: Icon(Icons.error),
       ),
@@ -129,4 +133,3 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     );
   }
 }
-
