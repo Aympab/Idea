@@ -67,11 +67,7 @@ class DatabaseService {
     });
 
     anonym
-        ? user = User(
-            uid: uid,
-            isAnonymous: true,
-            //TODO : Generate anonymous pseudo
-            infosOblig: InformationsObligatoiresUser(pseudo: 'Anonyme'))
+        ? user = generateAnonymousUser(uid: uid)
         : await userCollection.document(uid).get(source: Source.server).then(
               (value) => user = User(
                 isAnonymous: false,
@@ -97,6 +93,46 @@ class DatabaseService {
             );
 
     return user;
+  }
+
+  //Returns a user object from its username
+  Future<User> getUserFromUsername(String username) async {
+    User user;
+
+    //Si l'user n'est pas anonyme, on va chercher dans la collection des utilisateurs
+    user = username == 'Anonyme'
+        ? generateAnonymousUser()
+        : await userCollection
+            .where('pseudo', isEqualTo: username)
+            .snapshots()
+            .first
+            .then((value) => user = User(
+                  isAnonymous: false,
+                  infosOblig: InformationsObligatoiresUser(
+                    pseudo: value.documents.first.data['pseudo'],
+                  ),
+                  infosFacultatives: InformationsFacultativesUser(
+                    nom: value.documents.first.data['nom'],
+                    prenom: value.documents.first.data['prenom'],
+                    zoneGeographique: value.documents.first.data['zoneGeo'],
+                  ),
+                  profileInfos: ProfileInformation(
+                    level: Level(
+                      int.parse(value.documents.first.data['niveau']),
+                    ),
+                    title: DefaultTitle(value.documents.first.data['titre']),
+                  ),
+                ));
+
+    return user;
+  }
+
+  User generateAnonymousUser({String uid}) {
+    return User(
+        uid: uid ?? '',
+        isAnonymous: true,
+        //TODO : Generate anonymous pseudo
+        infosOblig: InformationsObligatoiresUser(pseudo: 'Anonyme'));
   }
 
   ///
@@ -233,8 +269,8 @@ class DatabaseService {
   Future suggestCategory(IdeaCategory category) async {
     //TODO : Check existence !!! sinon on met la popularity a 1 d'un truc deja existant !!
     /*Ici on est au moment ou l'user a suggérer une catégorie, donc on veut la mettre en BD avec accepted à false
-      Et la popularity à 1, sauf que la on vérifie pas l'existence on écrase direct le document en le remplacant
-    */
+                    Et la popularity à 1, sauf que la on vérifie pas l'existence on écrase direct le document en le remplacant
+                  */
     return await categoryCollection.document(category.name).setData({
       'popularity': 1,
       'accepted': false,

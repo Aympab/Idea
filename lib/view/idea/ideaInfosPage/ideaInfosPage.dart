@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:idea/model/user.dart';
+import 'package:idea/services/database.dart';
 import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/widget/userCard.dart';
 
 import '../../../launchingAppTest.dart';
 
-class IdeaInfosPage extends StatelessWidget {
-  const IdeaInfosPage({
+class IdeaInfosPage extends StatefulWidget {
+  IdeaInfosPage({
     Key key,
   }) : super(key: key);
 
+  @override
+  _IdeaInfosPageState createState() => _IdeaInfosPageState();
+}
+
+class _IdeaInfosPageState extends State<IdeaInfosPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,11 +50,12 @@ class IdeaInfosPage extends StatelessWidget {
             constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width - 50,
                 maxHeight: 250),
-            child: Image.network(
-              InheritedIdea.of(context).idea.imageURL,
-              //TODO : Dynamise and add border, maybe resize as well
-              //"https://previews.123rf.com/images/upixel123/upixel1231606/upixel123160600054/59803306-collez-figure-avec-une-fus%C3%A9e-sur-son-dos-et-patins-%C3%A0-roulettes.jpg"),
-            ),
+            child: InheritedIdea.of(context).idea.imageURL != null
+                ? Image.network(
+                    //TODO : Beautify
+                    InheritedIdea.of(context).idea.imageURL)
+                : //TODO : Display a default image
+                SizedBox(height: 100),
           ),
         ),
         SizedBox(height: 20),
@@ -63,8 +71,12 @@ class IdeaInfosPage extends StatelessWidget {
                     TextStyle(color: Colors.black, fontStyle: FontStyle.italic),
               ),
             ),
-            //TODO : Dynamise
-            UserCard(user: TestMain.user),
+            InheritedIdea.of(context).idea.creator.pseudo == 'Anonyme'
+                ? Card(
+                    //TODO : Sweet anonymous card
+                    child: Text("ANONYME"),
+                  )
+                : UserCard(user: InheritedIdea.of(context).idea.creator),
           ],
         ),
         _buildExpansionTileDescription(),

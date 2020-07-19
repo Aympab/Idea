@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 class IdeaCard extends StatelessWidget {
   IdeaCard({Key key, this.idea}) : super(key: key);
   final Idea idea;
+  final DatabaseService dbService = DatabaseService();
 
   final _logoPic = Image.asset('assets/logo.png');
   // final categories = IdeaCategory.listToCard(idea.categories, Colors.blue, Colors.yellow);
@@ -39,7 +40,10 @@ class IdeaCard extends StatelessWidget {
             ),
             subtitle: buildBottom(),
           ),
-          onLongPress: () {
+          onLongPress: () async {
+            //Setting the ceator's info
+            idea.creator =
+                await dbService.getUserFromUsername(idea.creator.pseudo);
             //When tapping on the card, we open idea's page
             print(idea.uid);
             Navigator.of(context).pushNamed(
