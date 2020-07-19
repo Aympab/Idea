@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/widget/userCard.dart';
 
 import '../../../launchingAppTest.dart';
@@ -18,8 +19,7 @@ class IdeaInfosPage extends StatelessWidget {
         Container(
           child: Center(
               child: Text(
-            //TODO : Dynamise
-            'Fusée à roulette',
+            InheritedIdea.of(context).idea.title,
             style: TextStyle(
                 fontSize: 40, fontFamily: 'Jost', fontWeight: FontWeight.bold),
           )),
@@ -27,8 +27,7 @@ class IdeaInfosPage extends StatelessWidget {
         Container(
           child: Center(
             child: Text(
-              //TODO : Dynamise
-              "Une fusée ambidextre qui peut rouler sur l'eau et voler dans l'espace",
+              InheritedIdea.of(context).idea.shortDescription,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontStyle: FontStyle.italic,
@@ -38,15 +37,17 @@ class IdeaInfosPage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height:30),
+        SizedBox(height: 30),
         Container(
           child: ConstrainedBox(
             constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width - 50,
                 maxHeight: 250),
             child: Image.network(
-                //TODO : Dynamise and add border, maybe resize as well
-                "https://previews.123rf.com/images/upixel123/upixel1231606/upixel123160600054/59803306-collez-figure-avec-une-fus%C3%A9e-sur-son-dos-et-patins-%C3%A0-roulettes.jpg"),
+              InheritedIdea.of(context).idea.imageURL,
+              //TODO : Dynamise and add border, maybe resize as well
+              //"https://previews.123rf.com/images/upixel123/upixel1231606/upixel123160600054/59803306-collez-figure-avec-une-fus%C3%A9e-sur-son-dos-et-patins-%C3%A0-roulettes.jpg"),
+            ),
           ),
         ),
         SizedBox(height: 20),
@@ -58,7 +59,8 @@ class IdeaInfosPage extends StatelessWidget {
               child: Text(
                 'Par :',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black,fontStyle: FontStyle.italic),
+                style:
+                    TextStyle(color: Colors.black, fontStyle: FontStyle.italic),
               ),
             ),
             //TODO : Dynamise
@@ -76,7 +78,7 @@ class IdeaInfosPage extends StatelessWidget {
   Text _buildTileTitle(String title) => Text(
         title,
         textAlign: TextAlign.center,
-        style: TextStyle( color: Colors.black, fontSize: 20),
+        style: TextStyle(color: Colors.black, fontSize: 20),
       );
 
   _buildExpansionTileDescription() {
