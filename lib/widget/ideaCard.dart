@@ -14,9 +14,7 @@ class IdeaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: BeveledRectangleBorder(
-        borderRadius: BorderRadius.circular(2),
-      ),
+      shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(2)),
       margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
       elevation: 10,
       child: Material(
@@ -39,7 +37,14 @@ class IdeaCard extends StatelessWidget {
             ),
             subtitle: buildBottom(),
           ),
-          onTap: () => print(idea.uid),
+          onTap: () {
+            //When tapping on the card, we open idea's page
+            print(idea.uid);
+            Navigator.of(context).pushNamed(
+              '/ideaPage',
+              arguments: idea,
+            );
+          },
           onDoubleTap: () {
             DatabaseService().addSupportToIdea(
                 idea, Provider.of<User>(context, listen: false));
