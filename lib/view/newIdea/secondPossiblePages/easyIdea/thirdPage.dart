@@ -118,19 +118,22 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                                       .uid);
 
                           //Uploading the idea picture to storage
-                          CloudStorageResult result = InheritedCreateEasyIdea
-                                          .of(context)
-                                      .newIdea
-                                      .imageFile ==
-                                  null
-                              ? null
-                              : await CloudStorageService().uploadImage(
-                                  imageToUpload:
-                                      InheritedCreateEasyIdea.of(context)
+                          CloudStorageResult
+                              result = InheritedCreateEasyIdea.of(context)
                                           .newIdea
-                                          .imageFile,
-                                  title:
-                                      '${InheritedCreateEasyIdea.of(context).newIdea.title}Picture');
+                                          .imageFile ==
+                                      null
+                                  ? null
+                                  : await CloudStorageService().uploadImage(
+                                      imageToUpload:
+                                          InheritedCreateEasyIdea.of(context)
+                                              .newIdea
+                                              .imageFile,
+                                      title: InheritedCreateEasyIdea.of(context)
+                                              .newIdea
+                                              .title +
+                                          'IMAGE');
+
                           //Setting the image URL of the idea
                           InheritedCreateEasyIdea.of(context).newIdea.imageURL =
                               result == null ? null : result.imageUrl;
@@ -145,10 +148,14 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
 
                           //A partir d'ici on a une idée tout prête à partir en BD
                           await DatabaseService().createIdeaData(newIdea);
-                          //TODO : Go to the freshly created idea's page
-                          // Navigator.of(context).pushReplacementNamed('/ideaPage', arguments : newIdea);
 
-                          Navigator.of(context).popAndPushNamed('/flux');
+                          //Go to the freshly created idea's page
+                          //TODO : Push to flux vite fait pour l'avoir au début du pop
+                          Navigator.of(context).pushReplacementNamed(
+                              '/ideaPage',
+                              arguments: newIdea);
+
+                          //Navigator.of(context).popAndPushNamed('/flux');
                         },
                       ),
                     ),

@@ -29,14 +29,10 @@ class DifficultyCardsRowState extends State<DifficultyCardsRow> {
     return -1;
   }
 
-  static GlobalKey<DifficultyCardState> noDiffKey =
-      GlobalKey<DifficultyCardState>();
-  static GlobalKey<DifficultyCardState> easyKey =
-      GlobalKey<DifficultyCardState>();
-  static GlobalKey<DifficultyCardState> medKey =
-      GlobalKey<DifficultyCardState>();
-  static GlobalKey<DifficultyCardState> hardKey =
-      GlobalKey<DifficultyCardState>();
+  GlobalKey<DifficultyCardState> noDiffKey = GlobalKey<DifficultyCardState>();
+  GlobalKey<DifficultyCardState> easyKey = GlobalKey<DifficultyCardState>();
+  GlobalKey<DifficultyCardState> medKey = GlobalKey<DifficultyCardState>();
+  GlobalKey<DifficultyCardState> hardKey = GlobalKey<DifficultyCardState>();
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +97,6 @@ class DifficultyCard extends StatefulWidget {
 }
 
 class DifficultyCardState extends State<DifficultyCard> {
-  
   bool isSelected = false;
   @override
   Widget build(BuildContext context) {

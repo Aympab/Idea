@@ -39,13 +39,16 @@ class IdeaCard extends StatelessWidget {
             ),
             subtitle: buildBottom(),
           ),
-          onTap: () {
+          onLongPress: () {
             //When tapping on the card, we open idea's page
             print(idea.uid);
             Navigator.of(context).pushNamed(
               '/ideaPage',
               arguments: idea,
             );
+          },
+          onTap: () {
+//TODO : Open detailled infos
           },
           onDoubleTap: () {
             DatabaseService().addSupportToIdea(
