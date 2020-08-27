@@ -6,6 +6,7 @@ import '../idea.dart';
 //This class is used in the profile view
 class ProfileInformation {
   final Image profilePic;
+  String profilePicURL;
 
   UserTitle title;
   Level level;
@@ -23,6 +24,7 @@ class ProfileInformation {
     this.inventions,
     this.ideasHelped,
     this.summary,
+    this.profilePicURL,
   });
 }
 

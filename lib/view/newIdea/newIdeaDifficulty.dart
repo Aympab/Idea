@@ -4,7 +4,7 @@ import 'package:idea/view/newIdea/difficultyCard.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/easyIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/hardIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/mediumIdea.dart';
-import 'package:idea/view/newIdea/secondPossiblePages/noDifficultyIdea.dart';
+import 'package:idea/view/newIdea/secondPossiblePages/noDiffIdea/noDifficultyIdea.dart';
 
 class NewIdea extends StatefulWidget {
   @override
@@ -281,7 +281,7 @@ class ArrowButtonState extends State<ArrowButton> {
               switch (widget.rowCardKey.currentState.whichOnIsSelected()) {
                 case (0):
                   //Nodifficulty
-                  transitionPushToPage(context, CreateNoDifficultyIdea());
+                  transitionPushToPage(context, InheritedCreateNoDiffIdea());
                   break;
                 case (1):
                   transitionPushToPage(context, InheritedCreateEasyIdea());
