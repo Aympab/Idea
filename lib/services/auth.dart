@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:idea/model/user.dart';
 import 'package:idea/services/database.dart';
+import 'package:logging/logging.dart';
 
 class AuthService {
+  static final Logger _log = Logger('AuthService');
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //create user object based on FirebaseUser
@@ -17,6 +20,7 @@ class AuthService {
 
   //stream changes whenever user logs in or out
   Stream<FirebaseUser> get user {
+    _log.fine("get user triggered : Authentication state changed");
     return _auth.onAuthStateChanged.map((FirebaseUser user) => user);
     // .map(_userFromFirebaseUser); //Identique à la ligne au dessus
   }
@@ -26,9 +30,10 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
+      _log.finest('Anonymous sign in succesfull');
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
+      _log.severe('Anonymous sign in failed\n' + e.toString());
       return null;
     }
   }

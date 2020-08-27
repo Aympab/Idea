@@ -4,6 +4,7 @@ import 'package:idea/model/user.dart';
 import 'package:idea/routeGenerator.dart';
 import 'package:idea/services/auth.dart';
 import 'package:idea/tools/themes.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,7 +15,6 @@ void main() {
         ChangeNotifierProvider(create: (BuildContext context) => ThemeModel()),
         StreamProvider<FirebaseUser>.value(value: AuthService().user),
         Provider<User>(create: (_) => User()),
-      
       ],
       child: MyApp(),
     ),
