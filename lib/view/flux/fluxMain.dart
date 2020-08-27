@@ -7,6 +7,8 @@ import 'package:idea/view/loadingScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:idea/services/database.dart';
 
+import 'drawerFlux.dart';
+
 class FluxMainView extends StatefulWidget {
   FluxMainView({Key key}) : super(key: key);
 
@@ -43,6 +45,7 @@ class _FluxMainViewState extends State<FluxMainView> {
                 ),
               ),
               child: Scaffold(
+                drawer: DrawerFlux(),
                 resizeToAvoidBottomPadding: false,
                 backgroundColor: Colors.transparent,
                 body: SafeArea(
@@ -85,7 +88,9 @@ class _FluxMainViewState extends State<FluxMainView> {
                           )
                         ],
                       ),
-                      SizedBox(height: 10,)
+                      SizedBox(
+                        height: 10,
+                      )
                     ],
                   ),
                 ),
