@@ -157,7 +157,10 @@ class _CreateNoDifficultyIdeaState extends State<CreateNoDifficultyIdea> {
                   ],
                 ),
               ),
-              ThirdPageEasyIdea()
+              ThirdPageIdea(
+                newIdea: InheritedCreateNoDiffIdea.of(context).newIdea,
+                difficultyLevel: 0,
+              )
             ],
           ),
         ),

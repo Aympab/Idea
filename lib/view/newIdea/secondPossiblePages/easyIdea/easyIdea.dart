@@ -92,7 +92,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                       children: <Widget>[
                         SizedBox(height: 50),
                         TitleSecondPage(),
-                        SizedBox(height:5),
+                        SizedBox(height: 5),
                         subtitleSecondPage(),
                         SizedBox(height: 30),
                         Expanded(
@@ -125,7 +125,7 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
                               child: FlatButton(
                                 child: Image.asset(
                                     'assets/images/buttonsImages/nextWhite.png'),
-                                onPressed: ()async {
+                                onPressed: () async {
                                   //Check if the user filled at least name and description
                                   if (_formKey.currentState.validate()) {
                                     InheritedCreateEasyIdea.of(context)
@@ -161,7 +161,10 @@ class _CreateEasyIdeaState extends State<CreateEasyIdea> {
               ],
             ),
           ),
-          ThirdPageEasyIdea()
+          ThirdPageIdea(
+            newIdea: InheritedCreateEasyIdea.of(context).newIdea,
+            difficultyLevel: 1,
+          ),
         ],
       ),
     );

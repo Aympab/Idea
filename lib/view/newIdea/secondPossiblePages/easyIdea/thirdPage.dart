@@ -9,16 +9,21 @@ import 'package:idea/view/newIdea/secondPossiblePages/easyIdea/easyIdea.dart';
 import 'package:idea/view/newIdea/secondPossiblePages/widgetThirdPage.dart';
 import 'package:provider/provider.dart';
 
-class ThirdPageEasyIdea extends StatefulWidget {
-  const ThirdPageEasyIdea({
+class ThirdPageIdea extends StatefulWidget {
+  const ThirdPageIdea({
+    @required this.newIdea,
+    @required this.difficultyLevel,
     Key key,
   }) : super(key: key);
 
+  final Idea newIdea;
+  final int difficultyLevel;
+
   @override
-  _ThirdPageEasyIdeaState createState() => _ThirdPageEasyIdeaState();
+  _ThirdPageIdeaState createState() => _ThirdPageIdeaState();
 }
 
-class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
+class _ThirdPageIdeaState extends State<ThirdPageIdea> {
   List<IdeaCategory> allCategories;
   bool _loading = true;
   // final suggestionsController = BehaviorSubject<List<String>>();
@@ -96,64 +101,45 @@ class _ThirdPageEasyIdeaState extends State<ThirdPageEasyIdea> {
                           });
 
                           //Modification de l'iéde du inherited widget
-                          InheritedCreateEasyIdea.of(context)
-                                  .newIdea
-                                  .categories =
+                          widget.newIdea.categories =
                               _categoryGridKey.currentState.selectedCategories;
 
-                          InheritedCreateEasyIdea.of(context)
-                              .newIdea
-                              .advancement = 10;
-                          InheritedCreateEasyIdea.of(context).newIdea.supports =
-                              1;
+                          widget.newIdea.advancement = 10;
 
-                          InheritedCreateEasyIdea.of(context).newIdea.creator =
-                              Provider.of<User>(context, listen: false);
+                          widget.newIdea.supports = 1;
 
-                          InheritedCreateEasyIdea.of(context).newIdea.creator =
-                              await DatabaseService().getUserFromUid(
-                                  InheritedCreateEasyIdea.of(context)
-                                      .newIdea
-                                      .creator
+                          // widget.newIdea.creator =
+                          //     Provider.of<User>(context, listen: false);
+
+                          widget.newIdea.creator = await DatabaseService()
+                              .getUserFromUid(
+                                  Provider.of<User>(context, listen: false)
                                       .uid);
 
                           //Uploading the idea picture to storage
-                          CloudStorageResult
-                              result = InheritedCreateEasyIdea.of(context)
-                                          .newIdea
-                                          .imageFile ==
-                                      null
+                          CloudStorageResult result =
+                              widget.newIdea.imageFile == null
                                   ? null
                                   : await CloudStorageService().uploadImage(
-                                      imageToUpload:
-                                          InheritedCreateEasyIdea.of(context)
-                                              .newIdea
-                                              .imageFile,
-                                      title: InheritedCreateEasyIdea.of(context)
-                                              .newIdea
-                                              .title +
-                                          'IMAGE');
+                                      imageToUpload: widget.newIdea.imageFile,
+                                      title: widget.newIdea.title + 'IMAGE');
 
                           //Setting the image URL of the idea
-                          InheritedCreateEasyIdea.of(context).newIdea.imageURL =
+                          widget.newIdea.imageURL =
                               result == null ? null : result.imageUrl;
-
-                          //Setting the diddiculty to 1 because it's easy idea
-                          InheritedCreateEasyIdea.of(context)
-                              .newIdea
-                              .difficulty = 1;
-
-                          Idea newIdea =
-                              InheritedCreateEasyIdea.of(context).newIdea;
+//TODO :
+                          //Setting the difficulty
+                          widget.newIdea.difficulty = widget.difficultyLevel;
 
                           //A partir d'ici on a une idée tout prête à partir en BD
-                          await DatabaseService().createIdeaData(newIdea);
+                          await DatabaseService()
+                              .createIdeaData(widget.newIdea);
 
                           //On pushReplacement sur le flux pour l'avoir en bas de la pile puis on push sur l'idée
                           Navigator.of(context).pushReplacementNamed('/flux');
 
-                          Navigator.of(context)
-                              .pushNamed('/ideaPage', arguments: newIdea);
+                          Navigator.of(context).pushNamed('/ideaPage',
+                              arguments: widget.newIdea);
 
                           //Navigator.of(context).popAndPushNamed('/flux');
                         },
