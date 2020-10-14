@@ -14,7 +14,6 @@ void main() {
         ChangeNotifierProvider(create: (BuildContext context) => ThemeModel()),
         StreamProvider<FirebaseUser>.value(value: AuthService().user),
         Provider<User>(create: (_) => User()),
-      
       ],
       child: MyApp(),
     ),

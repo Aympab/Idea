@@ -54,12 +54,31 @@ class _FluxMainViewState extends State<FluxMainView> {
                       SizedBox(
                         height: 30,
                       ),
-                      Text(
-                        "Flux d'idées",
-                        //'Flux de ${authUser.uid}',
-                        textAlign: TextAlign.center,
-                        style:
-                            TextStyle(fontFamily: 'BalsamiqSans', fontSize: 35),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Text(
+                                "Flux d'idées",
+                                //'Flux de ${authUser.uid}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'BalsamiqSans', fontSize: 35),
+                              ),
+                              flex: 6),
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: () {
+                                //TODO : Fenêtre de recherche/filtre de résultats
+                              },
+                              icon: Icon(Icons.search),
+                              iconSize: 50,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 50,
+                          )
+                        ],
                       ),
                       Expanded(
                           // height: 200,

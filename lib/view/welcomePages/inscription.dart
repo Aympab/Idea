@@ -33,7 +33,6 @@ class _InscriptionViewState extends State<InscriptionView> {
     });
   }
 
-
   List selectedCompetences = [];
   List selectedMaterials = [];
 
@@ -134,7 +133,7 @@ class _InscriptionViewState extends State<InscriptionView> {
       )
     ]);
 
-    var imageToDisplay = showImage();
+    var imageToDisplay = image == null ? Icon(Icons.person) : Image.file(image);
     final circularProfileAvatar = CircularProfileAvatar(
       '',
       child: imageToDisplay,
@@ -145,7 +144,7 @@ class _InscriptionViewState extends State<InscriptionView> {
       radius: 60,
       onTap: () {
         getImageGallery();
-        imageToDisplay = showImage();
+        imageToDisplay = image == null ? Icon(Icons.person) : Image.file(image);
       },
     );
 
@@ -240,7 +239,7 @@ class _InscriptionViewState extends State<InscriptionView> {
             )),
       ],
     );
-    
+
     _buildExpansionTileInfoFacultative() {
       return ExpansionTile(
         initiallyExpanded: false,

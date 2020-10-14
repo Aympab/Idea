@@ -10,7 +10,8 @@ class FormEasyIdea extends StatefulWidget {
     Key key,
     @required GlobalKey<FormState> formKey,
     this.keyTfShortDescr,
-    this.keyTfIdeaName, @required this.keyPicture,
+    this.keyTfIdeaName,
+    @required this.keyPicture,
   })  : _formKey = formKey,
         super(key: key);
 
@@ -62,6 +63,8 @@ class _FormEasyIdeaState extends State<FormEasyIdea> {
                   ),
                   SizedBox(height: 40),
                   PictureField(
+                    displayText:
+                        "Avec une image, un dessin ou une photo, c'est toujours plus clair ! (facultatif)",
                     key: widget.keyPicture,
                   ),
                   SizedBox(height: 40)

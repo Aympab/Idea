@@ -7,6 +7,7 @@ import 'package:idea/view/idea/ideaMainView.dart';
 import 'package:idea/view/welcomePages/inscription.dart';
 import 'package:idea/view/newIdea/newIdeaDifficulty.dart';
 import 'package:idea/view/profile/profileMain.dart';
+import 'package:idea/view/welcomePages/signUp.dart';
 import 'model/idea.dart';
 import 'model/user.dart';
 
@@ -21,7 +22,7 @@ class RouteGenerator {
 
       case '/inscription':
         return MaterialPageRoute(
-          builder: (_) => InscriptionView(),
+          builder: (_) => SignUpPage(),
         );
         break;
 

@@ -294,7 +294,10 @@ class TextFieldShortDescriptionState extends State<TextFieldShortDescription> {
 class PictureField extends StatefulWidget {
   const PictureField({
     Key key,
+    this.displayText = "",
   }) : super(key: key);
+
+  final String displayText;
 
   @override
   PictureFieldState createState() => PictureFieldState();
@@ -358,7 +361,7 @@ class PictureFieldState extends State<PictureField> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 30.0),
           child: Text(
-            "Avec une image, un dessin ou une photo, c'est toujours plus clair ! (facultatif)",
+            widget.displayText,
             textAlign: TextAlign.left,
             style: TextStyle(
               fontFamily: "BalsamiqSans",

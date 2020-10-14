@@ -13,28 +13,37 @@ class UserCard extends StatelessWidget {
     // );
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width/1.55),
-              child: Card(
-                color: Color(0x5F71B3).withOpacity(1),
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 1.55),
+        child: Card(
+          color: Color(0x5F71B3).withOpacity(1),
           child: InkWell(
             splashColor: Colors.amber,
             onTap: () {
               //TODO Go to user profile
-              // Navigator.of(context).popAndPushNamed('qsdqsdqsd', arguments:this.user);
+              Navigator.of(context)
+                  .popAndPushNamed('/userProfile', arguments: this.user);
               print('Card tapped.');
             },
             child: Column(
               // mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-               SizedBox(height: 5,),
+                SizedBox(
+                  height: 5,
+                ),
                 ListTile(
                   leading: user.profileInfos.profilePic,
                   title: Text(user.pseudo),
-                  subtitle: Text('${user.title}\nNiveau ${user.level}', style: TextStyle(color: Colors.grey),),
+                  subtitle: Text(
+                    '${user.title}\nNiveau ${user.level}',
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ),
                 Row(
                   children: <Widget>[
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     FlatButton(
                       child: Text('PROFIL'),
                       //TODO Go to user profile

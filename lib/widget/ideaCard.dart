@@ -50,7 +50,7 @@ class IdeaCard extends StatelessWidget {
             );
           },
           onTap: () {
-//TODO : Open detailled infos
+            //TODO : Open detailled infos
           },
           onDoubleTap: () {
             DatabaseService().addSupportToIdea(
